@@ -1,0 +1,13 @@
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\bin\Debug\LEDSimuLight.exe
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\bin\Debug\LEDSimuLight.pdb
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.csprojResolveAssemblyReference.cache
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.about.resources
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.design.resources
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.Main_form.resources
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.Properties.Resources.resources
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.report.resources
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.settings.resources
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.simulating.resources
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.csproj.GenerateResource.Cache
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.exe
+D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.pdb
