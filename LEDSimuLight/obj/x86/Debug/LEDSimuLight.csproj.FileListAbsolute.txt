@@ -36,3 +36,16 @@ D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSim
 D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.settings.resources
 D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.simulating.resources
 D:\Учеба\ГПО_магистратура\LEDSimuLight_active_project\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.csproj.GenerateResource.Cache
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.exe
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.pdb
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\bin\Debug\LEDSimuLight.exe
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\bin\Debug\LEDSimuLight.pdb
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.csprojResolveAssemblyReference.cache
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormAbout.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormDesign.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormMain.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.Properties.Resources.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormReport.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormSettings.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormSimulating.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.csproj.GenerateResource.Cache

@@ -83,52 +83,53 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="about.cs">
+    <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="about.Designer.cs">
-      <DependentUpon>about.cs</DependentUpon>
+    <Compile Include="FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="design.cs">
+    <Compile Include="FormDesign.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="design.Designer.cs">
-      <DependentUpon>design.cs</DependentUpon>
+    <Compile Include="FormDesign.Designer.cs">
+      <DependentUpon>FormDesign.cs</DependentUpon>
     </Compile>
-    <Compile Include="report.cs">
+    <Compile Include="FormReport.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="report.Designer.cs">
-      <DependentUpon>report.cs</DependentUpon>
+    <Compile Include="FormReport.Designer.cs">
+      <DependentUpon>FormReport.cs</DependentUpon>
     </Compile>
-    <Compile Include="settings.cs">
+    <Compile Include="FormSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="settings.Designer.cs">
-      <DependentUpon>settings.cs</DependentUpon>
+    <Compile Include="FormSettings.Designer.cs">
+      <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main_form.cs">
+    <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main_form.Designer.cs">
-      <DependentUpon>Main_form.cs</DependentUpon>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Globalcs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="simulating.cs">
+    <Compile Include="FormSimulating.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="simulating.Designer.cs">
-      <DependentUpon>simulating.cs</DependentUpon>
+    <Compile Include="FormSimulating.Designer.cs">
+      <DependentUpon>FormSimulating.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="about.resx">
-      <DependentUpon>about.cs</DependentUpon>
+    <EmbeddedResource Include="FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="design.resx">
-      <DependentUpon>design.cs</DependentUpon>
+    <EmbeddedResource Include="FormDesign.resx">
+      <DependentUpon>FormDesign.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main_form.resx">
-      <DependentUpon>Main_form.cs</DependentUpon>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -139,14 +140,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="report.resx">
-      <DependentUpon>report.cs</DependentUpon>
+    <EmbeddedResource Include="FormReport.resx">
+      <DependentUpon>FormReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="settings.resx">
-      <DependentUpon>settings.cs</DependentUpon>
+    <EmbeddedResource Include="FormSettings.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="simulating.resx">
-      <DependentUpon>simulating.cs</DependentUpon>
+    <EmbeddedResource Include="FormSimulating.resx">
+      <DependentUpon>FormSimulating.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

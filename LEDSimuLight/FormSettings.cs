@@ -9,20 +9,16 @@ using System.Windows.Forms;
 
 namespace LEDSimuLight
 {
-    public partial class report : Form
+    public partial class FormSettings : Form
     {
-        public report()
+        public FormSettings()
         {
             InitializeComponent();
         }
 
-        public void toMessBox(String s)
+        private void закрытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageTextBox.AppendText(s);
-        }
-
-        private void report_Load(object sender, EventArgs e)
-        {
+            Form.ActiveForm.Close();
         }
     }
 }
