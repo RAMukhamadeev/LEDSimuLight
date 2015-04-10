@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
 using Tao.FreeGlut;
@@ -34,7 +36,7 @@ namespace LEDSimuLight
             for (int x = 0; x <= W; x++)
                 for (int y = 0; y <= H; y++)
                 {
-                    mas[x, y] = dataIn.ReadInt32();
+                    Mas[x, y] = dataIn.ReadInt32();
                 }
 
             dataIn.Close();
@@ -55,7 +57,7 @@ namespace LEDSimuLight
             }
             for (int x = 0; x <= W; x++)
                 for (int y = 0; y <= H; y++)
-                    dataOut.Write(mas[x, y]);
+                    dataOut.Write(Mas[x, y]);
             dataOut.Close();
         }
 
@@ -76,18 +78,18 @@ namespace LEDSimuLight
             public double Fraction, Reflection, Absorption, R, G, B;
         }
 
-        public static bool onceInitGL = false;
-        public static int[,] mas;
+        public static bool OnceInitGl = false;
+        public static int[,] Mas;
         public static int
             PrecKoeff = 1,
-            W = 500 * PrecKoeff,
-            H = 500 * PrecKoeff,
+            W,
+            H,
             HMaxMicr = 10,
             WMaxMicr = 10,
             NumOfMatr = 0,
-            Border = 50 * PrecKoeff,
-            PicW = 600 * PrecKoeff,
-            PicH = 600 * PrecKoeff,
+            Border,
+            PicW,
+            PicH,
             FrameSensor = 12 * PrecKoeff,
             SensMat = 6,
             QuantsOut = 0,
@@ -98,7 +100,7 @@ namespace LEDSimuLight
             QuantsRight = 0,
             DivOfLightCirc = 1,
             BadQuants = 0,
-            SideSector = (int)((W / WMaxMicr) * DivOfLightCirc * Math.PI * (HMaxMicr / 2) / 180);
+            SideSector;
         public static double QuantumEff = 0;
 
         public static MaterialsArray[] Materials;
@@ -108,8 +110,8 @@ namespace LEDSimuLight
     {
         public static void InitGl()
         {
-            if (!Var.onceInitGL)
-                Var.onceInitGL = true;
+            if (!Var.OnceInitGl)
+                Var.OnceInitGl = true;
             else
                 return; // проверяем чтобы инициализация была один раз
             // инициализация Glut 
@@ -130,92 +132,67 @@ namespace LEDSimuLight
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
         }
 
-        private static void CreateFrame()  // рисуем рамку
+        private static void CreateFrame(Graphics g)  // рисуем рамку
         {
-            Gl.glColor3d(0, 0, 0);
-            Gl.glBegin(Gl.GL_LINE_STRIP);
-            Gl.glVertex2d(Var.Border, Var.Border);
-            Gl.glVertex2d(Var.Border, Var.PicH - Var.Border);
-            Gl.glEnd();
-            Gl.glBegin(Gl.GL_LINE_STRIP);
-            Gl.glVertex2d(Var.Border, Var.PicH - Var.Border);
-            Gl.glVertex2d(Var.PicH - Var.Border, Var.PicH - Var.Border);
-            Gl.glEnd();
-            Gl.glBegin(Gl.GL_LINE_STRIP);
-            Gl.glVertex2d(Var.PicH - Var.Border, Var.PicH - Var.Border);
-            Gl.glVertex2d(Var.PicH - Var.Border, Var.Border);
-            Gl.glEnd();
-            Gl.glBegin(Gl.GL_LINE_STRIP);
-            Gl.glVertex2d(Var.PicH - Var.Border, Var.Border);
-            Gl.glVertex2d(Var.Border, Var.Border);
-            Gl.glEnd();
-            Gl.glFlush();
+            Pen currPen = new Pen(Color.Black, 2);
+
+            g.DrawLine(currPen, Var.Border, Var.Border, Var.Border, Var.PicH - Var.Border);
+            g.DrawLine(currPen, Var.Border, Var.PicH - Var.Border, Var.PicW - Var.Border, Var.PicH - Var.Border);
+            g.DrawLine(currPen, Var.PicW - Var.Border, Var.PicH - Var.Border, Var.PicW - Var.Border, Var.Border);
+            g.DrawLine(currPen, Var.PicW - Var.Border, Var.Border, Var.Border, Var.Border);
+
+            g.Flush();
         }
 
-        static void PrintText(int x, int y, string text)
+        static void PrintText(int x, int y, string text, Graphics g = null)
         {
-            // устанавливаем позицию вывода растровых символов 
-            // в переданных координатах x и y
-            Gl.glRasterPos2d(x, y);
-            foreach (char t in text)
-                // визуализируем символ c, с помощью функции glutBitmapCharacter, используя шрифт GLUT_BITMAP_9_BY_15. 
-                Glut.glutBitmapCharacter(Glut.GLUT_BITMAP_8_BY_13, t);
+            g.DrawString(text, new Font("Arial", 9), Brushes.Black, new PointF(x, y));
+            g.Flush();
         }
 
-        private static void CreateMark(int maxW, int maxH)  // метки на осях
+        private static void CreateMark(int maxW, int maxH, Graphics g)  // метки на осях
         {
-            Gl.glColor3d(0, 0, 0);
+            Pen currPen = new Pen(Color.Black, 2);
+
             int koeff = Var.PrecKoeff,
-                h = 5 * koeff;
-            for (int i = 0; i <= 10; i++) // крупнык метки на осях
+                h = 5*koeff,
+                div = 10;
+            for (int i = 0; i <= div; i++) // крупнык метки на осях
             {
-                Gl.glBegin(Gl.GL_LINE_STRIP);   // нижняя ось Х
-                Gl.glVertex2d(Var.Border + i * (Var.W / 10), Var.Border - h);
-                Gl.glVertex2d(Var.Border + i * (Var.W / 10), Var.Border + h);
-                Gl.glEnd();
-                PrintText(Var.Border + i * (Var.W / 10) - 5 * koeff, Var.Border - h - 15 * koeff, (i * maxW / 10.0).ToString()); // подписи к меткам
+                g.DrawLine(currPen, Var.Border + i * (Var.W / div), Var.Border - h, Var.Border + i * (Var.W / div), Var.Border + h);
+                PrintText(Var.Border + i * (Var.W / div) - 5 * koeff, Var.Border - h - 15 * koeff, (i * maxW / (double) div).ToString(), g); // подписи к меткам
 
-                Gl.glBegin(Gl.GL_LINE_STRIP);   // верхняя ось Х
-                Gl.glVertex2d(Var.Border + i * (Var.W / 10), (Var.PicH - Var.Border) - h);
-                Gl.glVertex2d(Var.Border + i * (Var.W / 10), (Var.PicH - Var.Border) + h);
-                Gl.glEnd();
+                g.DrawLine(currPen, Var.Border + i * (Var.W / div), (Var.PicH - Var.Border) - h, Var.Border + i * (Var.W / div), (Var.PicH - Var.Border) + h);
+                g.DrawLine(currPen, (Var.PicH - Var.Border) - h, Var.Border + i * (Var.H / div), (Var.PicH - Var.Border) + h, Var.Border + i * (Var.H / div));
 
-                Gl.glBegin(Gl.GL_LINE_STRIP);   // правая ось Y
-                Gl.glVertex2d((Var.PicH - Var.Border) - h, Var.Border + i * (Var.H / 10));
-                Gl.glVertex2d((Var.PicH - Var.Border) + h, Var.Border + i * (Var.H / 10));
-                Gl.glEnd();
-
-                Gl.glBegin(Gl.GL_LINE_STRIP);   // левая ось Y
-                Gl.glVertex2d(Var.Border - h, Var.Border + i * (Var.H / 10));
-                Gl.glVertex2d(Var.Border + h, Var.Border + i * (Var.H / 10));
-                Gl.glEnd();
-                PrintText(Var.Border - h - 30 * koeff, Var.Border + i * (Var.H / 10) - 5 * koeff, (i * maxH / 10.0).ToString()); // подписи к меткам
+                g.DrawLine(currPen, Var.Border - h, Var.Border + i * (Var.H / div), Var.Border + h, Var.Border + i * (Var.H / div));
+                PrintText(Var.Border - h - 30 * koeff, Var.Border + i * (Var.H / div) - 5 * koeff, (i * maxH / (double)div).ToString(), g); // подписи к меткам
             }
 
-            int hl = 2 * koeff; // маленькие метки на осях
-            for (int i = 0; i <= 20; i++)
-            {
-                Gl.glBegin(Gl.GL_LINE_STRIP);   // нижняя ось Х
-                Gl.glVertex2d(Var.Border + i * (Var.W / 20), Var.Border - hl);
-                Gl.glVertex2d(Var.Border + i * (Var.W / 20), Var.Border + hl);
-                Gl.glEnd();
+            //int hl = 2 * koeff; // маленькие метки на осях
+            //for (int i = 0; i <= 20; i++)
+            //{
+            //    Gl.glBegin(Gl.GL_LINE_STRIP);   // нижняя ось Х
+            //    Gl.glVertex2d(Var.Border + i * (Var.W / 20), Var.Border - hl);
+            //    Gl.glVertex2d(Var.Border + i * (Var.W / 20), Var.Border + hl);
+            //    Gl.glEnd();
 
-                Gl.glBegin(Gl.GL_LINE_STRIP);   // верхняя ось Х
-                Gl.glVertex2d(Var.Border + i * (Var.W / 20), (Var.PicH - Var.Border) - hl);
-                Gl.glVertex2d(Var.Border + i * (Var.W / 20), (Var.PicH - Var.Border) + hl);
-                Gl.glEnd();
+            //    Gl.glBegin(Gl.GL_LINE_STRIP);   // верхняя ось Х
+            //    Gl.glVertex2d(Var.Border + i * (Var.W / 20), (Var.PicH - Var.Border) - hl);
+            //    Gl.glVertex2d(Var.Border + i * (Var.W / 20), (Var.PicH - Var.Border) + hl);
+            //    Gl.glEnd();
 
-                Gl.glBegin(Gl.GL_LINE_STRIP);   // правая ось Y
-                Gl.glVertex2d((Var.PicH - Var.Border) - hl, Var.Border + i * (Var.H / 20));
-                Gl.glVertex2d((Var.PicH - Var.Border) + hl, Var.Border + i * (Var.H / 20));
-                Gl.glEnd();
+            //    Gl.glBegin(Gl.GL_LINE_STRIP);   // правая ось Y
+            //    Gl.glVertex2d((Var.PicH - Var.Border) - hl, Var.Border + i * (Var.H / 20));
+            //    Gl.glVertex2d((Var.PicH - Var.Border) + hl, Var.Border + i * (Var.H / 20));
+            //    Gl.glEnd();
 
-                Gl.glBegin(Gl.GL_LINE_STRIP);   // левая ось Y
-                Gl.glVertex2d(Var.Border - hl, Var.Border + i * (Var.H / 20));
-                Gl.glVertex2d(Var.Border + hl, Var.Border + i * (Var.H / 20));
-                Gl.glEnd();
-            }
-            Gl.glFlush();
+            //    Gl.glBegin(Gl.GL_LINE_STRIP);   // левая ось Y
+            //    Gl.glVertex2d(Var.Border - hl, Var.Border + i * (Var.H / 20));
+            //    Gl.glVertex2d(Var.Border + hl, Var.Border + i * (Var.H / 20));
+            //    Gl.glEnd();
+            //}
+            //Gl.glFlush();
         }
 
         private static void PutFive(int x, int y)
@@ -252,14 +229,21 @@ namespace LEDSimuLight
             Gl.glFlush();
         }
 
-        public static void SetMesh(int w, int h)
+        public static void SetMesh(int w, int h, Graphics g = null)
         {
-            CreateFrame();
-            CreateMark(w, h);
-            CreatePoints(100);
+            CreateFrame(g);
+            CreateMark(w, h, g);
+            //CreatePoints(100);
         }
 
-        public static void LineDrawPic(int xl, int xr, int yd, int yu) // faster
+        /// <summary>
+        /// Метод рисует на Bitmap содержимое файла линиями
+        /// </summary>
+        /// <param name="xl"></param>
+        /// <param name="xr"></param>
+        /// <param name="yd"></param>
+        /// <param name="yu"></param>
+        public static void LineDrawPic(int xl, int xr, int yd, int yu)
         {
             xl = Math.Max(0, xl);
             yd = Math.Max(0, yd);
@@ -272,10 +256,10 @@ namespace LEDSimuLight
                 while (x <= xr)
                 {
                     int x1 = x;
-                    int col0 = Var.mas[x, y];
+                    int col0 = Var.Mas[x, y];
                     Gl.glColor3d(Var.Materials[col0].R, Var.Materials[col0].G, Var.Materials[col0].B);
 
-                    while (x <= Var.W && col0 == Var.mas[x, y])
+                    while (x <= Var.W && col0 == Var.Mas[x, y])
                         x++;
 
                     Gl.glBegin(Gl.GL_LINE_STRIP);

@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDesign));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pbDesignOfLed = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.AnT = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,6 +79,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDesignOfLed)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panel_input.SuspendLayout();
             this.menuStrip2.SuspendLayout();
@@ -89,14 +90,23 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.pbDesignOfLed);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.AnT);
             this.panel1.Location = new System.Drawing.Point(488, 67);
             this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1402, 1244);
             this.panel1.TabIndex = 3;
+            // 
+            // pbDesignOfLed
+            // 
+            this.pbDesignOfLed.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.pbDesignOfLed.Location = new System.Drawing.Point(207, 54);
+            this.pbDesignOfLed.Name = "pbDesignOfLed";
+            this.pbDesignOfLed.Size = new System.Drawing.Size(1100, 1100);
+            this.pbDesignOfLed.TabIndex = 8;
+            this.pbDesignOfLed.TabStop = false;
             // 
             // label2
             // 
@@ -119,26 +129,6 @@
             this.label1.Size = new System.Drawing.Size(145, 44);
             this.label1.TabIndex = 6;
             this.label1.Text = "X, мкм";
-            // 
-            // AnT
-            // 
-            this.AnT.AccumBits = ((byte)(0));
-            this.AnT.AutoCheckErrors = false;
-            this.AnT.AutoFinish = false;
-            this.AnT.AutoMakeCurrent = true;
-            this.AnT.AutoSwapBuffers = true;
-            this.AnT.BackColor = System.Drawing.Color.White;
-            this.AnT.ColorBits = ((byte)(32));
-            this.AnT.Cursor = System.Windows.Forms.Cursors.Default;
-            this.AnT.DepthBits = ((byte)(16));
-            this.AnT.Location = new System.Drawing.Point(180, 21);
-            this.AnT.Margin = new System.Windows.Forms.Padding(6);
-            this.AnT.Name = "AnT";
-            this.AnT.Size = new System.Drawing.Size(1200, 1154);
-            this.AnT.StencilBits = ((byte)(0));
-            this.AnT.TabIndex = 5;
-            this.AnT.Click += new System.EventHandler(this.AnT_Click);
-            this.AnT.MouseMove += new System.Windows.Forms.MouseEventHandler(this.AnT_MouseMove);
             // 
             // menuStrip1
             // 
@@ -569,6 +559,7 @@
             this.Load += new System.EventHandler(this.design_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDesignOfLed)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel_input.ResumeLayout(false);
@@ -587,7 +578,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private Tao.Platform.Windows.SimpleOpenGlControl AnT;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem закрытьToolStripMenuItem;
@@ -633,6 +623,7 @@
         private System.Windows.Forms.ToolStripMenuItem многоугольникToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem редактироватьФигуруToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem удалитьПоследнююФигуруToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pbDesignOfLed;
 
     }
 }

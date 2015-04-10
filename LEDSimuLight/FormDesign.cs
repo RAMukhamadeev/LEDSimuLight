@@ -1,10 +1,20 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace LEDSimuLight
 {
     public partial class FormDesign : Form
     {
+        Var.Point _currPoint = new Var.Point(0, 0);
+        readonly Var.Point[] _masPoints = new Var.Point[100];
+        readonly Line[] _lines = new Line[100];
+        string _material = "", _shape = "";
+        int _click = 0, _oldClick = 0;
+
+        private Graphics _graphicsDesignOfLed;
+        private Bitmap _bmpDesignOfLed;
+
         private class Line
         {
             public Line(double a, double b, double c)
@@ -16,25 +26,27 @@ namespace LEDSimuLight
             public double A, B, C;
         }
 
-        Var.Point _currPoint = new Var.Point(0, 0);
-        readonly Var.Point[] _masPoints = new Var.Point[100];
-        readonly Line[] _lines = new Line[100];
-        string _material = "", _shape = "";
-
-        int _click = 0, _oldClick = 0;
-
         public FormDesign()
         {
             InitializeComponent();
-            AnT.InitializeContexts();
         }
 
         private void design_Load(object sender, EventArgs e)
         {
-            OpenGLm.ProjectionInit();
-            OpenGLm.LineDrawPic(0, Var.W, 0, Var.H);
-            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr);
-            AnT.Invalidate();
+            _bmpDesignOfLed = new Bitmap(pbDesignOfLed.Width, pbDesignOfLed.Height);
+            _graphicsDesignOfLed = Graphics.FromImage(_bmpDesignOfLed);
+            
+            Var.PicH = pbDesignOfLed.Height;
+            Var.PicW = pbDesignOfLed.Width;
+            Var.Border = 50;
+            Var.H = Var.PicH - Var.Border * 2;
+            Var.W = Var.PicW - Var.Border * 2;
+            Var.SideSector = (int)((Var.W / Var.WMaxMicr) * Var.DivOfLightCirc * Math.PI * (Var.HMaxMicr / 2) / 180);
+
+            //OpenGLm.LineDrawPic(0, Var.W, 0, Var.H);
+            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsDesignOfLed);
+
+            pbDesignOfLed.Image = _bmpDesignOfLed;
         }
 
         private void закрытьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -46,7 +58,7 @@ namespace LEDSimuLight
         {
             for (int i = y1; i <= y2; i++)
                 for (int j = x2; j <= x3; j++)
-                    Var.mas[j, i] = col;
+                    Var.Mas[j, i] = col;
         }
 
         private int GetX(double x)
@@ -94,11 +106,10 @@ namespace LEDSimuLight
             for (int x = 0; x <= Var.W; x++)
                 for (int y = 0; y <= Var.H; y++)
                     if (PointIn(x, y, _oldClick))
-                        Var.mas[x, y] = 0;
+                        Var.Mas[x, y] = 0;
 
             OpenGLm.LineDrawPic(0, Var.W, 0, Var.H); // рисуем на экране
-            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr);
-            AnT.Invalidate();
+            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsDesignOfLed);
 
             _oldClick = 0;
         }
@@ -124,11 +135,10 @@ namespace LEDSimuLight
             for (int x = 0; x <= Var.W; x++)
                 for (int y = 0; y <= Var.H; y++)
                     if (PointIn(x, y, _click))
-                        Var.mas[x, y] = code;
+                        Var.Mas[x, y] = code;
 
             OpenGLm.LineDrawPic(0, Var.W, 0, Var.H); // рисуем на экране
-            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr);
-            AnT.Invalidate();
+            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsDesignOfLed);
 
             _oldClick = _click;
             _click = 0;
@@ -175,13 +185,12 @@ namespace LEDSimuLight
                 {
                     p.X = x; p.Y = y;
                     if (Dist(_masPoints[1], p) <= quadR)
-                        Var.mas[x, y] = 0;
+                        Var.Mas[x, y] = 0;
                 }
 
 
             OpenGLm.LineDrawPic(0, Var.W, 0, Var.H); // рисуем на экране
-            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr);
-            AnT.Invalidate();
+            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsDesignOfLed);
 
             _oldClick = 0;
         }
@@ -198,13 +207,12 @@ namespace LEDSimuLight
                 {
                     p.X = x; p.Y = y;
                     if (Dist(_masPoints[1], p) <= quadR)
-                        Var.mas[x, y] = code;
+                        Var.Mas[x, y] = code;
                 }
 
 
             OpenGLm.LineDrawPic(0, Var.W, 0, Var.H); // рисуем на экране
-            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr);
-            AnT.Invalidate();
+            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsDesignOfLed);
             _oldClick = _click;
             _click = 0;    
         }
@@ -242,8 +250,7 @@ namespace LEDSimuLight
             {
                 Var.OpenBinFile(openFileDialog1.FileName);
                 OpenGLm.LineDrawPic(0, Var.W, 0, Var.H);
-                OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr);
-                AnT.Invalidate();
+                OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsDesignOfLed);
             }
         }
 
@@ -265,10 +272,9 @@ namespace LEDSimuLight
         private void PutCross(Var.Point p, int x1, int x2, int y1, int y2)
         {
             OpenGLm.LineDrawPic(_nowX1 - 50 * Var.PrecKoeff, _nowX1 + 50 * Var.PrecKoeff, _nowY1 - 50 * Var.PrecKoeff, _nowY1 + 50 * Var.PrecKoeff);
-            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr);
+            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsDesignOfLed);
             OpenGLm.DrawSegment(_click, _masPoints);
             OpenGLm.DrawCross(p.X, p.Y);
-            AnT.Invalidate();
 
             label6.Text = ToMicr(p.X).ToString() + " мкм";
             label7.Text = ToMicr(p.Y).ToString() + " мкм";

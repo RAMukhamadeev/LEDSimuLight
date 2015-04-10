@@ -28,7 +28,7 @@ namespace LEDSimuLight
 
         private void SetVariables()
         {
-            Var.mas = new int[Var.W + 1, Var.H + 1];
+            Var.Mas = new int[Var.W + 1, Var.H + 1];
             Var.Materials = new Var.MaterialsArray[100];
             Var.CircleBright = new int[180 / Var.DivOfLightCirc];
             Var.LeftBright = new int[1 + Var.H / (2 * Var.SideSector)];
