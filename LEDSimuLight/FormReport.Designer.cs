@@ -1,11 +1,16 @@
-﻿namespace LEDSimuLight
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace LEDSimuLight
 {
     partial class FormReport
     {
         /// <summary>
         /// Требуется переменная конструктора.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Освободить все используемые ресурсы.
@@ -28,39 +33,39 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReport));
-            this.MessageTextBox = new System.Windows.Forms.RichTextBox();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(FormReport));
+            this.MessageTextBox = new RichTextBox();
             this.SuspendLayout();
             // 
             // MessageTextBox
             // 
-            this.MessageTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.MessageTextBox.Location = new System.Drawing.Point(24, 23);
-            this.MessageTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.MessageTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204)));
+            this.MessageTextBox.Location = new Point(24, 23);
+            this.MessageTextBox.Margin = new Padding(6, 6, 6, 6);
             this.MessageTextBox.Name = "MessageTextBox";
             this.MessageTextBox.ReadOnly = true;
-            this.MessageTextBox.Size = new System.Drawing.Size(1372, 517);
+            this.MessageTextBox.Size = new Size(1372, 517);
             this.MessageTextBox.TabIndex = 0;
             this.MessageTextBox.Text = "";
             // 
             // FormReport
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1424, 567);
+            this.AutoScaleDimensions = new SizeF(12F, 25F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.ClientSize = new Size(1424, 567);
             this.Controls.Add(this.MessageTextBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.Icon = ((Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new Padding(6, 6, 6, 6);
             this.Name = "FormReport";
             this.Text = "Отчет";
-            this.Load += new System.EventHandler(this.report_Load);
+            this.Load += new EventHandler(this.report_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox MessageTextBox;
+        private RichTextBox MessageTextBox;
     }
 }

@@ -102,11 +102,14 @@
             // pbDesignOfLed
             // 
             this.pbDesignOfLed.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.pbDesignOfLed.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbDesignOfLed.Location = new System.Drawing.Point(207, 54);
             this.pbDesignOfLed.Name = "pbDesignOfLed";
             this.pbDesignOfLed.Size = new System.Drawing.Size(1100, 1100);
             this.pbDesignOfLed.TabIndex = 8;
             this.pbDesignOfLed.TabStop = false;
+            this.pbDesignOfLed.Click += new System.EventHandler(this.pbDesignOfLed_Click);
+            this.pbDesignOfLed.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbDesignOfLed_MouseMove);
             // 
             // label2
             // 

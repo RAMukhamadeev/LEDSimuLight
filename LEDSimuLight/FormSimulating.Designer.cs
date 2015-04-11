@@ -1,11 +1,16 @@
-﻿namespace LEDSimuLight
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace LEDSimuLight
 {
     partial class FormSimulating
     {
         /// <summary>
         /// Требуется переменная конструктора.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Освободить все используемые ресурсы.
@@ -42,7 +47,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.AnT = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -85,11 +89,13 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.pbSimulatingOfLed = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSimulatingOfLed)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -178,11 +184,11 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.pbSimulatingOfLed);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.AnT);
             this.panel1.Location = new System.Drawing.Point(492, 69);
-            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1402, 1244);
             this.panel1.TabIndex = 4;
@@ -209,24 +215,6 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "X, мкм";
             // 
-            // AnT
-            // 
-            this.AnT.AccumBits = ((byte)(0));
-            this.AnT.AutoCheckErrors = false;
-            this.AnT.AutoFinish = false;
-            this.AnT.AutoMakeCurrent = true;
-            this.AnT.AutoSwapBuffers = true;
-            this.AnT.BackColor = System.Drawing.Color.White;
-            this.AnT.ColorBits = ((byte)(32));
-            this.AnT.DepthBits = ((byte)(16));
-            this.AnT.Location = new System.Drawing.Point(180, 23);
-            this.AnT.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.AnT.Name = "AnT";
-            this.AnT.Size = new System.Drawing.Size(1200, 1154);
-            this.AnT.StencilBits = ((byte)(0));
-            this.AnT.TabIndex = 5;
-            this.AnT.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AnT_MouseClick);
-            // 
             // panel2
             // 
             this.panel2.AutoScroll = true;
@@ -249,7 +237,7 @@
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Location = new System.Drawing.Point(42, 69);
-            this.panel2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel2.Margin = new System.Windows.Forms.Padding(6);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(398, 502);
             this.panel2.TabIndex = 5;
@@ -455,7 +443,7 @@
             this.panel4.Controls.Add(this.Col1);
             this.panel4.Controls.Add(this.label5);
             this.panel4.Location = new System.Drawing.Point(42, 602);
-            this.panel4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel4.Margin = new System.Windows.Forms.Padding(6);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(398, 569);
             this.panel4.TabIndex = 7;
@@ -475,7 +463,7 @@
             // Col9
             // 
             this.Col9.Location = new System.Drawing.Point(10, 504);
-            this.Col9.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Col9.Margin = new System.Windows.Forms.Padding(6);
             this.Col9.Name = "Col9";
             this.Col9.Size = new System.Drawing.Size(88, 44);
             this.Col9.TabIndex = 18;
@@ -497,7 +485,7 @@
             // Col8
             // 
             this.Col8.Location = new System.Drawing.Point(12, 444);
-            this.Col8.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Col8.Margin = new System.Windows.Forms.Padding(6);
             this.Col8.Name = "Col8";
             this.Col8.Size = new System.Drawing.Size(88, 44);
             this.Col8.TabIndex = 16;
@@ -519,7 +507,7 @@
             // Col7
             // 
             this.Col7.Location = new System.Drawing.Point(12, 390);
-            this.Col7.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Col7.Margin = new System.Windows.Forms.Padding(6);
             this.Col7.Name = "Col7";
             this.Col7.Size = new System.Drawing.Size(88, 44);
             this.Col7.TabIndex = 14;
@@ -541,7 +529,7 @@
             // Col6
             // 
             this.Col6.Location = new System.Drawing.Point(12, 335);
-            this.Col6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Col6.Margin = new System.Windows.Forms.Padding(6);
             this.Col6.Name = "Col6";
             this.Col6.Size = new System.Drawing.Size(88, 44);
             this.Col6.TabIndex = 12;
@@ -563,7 +551,7 @@
             // Col5
             // 
             this.Col5.Location = new System.Drawing.Point(12, 279);
-            this.Col5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Col5.Margin = new System.Windows.Forms.Padding(6);
             this.Col5.Name = "Col5";
             this.Col5.Size = new System.Drawing.Size(88, 44);
             this.Col5.TabIndex = 10;
@@ -585,7 +573,7 @@
             // Col4
             // 
             this.Col4.Location = new System.Drawing.Point(12, 223);
-            this.Col4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Col4.Margin = new System.Windows.Forms.Padding(6);
             this.Col4.Name = "Col4";
             this.Col4.Size = new System.Drawing.Size(88, 44);
             this.Col4.TabIndex = 8;
@@ -607,7 +595,7 @@
             // Col3
             // 
             this.Col3.Location = new System.Drawing.Point(12, 167);
-            this.Col3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Col3.Margin = new System.Windows.Forms.Padding(6);
             this.Col3.Name = "Col3";
             this.Col3.Size = new System.Drawing.Size(88, 44);
             this.Col3.TabIndex = 6;
@@ -629,7 +617,7 @@
             // Col2
             // 
             this.Col2.Location = new System.Drawing.Point(12, 112);
-            this.Col2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Col2.Margin = new System.Windows.Forms.Padding(6);
             this.Col2.Name = "Col2";
             this.Col2.Size = new System.Drawing.Size(88, 44);
             this.Col2.TabIndex = 4;
@@ -651,7 +639,7 @@
             // Col1
             // 
             this.Col1.Location = new System.Drawing.Point(12, 56);
-            this.Col1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Col1.Margin = new System.Windows.Forms.Padding(6);
             this.Col1.Name = "Col1";
             this.Col1.Size = new System.Drawing.Size(88, 44);
             this.Col1.TabIndex = 2;
@@ -677,7 +665,7 @@
             this.panel3.Controls.Add(this.label7);
             this.panel3.Controls.Add(this.label6);
             this.panel3.Location = new System.Drawing.Point(42, 1208);
-            this.panel3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel3.Margin = new System.Windows.Forms.Padding(6);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(398, 98);
             this.panel3.TabIndex = 8;
@@ -726,6 +714,16 @@
             this.label6.TabIndex = 20;
             this.label6.Text = "X :";
             // 
+            // pbSimulatingOfLed
+            // 
+            this.pbSimulatingOfLed.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.pbSimulatingOfLed.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pbSimulatingOfLed.Location = new System.Drawing.Point(210, 39);
+            this.pbSimulatingOfLed.Name = "pbSimulatingOfLed";
+            this.pbSimulatingOfLed.Size = new System.Drawing.Size(1100, 1100);
+            this.pbSimulatingOfLed.TabIndex = 9;
+            this.pbSimulatingOfLed.TabStop = false;
+            // 
             // FormSimulating
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
@@ -736,10 +734,9 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "FormSimulating";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Моделирование распределения света";
@@ -755,6 +752,7 @@
             this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSimulatingOfLed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -762,61 +760,61 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem закрытьToolStripMenuItem;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private Tao.Platform.Windows.SimpleOpenGlControl AnT;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label elem1;
-        private System.Windows.Forms.Button Col1;
-        private System.Windows.Forms.Label elem7;
-        private System.Windows.Forms.Button Col7;
-        private System.Windows.Forms.Label elem6;
-        private System.Windows.Forms.Button Col6;
-        private System.Windows.Forms.Label elem5;
-        private System.Windows.Forms.Button Col5;
-        private System.Windows.Forms.Label elem4;
-        private System.Windows.Forms.Button Col4;
-        private System.Windows.Forms.Label elem3;
-        private System.Windows.Forms.Button Col3;
-        private System.Windows.Forms.Label elem2;
-        private System.Windows.Forms.Button Col2;
-        private System.Windows.Forms.ToolStripMenuItem моделированиеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem трассировкаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem начатьМоделированиеToolStripMenuItem;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label elem9;
-        private System.Windows.Forms.Button Col9;
-        private System.Windows.Forms.Label elem8;
-        private System.Windows.Forms.Button Col8;
-        private System.Windows.Forms.ToolStripMenuItem отчетОМоделированииToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem показатьОтчетToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem показатьРаспределениеСветаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem одиночныйКвантToolStripMenuItem;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem файлToolStripMenuItem;
+        private ToolStripMenuItem закрытьToolStripMenuItem;
+        private Panel panel1;
+        private Label label2;
+        private Label label1;
+        private Panel panel2;
+        private Panel panel4;
+        private Label label5;
+        private Label elem1;
+        private Button Col1;
+        private Label elem7;
+        private Button Col7;
+        private Label elem6;
+        private Button Col6;
+        private Label elem5;
+        private Button Col5;
+        private Label elem4;
+        private Button Col4;
+        private Label elem3;
+        private Button Col3;
+        private Label elem2;
+        private Button Col2;
+        private ToolStripMenuItem моделированиеToolStripMenuItem;
+        private ToolStripMenuItem трассировкаToolStripMenuItem;
+        private ToolStripMenuItem начатьМоделированиеToolStripMenuItem;
+        private Panel panel3;
+        private Label label9;
+        private Label label8;
+        private Label label7;
+        private Label label6;
+        private Label elem9;
+        private Button Col9;
+        private Label elem8;
+        private Button Col8;
+        private ToolStripMenuItem отчетОМоделированииToolStripMenuItem;
+        private ToolStripMenuItem показатьОтчетToolStripMenuItem;
+        private ToolStripMenuItem показатьРаспределениеСветаToolStripMenuItem;
+        private ToolStripMenuItem одиночныйКвантToolStripMenuItem;
+        private Label label4;
+        private Label label3;
+        private Label label13;
+        private Label label12;
+        private Label label11;
+        private Label label10;
+        private Label label15;
+        private Label label14;
+        private Label label16;
+        private Label label17;
+        private Label label22;
+        private Label label23;
+        private Label label20;
+        private Label label21;
+        private Label label18;
+        private Label label19;
+        private PictureBox pbSimulatingOfLed;
     }
 }
