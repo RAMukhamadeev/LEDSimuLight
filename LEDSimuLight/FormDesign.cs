@@ -54,10 +54,10 @@ namespace LEDSimuLight
             Var.W = Var.RealW - Var.Border * 2;
             Var.SideSector = (int) (((Math.PI * Var.H / 2) / 180) * Var.DiscreteAngle);
             Var.Mas = new int[Var.RealW + 1, Var.RealH + 1];
-            Var.CircleBright = new int[10 + 180 / Var.DiscreteAngle];
-            Var.LeftBright = new int[10 + (Var.H / 2) / Var.SideSector];
-            Var.RightBright = new int[10 + (Var.H / 2) / Var.SideSector];
-            Var.FloorBright = new int[10 + Var.W / Var.SideSector];
+            Var.CircleBright = new int[1 + 180 / Var.DiscreteAngle];
+            Var.LeftBright = new int[1 + (Var.RealH / 2) / Var.SideSector];
+            Var.RightBright = new int[1 + (Var.RealH / 2) / Var.SideSector];
+            Var.FloorBright = new int[1 + Var.RealW / Var.SideSector];
 
             OpenGLm.LineDrawPic(_graphicsDesignOfLed, 0, Var.RealW, 0, Var.RealH);
             OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsDesignOfLed);
@@ -151,11 +151,12 @@ namespace LEDSimuLight
 
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Filter = "Конструкция светодиода (*.LED)|*.LED";
-            saveFileDialog1.FileName = "Конструкция светодиода";
-            DialogResult drs = saveFileDialog1.ShowDialog();
+            SaveFileDialog svf = new SaveFileDialog();
+            svf.Filter = "Конструкция светодиода (*.LED)|*.LED";
+            svf.FileName = "Конструкция светодиода";
+            DialogResult drs = svf.ShowDialog();
             if (drs == DialogResult.OK)
-                Var.SaveToBinFile(saveFileDialog1.FileName);
+                Var.SaveToBinFile(svf.FileName);
         }
 
         private void MakePolygon(int code)
@@ -224,11 +225,12 @@ namespace LEDSimuLight
 
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = "Конструкция светодиода (*.LED)|*.LED";
-            openFileDialog1.ShowDialog();
-            if (openFileDialog1.FileName != "*.LED")
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Конструкция светодиода (*.LED)|*.LED";
+            ofd.ShowDialog();
+            if (ofd.FileName != "*.LED")
             {
-                Var.OpenBinFile(openFileDialog1.FileName);
+                Var.OpenBinFile(ofd.FileName);
                 OpenGLm.LineDrawPic(_graphicsDesignOfLed, 0, Var.RealW, 0, Var.RealH);
                 OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsDesignOfLed);
             }

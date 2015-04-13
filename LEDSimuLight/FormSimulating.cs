@@ -84,6 +84,11 @@ namespace LEDSimuLight
             Var.QuantsRight = 0;
             Var.QuantumEff = 0;
             Var.BadQuants = 0;
+
+            Array.Clear(Var.LeftBright, 0, Var.LeftBright.Length);
+            Array.Clear(Var.RightBright, 0, Var.RightBright.Length);
+            Array.Clear(Var.CircleBright, 0, Var.CircleBright.Length);
+            Array.Clear(Var.FloorBright, 0, Var.FloorBright.Length);
         }
 
         private void simulating_Load(object sender, EventArgs e)
@@ -339,6 +344,7 @@ namespace LEDSimuLight
                 y0 = Var.Border + Var.H / 2,
                 dx = x - x0,
                 dy = y - y0;
+            int delta = 3;
 
             if (y > y0)
             {
@@ -359,26 +365,27 @@ namespace LEDSimuLight
             else
             {
                 int num = 0;
-                if (x <= Var.Border + Var.FrameSensor)
+                if (x <= Var.Border + Var.FrameSensor + delta)
                 {
                     num = y / Var.SideSector;
                     Var.LeftBright[num]++;
                     Var.QuantsLeft++;
                 }
                 else
-                    if (y <= Var.Border + Var.FrameSensor)
+                    if (y <= Var.Border + Var.FrameSensor + delta)
                     {
                         num = x / Var.SideSector;
                         Var.FloorBright[num]++;
                         Var.QuantsBack++;
                     }
+                    else if (x >= Var.W + Var.Border - Var.FrameSensor - delta)
+                    {
+                        num = y/Var.SideSector;
+                        Var.RightBright[num]++;
+                        Var.QuantsRight++;
+                    }
                     else
-                        if (x >= Var.W + Var.Border - Var.FrameSensor)
-                        {
-                            num = y / Var.SideSector;
-                            Var.RightBright[num]++;
-                            Var.QuantsRight++;
-                        }
+                        MessageBox.Show("Не найден сектор!!!");
             }
         }
 
@@ -426,7 +433,6 @@ namespace LEDSimuLight
             if ( Absorbed(code0, x, y) )
             {
                 Var.QuantAbsorbed++;
-          //      pushMessage("Квант поглотился в материале " + var.materials[code0].name);
                 return;
             }
             _xs = x; 
@@ -434,7 +440,6 @@ namespace LEDSimuLight
             if (Var.Mas[x, y] == Var.SensMat)
             {
                 CalcSector(x, y);
-         //     pushMessage("Квант захвачен сенсором.");
                 Var.QuantsOut++;
                 return;
             }
@@ -449,40 +454,32 @@ namespace LEDSimuLight
             if (IsReflection(angle, beta, n, n1, code))
             {
                 double newAlpha = CalculateReflection(angle, beta);
-           //     pushMessage("Квант претерпел отражение от " + var.materials[code].name + "; угол стал равен " + toDegree(new_alpha) + " градусов.");
                 RayTracing(newAlpha, x0, y0);
             }
             else
             {
                 double newAlpha = CalculateFraction(angle, beta, n, n1);
-            //    pushMessage("Квант достиг " + var.materials[code].name + " и претерпел преломление; угол стал равен " + toDegree(new_alpha) + " градусов.");
                 RayTracing(newAlpha, x, y);
             }
         }
 
         private void PutVertex(int x, int y, char status)
         {
-            int ost = 0,
-                mod = 7 * Var.PrecKoeff;
+            int mod = Var.H / 50;
+
             Color col = Color.Black;
             if (status == 'l' || status == 'r')
             {
-                ost = x % (mod * 2);
-                if (ost < mod)
-                    col = Color.Black;
-                else
-                    col = Color.Yellow;
+                int ost = x % (mod * 2);
+                col = ost < mod ? Color.Black : Color.Yellow;
             }
             if (status == 'd' || status == 'u')
             {
-                ost = y % (mod * 2);
-                if (ost < mod)
-                    col = Color.Black;
-                else
-                    col = Color.Yellow;
+                int ost = y % (mod * 2);
+                col = ost < mod ? Color.Black : Color.Yellow;
             }
 
-            OpenGLm.DrawPoint(_graphicsSimulatingOfLed, x, y);
+            OpenGLm.DrawPoint(_graphicsSimulatingOfLed, x, y, col);
         }
 
         private void DebugMovingRight(int x, int y, double delta, double angle)
@@ -620,7 +617,7 @@ namespace LEDSimuLight
 
         private void DebugRayTracing(double curAngle, int x, int y)
         {
-            if (_stackSize >= 50)
+            if (_stackSize >= 75)
             {
                 PushMessage("Квант поглотился в материале " + Var.Materials[Var.Mas[x, y]].Name);
                 return;
@@ -707,9 +704,10 @@ namespace LEDSimuLight
 
         private void DebugEmittingQuants(int count)
         {
-            //OpenGLm.LineDrawPic(0, Var.W, 0, Var.H);
-            //OpenGLm.DrawSensors(_graphicsSimulatingOfLed);
-            //OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsSimulatingOfLed);
+            _graphicsSimulatingOfLed.Clear(Color.White);
+            OpenGLm.LineDrawPic(_graphicsSimulatingOfLed, 0, Var.RealW, 0, Var.RealH);
+            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsSimulatingOfLed);
+            OpenGLm.DrawSensors(_graphicsSimulatingOfLed);
 
             _nMess = 0;
 

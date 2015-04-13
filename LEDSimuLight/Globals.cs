@@ -123,7 +123,7 @@ namespace LEDSimuLight
             QuantsBack = 0,
             QuantsLeft = 0,
             QuantsRight = 0,
-            DiscreteAngle = 2,
+            DiscreteAngle = 1,
             BadQuants = 0,
             SideSector;
         public static double QuantumEff = 0;
@@ -167,6 +167,7 @@ namespace LEDSimuLight
         public static void DrawPoint(Graphics g, int x, int y, Color col)
         {
             g.DrawLine(new Pen(col, 1), x, Var.RealH - y, x, Var.RealH - y + 1);
+            g.DrawLine(new Pen(col, 1), x - 1, Var.RealH - y, x - 1, Var.RealH - y + 1);
         }
 
         public static void DrawCross(Graphics g, int x, int y, int l, int w)
@@ -203,7 +204,7 @@ namespace LEDSimuLight
             {
                 DrawLine(g, Var.Border + i * (Var.W / div2), Var.Border - hl, Var.Border + i * (Var.W / div2), Var.Border + hl);
                 DrawLine(g, Var.Border + i*(Var.W / div2), (Var.RealH - Var.Border) - hl, Var.Border + i*(Var.W / div2), (Var.RealH - Var.Border) + hl);
-                DrawLine(g, (Var.RealH - Var.Border) - hl, Var.Border + i * (Var.H / div2), (Var.RealH - Var.Border) + hl, Var.Border + i * (Var.H / div2));
+                DrawLine(g, Var.RealH - Var.Border - hl, Var.Border + i * (Var.H / div2), (Var.RealH - Var.Border) + hl, Var.Border + i * (Var.H / div2));
                 DrawLine(g, Var.Border - hl, Var.Border + i*(Var.H / div2), Var.Border + hl, Var.Border + i*(Var.H / div2));
             }
         }
@@ -231,6 +232,7 @@ namespace LEDSimuLight
         /// <summary>
         /// Метод рисует на Bitmap содержимое файла линиями
         /// </summary>
+        /// <param name="g"></param>
         /// <param name="xl"></param>
         /// <param name="xr"></param>
         /// <param name="yd"></param>
@@ -375,66 +377,70 @@ namespace LEDSimuLight
             DrawHalfCircle(g, x0, y0, r2);
         }
 
-        private static int AverageByThree(int[] massive, int min, int max, int num)
+        static int[] GetAverageMas(int[] inputMas)
         {
-            int res = 0;
-            if (num == min)
-                res = (massive[num] + massive[num + 1]) / 2;
-            else
-                if (num == max)
-                    res = (massive[num] + massive[num - 1]) / 2;
-                else
-                    res = (massive[num] + massive[num - 1] + massive[num + 1]) / 3;
+            int len = inputMas.Length;
+            int[] temp = new int[len];
 
-            return res;
+            temp[0] = (inputMas[0] + inputMas[1]) / 2;
+            temp[len - 1] = (inputMas[len - 1] + inputMas[len - 2]) / 2;
+            for (int i = 1; i < len - 1; i++)
+            {
+                temp[i] = (inputMas[i] + inputMas[i - 1] + inputMas[i + 1]) / 3;
+            }
+            return temp;
         }
 
         public static void DrawLightDistribution(Graphics g)
         {
-            int x0 = Var.Border + Var.W / 2,
-                y0 = Var.Border + Var.H / 2;
-            int r1 = Sqr(Var.H / 2 - Var.FrameSensor),
-                r2 = Sqr(Var.H / 2);
-
-            // этот блок кода - интерполяция для проблемных сенсоров (вверх, лево, право)
+            // этот блок кода - интерполяция для проблемных сенсоров
             int center = 90 / Var.DiscreteAngle; 
             Var.CircleBright[center] = (Var.CircleBright[center - 1] + Var.CircleBright[center + 1]) / 2;
             Var.CircleBright[0] = Var.CircleBright[1];
-            Var.CircleBright[center * 2 - 1] = Var.CircleBright[center * 2 - 2];
+            Var.CircleBright[Var.CircleBright.Length - 1] = Var.CircleBright[Var.CircleBright.Length - 2];
+            Var.LeftBright[Var.LeftBright.Length - 1] = Var.LeftBright[Var.LeftBright.Length - 2];
+            Var.RightBright[Var.RightBright.Length - 1] = Var.RightBright[Var.RightBright.Length - 2];
 
-            // усреднение и поиск минимума и максимума
-            int max = 0, min = Int32.MaxValue, curr;
-            for (int i = 0; i <= 180 / Var.DiscreteAngle; i++)
+            int nonZeroPointLeft = Var.FloorBright[1 + (Var.Border + Var.FrameSensor) / Var.SideSector];
+            for (int i = 0; i <= Var.Border + Var.FrameSensor; i++)
+                Var.FloorBright[i / Var.SideSector] = nonZeroPointLeft;
+
+            int nonZeroPointRight = Var.FloorBright[-1 + (Var.Border + Var.W - Var.FrameSensor) / Var.SideSector];
+            for (int i = Var.Border + Var.W - Var.FrameSensor; i <= Var.Border + Var.W + Var.SideSector; i++)
+                Var.FloorBright[i / Var.SideSector] = nonZeroPointRight;
+
+            // усреднение значений сенсоров
+            Var.CircleBright = GetAverageMas(Var.CircleBright);
+            Var.LeftBright = GetAverageMas(Var.LeftBright);
+            Var.RightBright = GetAverageMas(Var.RightBright);
+            Var.FloorBright = GetAverageMas(Var.FloorBright);
+
+            // поиск минимума и максимума
+            int max = 0, min = Int32.MaxValue;
+            foreach (int curr in Var.CircleBright)
             {
-                //curr = AverageByThree(Var.CircleBright, 0, -1 + (180 / Var.DiscreteAngle), i);
-                curr = Var.CircleBright[i];
                 if (max < curr)
                     max = curr;
                 if (min > curr)
                     min = curr;
             }
-            for (int i = 0; i <= (Var.H / 2) / Var.SideSector; i++)
+            foreach (int curr in Var.LeftBright)
             {
-                //curr = AverageByThree(Var.LeftBright, 0, Var.H / (2 * Var.SideSector), i);
-                curr = Var.LeftBright[i];
                 if (max < curr)
                     max = curr;
                 if (min > curr)
                     min = curr;
             }
-            for (int i = 0; i <= (Var.H / 2) / Var.SideSector; i++)
+
+            foreach (int curr in Var.RightBright)
             {
-                //curr = AverageByThree(Var.RightBright, 0, Var.H / (2 * Var.SideSector), i);
-                curr = Var.RightBright[i];
                 if (max < curr)
                     max = curr;
                 if (min > curr)
                     min = curr;
             }
-            for (int i = 0; i <= Var.W / Var.SideSector; i++)
+            foreach (int curr in Var.FloorBright)
             {
-                //curr = AverageByThree(Var.FloorBright, 0, Var.W / Var.SideSector, i);
-                curr = Var.FloorBright[i];
                 if (max < curr)
                     max = curr;
                 if (min > curr)
@@ -444,6 +450,10 @@ namespace LEDSimuLight
             if (sigma == 0)
                 sigma = 1;
 
+            int x0 = Var.Border + Var.W / 2,
+                y0 = Var.Border + Var.H / 2;
+            int r1 = Sqr(Var.H / 2 - Var.FrameSensor),
+                r2 = Sqr(Var.H / 2);
             for (int x = Var.Border; x <= Var.W + Var.Border; x++)
                 for (int y = Var.Border; y <= Var.H + Var.Border; y++)
                 {
@@ -466,9 +476,7 @@ namespace LEDSimuLight
                         double koef = 0,
                                colk = 0;
 
-                        //koef = 4.0 * (-min + AverageByThree(Var.CircleBright, 0, -1 + (180 / Var.DiscreteAngle), num)) / sigma;
                         koef = 4 * ( (double)Var.CircleBright[num] - min) / sigma;
-
                         colk = koef - Math.Floor(koef);
 
                         Color col = Color.Blue;
@@ -483,8 +491,6 @@ namespace LEDSimuLight
                         if (koef == 4)
                             col = Color.FromArgb(255, 0, 0);
                         DrawPoint(g, x, y, col);
-
-                        continue;
                     }
                     if (y <= Var.Border + Var.H / 2 && x < Var.Border + Var.FrameSensor)
                     {
@@ -492,10 +498,9 @@ namespace LEDSimuLight
                         double koef = 0,
                                colk = 0;
 
-                        //koef = 4.0 * (-min + AverageByThree(Var.LeftBright, 0, Var.H / (2 * Var.SideSector), num)) / sigma;
                         koef = 4 * ( (double)Var.LeftBright[num] - min) / sigma;
-
                         colk = koef - Math.Floor(koef);
+
                         Color col = Color.Blue;
                         if (koef >= 0 && koef < 1)
                             col = Color.FromArgb(0, (int)(colk * 255), 255);
@@ -508,8 +513,6 @@ namespace LEDSimuLight
                         if (koef == 4)
                             col = Color.FromArgb(255, 0, 0);
                         DrawPoint(g, x, y, col);
-
-                        continue;
                     }
                     if (y <= Var.Border + Var.H / 2 && x > Var.Border + Var.W - Var.FrameSensor)
                     {
@@ -517,9 +520,7 @@ namespace LEDSimuLight
                         double koef = 0,
                                colk = 0;
 
-                        //koef = 4.0 * (-min + AverageByThree(Var.RightBright, 0, Var.H / (2 * Var.SideSector), num)) / sigma;
                         koef = 4 * ( (double)Var.RightBright[num] - min) / sigma;
-
                         colk = koef - Math.Floor(koef);
 
                         Color col = Color.Blue;
@@ -534,8 +535,6 @@ namespace LEDSimuLight
                         if (koef == 4)
                             col = Color.FromArgb(255, 0, 0);
                         DrawPoint(g, x, y, col);
-
-                        continue;
                     }
                     if (y < Var.Border + Var.FrameSensor)
                     {
@@ -543,9 +542,7 @@ namespace LEDSimuLight
                         double koef = 0,
                                colk = 0;
 
-                        //koef = 4.0 * (-min + AverageByThree(Var.FloorBright, 0, Var.W / Var.SideSector, num)) / sigma;
                         koef = 4 * ( (double)Var.FloorBright[num] - min) / sigma;
-
                         colk = koef - Math.Floor(koef);
 
                         Color col = Color.Blue;

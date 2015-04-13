@@ -33,7 +33,7 @@
             this.pbDesignOfLed = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,8 +71,6 @@
             this.зеркалоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отражательБрэггаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.пустотаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -80,7 +78,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDesignOfLed)).BeginInit();
-            this.menuStrip1.SuspendLayout();
+            this.menuStripMain.SuspendLayout();
             this.panel_input.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -133,19 +131,19 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "X, мкм";
             // 
-            // menuStrip1
+            // menuStripMain
             // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStripMain.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
             this.создатьРельефToolStripMenuItem,
             this.редактироватьФигуруToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 4, 0, 4);
-            this.menuStrip1.Size = new System.Drawing.Size(1912, 44);
-            this.menuStrip1.TabIndex = 5;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStripMain.Location = new System.Drawing.Point(0, 0);
+            this.menuStripMain.Name = "menuStripMain";
+            this.menuStripMain.Padding = new System.Windows.Forms.Padding(12, 4, 0, 4);
+            this.menuStripMain.Size = new System.Drawing.Size(1912, 44);
+            this.menuStripMain.TabIndex = 5;
+            this.menuStripMain.Text = "menuStrip1";
             // 
             // файлToolStripMenuItem
             // 
@@ -340,7 +338,7 @@
             this.menuStrip2.Location = new System.Drawing.Point(28, 21);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Padding = new System.Windows.Forms.Padding(6, 4, 0, 4);
-            this.menuStrip2.Size = new System.Drawing.Size(313, 48);
+            this.menuStrip2.Size = new System.Drawing.Size(497, 48);
             this.menuStrip2.TabIndex = 25;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -479,10 +477,6 @@
             this.пустотаToolStripMenuItem.Text = "Пустота";
             this.пустотаToolStripMenuItem.Click += new System.EventHandler(this.пустотаToolStripMenuItem_Click);
             // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "*.LED";
-            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.InactiveCaption;
@@ -550,10 +544,10 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel_input);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.menuStripMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuStripMain;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "FormDesign";
@@ -563,8 +557,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDesignOfLed)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStripMain.ResumeLayout(false);
+            this.menuStripMain.PerformLayout();
             this.panel_input.ResumeLayout(false);
             this.panel_input.PerformLayout();
             this.menuStrip2.ResumeLayout(false);
@@ -581,7 +575,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStripMain;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem закрытьToolStripMenuItem;
         private System.Windows.Forms.Panel panel_input;
@@ -592,8 +586,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
