@@ -29,9 +29,9 @@ namespace LEDSimuLight
 
         private void InsertSensorMaterial()
         {
-            int x0 = (Var.RealW) / 2,
-                y0 = (Var.RealH) / 2,
-                r = (Var.RealH / 2) - Var.FrameSensor + 5,
+            int x0 = Var.Border + Var.W / 2,
+                y0 = Var.Border + Var.H / 2,
+                r = (Var.H / 2) - Var.FrameSensor + 5,
                 limit = (int) ( r / Math.Sqrt(2) ),
                 sens = Var.SensMat;
 
@@ -62,17 +62,16 @@ namespace LEDSimuLight
             }
             Var.Mas[x0, y0 + r - 5] = sens;
 
-            for (int y = Var.FrameSensor - 5; y <= Var.RealH / 2; y++)
+            for (int y = Var.Border + Var.FrameSensor - 5; y <= Var.Border + Var.H / 2; y++)
             {
-                for (int x = Var.FrameSensor - 5; x < Var.FrameSensor; x++)
+                for (int x = Var.Border + Var.FrameSensor - 5; x < Var.Border + Var.FrameSensor; x++)
                     Var.Mas[x, y] = sens;
-                for (int x = Var.RealW - Var.FrameSensor; x < Var.RealW - Var.FrameSensor + 5; x++)
+                for (int x = Var.Border + Var.W - Var.FrameSensor; x < Var.Border + Var.W - Var.FrameSensor + 5; x++)
                     Var.Mas[x, y] = sens;
             }
-            for (int y = Var.FrameSensor - 5; y < Var.FrameSensor; y++)
-                for (int x = Var.FrameSensor - 5; x <= Var.RealW - Var.FrameSensor + 4; x++)
+            for (int y = Var.Border + Var.FrameSensor - 5; y < Var.Border + Var.FrameSensor; y++)
+                for (int x = Var.Border + Var.FrameSensor - 5; x <= Var.Border + Var.W - Var.FrameSensor + 4; x++)
                     Var.Mas[x, y] = sens;
-
         }
 
         private static void InitializeVar()
@@ -85,16 +84,6 @@ namespace LEDSimuLight
             Var.QuantsRight = 0;
             Var.QuantumEff = 0;
             Var.BadQuants = 0;
-
-            for (int i = 0; i < 180 / Var.DivOfLightCirc; i++)
-                Var.CircleBright[i] = 0;
-            for (int i = 0; i < 1 + Var.H / (2 * Var.SideSector); i++)
-            {
-                Var.LeftBright[i] = 0;
-                Var.RightBright[i] = 0;
-            }
-            for (int i = 0; i < 1 + Var.W / Var.SideSector; i++)
-                Var.FloorBright[i] = 0;
         }
 
         private void simulating_Load(object sender, EventArgs e)
@@ -346,14 +335,14 @@ namespace LEDSimuLight
 
         private void CalcSector(int x, int y)
         {
-            int x0 = Var.W / 2,
-                y0 = Var.H / 2,
+            int x0 = Var.Border + Var.W / 2,
+                y0 = Var.Border + Var.H / 2,
                 dx = x - x0,
                 dy = y - y0;
 
             if (y > y0)
             {
-                int alpha = 0;
+                int alpha;
                 if (dx != 0)
                 {
                     alpha = (int)((180.0 / Math.PI) * Math.Atan(dy / (double)(dx)));
@@ -363,28 +352,28 @@ namespace LEDSimuLight
                 else
                     alpha = 90;
 
-                int num = alpha / Var.DivOfLightCirc; // вычисляем сектор
+                int num = alpha / Var.DiscreteAngle; // вычисляем сектор
                 Var.CircleBright[num]++;
                 Var.QuantsFront++;
             }
             else
             {
                 int num = 0;
-                if (x == 11)
+                if (x <= Var.Border + Var.FrameSensor)
                 {
                     num = y / Var.SideSector;
                     Var.LeftBright[num]++;
                     Var.QuantsLeft++;
                 }
                 else
-                    if (y == 11)
+                    if (y <= Var.Border + Var.FrameSensor)
                     {
                         num = x / Var.SideSector;
                         Var.FloorBright[num]++;
                         Var.QuantsBack++;
                     }
                     else
-                        if (x == 488)
+                        if (x >= Var.W + Var.Border - Var.FrameSensor)
                         {
                             num = y / Var.SideSector;
                             Var.RightBright[num]++;

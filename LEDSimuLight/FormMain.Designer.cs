@@ -33,118 +33,114 @@ namespace LEDSimuLight
         /// </summary>
         private void InitializeComponent()
         {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(FormMain));
-            this.btnConstruct = new Button();
-            this.btnSimulating = new Button();
-            this.menuStrip1 = new MenuStrip();
-            this.файлToolStripMenuItem = new ToolStripMenuItem();
-            this.закрытьToolStripMenuItem = new ToolStripMenuItem();
-            this.сервисToolStripMenuItem = new ToolStripMenuItem();
-            this.настройкаToolStripMenuItem = new ToolStripMenuItem();
-            this.справкаToolStripMenuItem = new ToolStripMenuItem();
-            this.оПрограммеToolStripMenuItem = new ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            this.btnConstruct = new System.Windows.Forms.Button();
+            this.btnSimulating = new System.Windows.Forms.Button();
+            this.menuStripMain = new System.Windows.Forms.MenuStrip();
+            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.закрытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сервисToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnConstruct
             // 
-            this.btnConstruct.Location = new Point(78, 85);
-            this.btnConstruct.Margin = new Padding(6, 6, 6, 6);
+            this.btnConstruct.Location = new System.Drawing.Point(36, 74);
+            this.btnConstruct.Margin = new System.Windows.Forms.Padding(96, 46, 96, 46);
             this.btnConstruct.Name = "btnConstruct";
-            this.btnConstruct.Size = new Size(300, 90);
+            this.btnConstruct.Size = new System.Drawing.Size(502, 113);
             this.btnConstruct.TabIndex = 0;
             this.btnConstruct.Text = "Конструирование светодиода";
             this.btnConstruct.UseVisualStyleBackColor = true;
-            this.btnConstruct.Click += new EventHandler(this.button1_Click);
+            this.btnConstruct.Click += new System.EventHandler(this.btnConstruct_Click);
             // 
             // btnSimulating
             // 
-            this.btnSimulating.Location = new Point(486, 85);
-            this.btnSimulating.Margin = new Padding(6, 6, 6, 6);
+            this.btnSimulating.Location = new System.Drawing.Point(581, 74);
+            this.btnSimulating.Margin = new System.Windows.Forms.Padding(96, 46, 96, 46);
             this.btnSimulating.Name = "btnSimulating";
-            this.btnSimulating.Size = new Size(300, 90);
+            this.btnSimulating.Size = new System.Drawing.Size(464, 113);
             this.btnSimulating.TabIndex = 1;
             this.btnSimulating.Text = "Моделирование распределения света";
             this.btnSimulating.UseVisualStyleBackColor = true;
-            this.btnSimulating.Click += new EventHandler(this.button2_Click);
+            this.btnSimulating.Click += new System.EventHandler(this.btnSimulating_Click);
             // 
-            // menuStrip1
+            // menuStripMain
             // 
-            this.menuStrip1.BackColor = SystemColors.GradientInactiveCaption;
-            this.menuStrip1.Items.AddRange(new ToolStripItem[] {
+            this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
             this.сервисToolStripMenuItem,
             this.справкаToolStripMenuItem});
-            this.menuStrip1.Location = new Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new Padding(12, 4, 0, 4);
-            this.menuStrip1.Size = new Size(874, 44);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStripMain.Location = new System.Drawing.Point(0, 0);
+            this.menuStripMain.Name = "menuStripMain";
+            this.menuStripMain.Size = new System.Drawing.Size(1116, 40);
+            this.menuStripMain.TabIndex = 2;
+            this.menuStripMain.Text = "menuStrip1";
             // 
             // файлToolStripMenuItem
             // 
-            this.файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
+            this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.закрытьToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new Size(83, 36);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(83, 36);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // закрытьToolStripMenuItem
             // 
             this.закрытьToolStripMenuItem.Name = "закрытьToolStripMenuItem";
-            this.закрытьToolStripMenuItem.Size = new Size(180, 36);
+            this.закрытьToolStripMenuItem.Size = new System.Drawing.Size(180, 36);
             this.закрытьToolStripMenuItem.Text = "Закрыть";
-            this.закрытьToolStripMenuItem.Click += new EventHandler(this.закрытьToolStripMenuItem_Click);
+            this.закрытьToolStripMenuItem.Click += new System.EventHandler(this.закрытьToolStripMenuItem_Click);
             // 
             // сервисToolStripMenuItem
             // 
-            this.сервисToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
-            this.настройкаToolStripMenuItem});
+            this.сервисToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.настройкиToolStripMenuItem});
             this.сервисToolStripMenuItem.Name = "сервисToolStripMenuItem";
-            this.сервисToolStripMenuItem.Size = new Size(107, 36);
+            this.сервисToolStripMenuItem.Size = new System.Drawing.Size(107, 36);
             this.сервисToolStripMenuItem.Text = "Сервис";
             // 
-            // настройкаToolStripMenuItem
+            // настройкиToolStripMenuItem
             // 
-            this.настройкаToolStripMenuItem.Name = "настройкаToolStripMenuItem";
-            this.настройкаToolStripMenuItem.Size = new Size(208, 36);
-            this.настройкаToolStripMenuItem.Text = "Настройки";
-            this.настройкаToolStripMenuItem.Click += new EventHandler(this.настройкаToolStripMenuItem_Click);
+            this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(208, 36);
+            this.настройкиToolStripMenuItem.Text = "Настройки";
+            this.настройкиToolStripMenuItem.Click += new System.EventHandler(this.настройкиToolStripMenuItem_Click);
             // 
             // справкаToolStripMenuItem
             // 
-            this.справкаToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
+            this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.оПрограммеToolStripMenuItem});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new Size(119, 36);
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(119, 36);
             this.справкаToolStripMenuItem.Text = "Справка";
             // 
             // оПрограммеToolStripMenuItem
             // 
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new Size(239, 36);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(239, 36);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
-            this.оПрограммеToolStripMenuItem.Click += new EventHandler(this.оПрограммеToolStripMenuItem_Click);
+            this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click_1);
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new SizeF(12F, 25F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(874, 238);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(1116, 260);
             this.Controls.Add(this.btnSimulating);
             this.Controls.Add(this.btnConstruct);
-            this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.Icon = ((Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new Padding(6, 6, 6, 6);
+            this.Controls.Add(this.menuStripMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(96, 46, 96, 46);
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LEDSimuLight";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStripMain.ResumeLayout(false);
+            this.menuStripMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -154,11 +150,11 @@ namespace LEDSimuLight
 
         private Button btnConstruct;
         private Button btnSimulating;
-        private MenuStrip menuStrip1;
+        private MenuStrip menuStripMain;
         private ToolStripMenuItem файлToolStripMenuItem;
         private ToolStripMenuItem закрытьToolStripMenuItem;
         private ToolStripMenuItem сервисToolStripMenuItem;
-        private ToolStripMenuItem настройкаToolStripMenuItem;
+        private ToolStripMenuItem настройкиToolStripMenuItem;
         private ToolStripMenuItem справкаToolStripMenuItem;
         private ToolStripMenuItem оПрограммеToolStripMenuItem;
     }

@@ -7,20 +7,25 @@ namespace LEDSimuLight
     {
         public FormMain()
         {
-            KeyPreview = true;
             InitializeComponent();
         }
 
-        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        private void оПрограммеToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             FormAbout winAbout = new FormAbout();
             winAbout.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSimulating_Click(object sender, EventArgs e)
         {
-            FormDesign winDesign = new FormDesign();
-            winDesign.Show();
+            FormSimulating simWin = new FormSimulating();
+            simWin.Show();
+        }
+
+        private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormSettings winSet = new FormSettings();
+            winSet.Show();
         }
 
         private void закрытьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -28,16 +33,10 @@ namespace LEDSimuLight
             Application.Exit();
         }
 
-        private void настройкаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnConstruct_Click(object sender, EventArgs e)
         {
-            FormSettings winSet = new FormSettings();
-            winSet.Show();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            FormSimulating simWin = new FormSimulating();
-            simWin.Show();
+            FormDesign winDesign = new FormDesign();
+            winDesign.Show();
         }
     }
 }

@@ -49,15 +49,15 @@ namespace LEDSimuLight
             Var.RealH = pbDesignOfLed.Height;
             Var.RealW = pbDesignOfLed.Width;
             Var.Border = 50;
-            Var.FrameSensor = 20 * Var.PrecKoeff + Var.Border;
+            Var.FrameSensor = 20;
             Var.H = Var.RealH - Var.Border * 2;
             Var.W = Var.RealW - Var.Border * 2;
-            Var.SideSector = (int)((Var.W / Var.WMaxMicr) * Var.DivOfLightCirc * Math.PI * (Var.HMaxMicr / 2) / 180);
+            Var.SideSector = (int) (((Math.PI * Var.H / 2) / 180) * Var.DiscreteAngle);
             Var.Mas = new int[Var.RealW + 1, Var.RealH + 1];
-            Var.CircleBright = new int[180 / Var.DivOfLightCirc];
-            Var.LeftBright = new int[1 + Var.H / (2 * Var.SideSector)];
-            Var.RightBright = new int[1 + Var.H / (2 * Var.SideSector)];
-            Var.FloorBright = new int[1 + Var.W / Var.SideSector];
+            Var.CircleBright = new int[10 + 180 / Var.DiscreteAngle];
+            Var.LeftBright = new int[10 + (Var.H / 2) / Var.SideSector];
+            Var.RightBright = new int[10 + (Var.H / 2) / Var.SideSector];
+            Var.FloorBright = new int[10 + Var.W / Var.SideSector];
 
             OpenGLm.LineDrawPic(_graphicsDesignOfLed, 0, Var.RealW, 0, Var.RealH);
             OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsDesignOfLed);

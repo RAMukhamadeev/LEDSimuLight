@@ -123,7 +123,7 @@ namespace LEDSimuLight
             QuantsBack = 0,
             QuantsLeft = 0,
             QuantsRight = 0,
-            DivOfLightCirc = 1,
+            DiscreteAngle = 2,
             BadQuants = 0,
             SideSector;
         public static double QuantumEff = 0;
@@ -362,16 +362,14 @@ namespace LEDSimuLight
 
         public static void DrawSensors(Graphics g)
         {
+            DrawLine(g, Var.FrameSensor + Var.Border, Var.FrameSensor + Var.Border, Var.Border + Var.W - Var.FrameSensor, Var.FrameSensor + Var.Border);
+            DrawLine(g, Var.FrameSensor + Var.Border, Var.FrameSensor + Var.Border, Var.FrameSensor + Var.Border, Var.Border + Var.H / 2);
+            DrawLine(g, Var.Border + Var.W - Var.FrameSensor, Var.FrameSensor + Var.Border, Var.Border + Var.W - Var.FrameSensor, Var.Border + Var.H / 2);
 
-            DrawLine(g, Var.FrameSensor, Var.FrameSensor, Var.RealW - Var.FrameSensor, Var.FrameSensor);
-            DrawLine(g, Var.FrameSensor, Var.FrameSensor, Var.FrameSensor, Var.Border + Var.H / 2);
-            DrawLine(g, Var.RealW - Var.FrameSensor, Var.FrameSensor, Var.RealW - Var.FrameSensor, Var.Border + Var.H / 2);
-
-            int x0 = Var.RealW / 2,
-                y0 = Var.RealH / 2,
-                r1 = Var.H / 2 - Var.FrameSensor + Var.Border,
+            int x0 = Var.Border + Var.W / 2,
+                y0 = Var.Border + Var.H / 2,
+                r1 = Var.H / 2 - Var.FrameSensor,
                 r2 = Var.H / 2;
-            x0 = x0 - Var.PrecKoeff; // поправка на погрешность
 
             DrawHalfCircle(g, x0, y0, r1);
             DrawHalfCircle(g, x0, y0, r2);
@@ -393,37 +391,41 @@ namespace LEDSimuLight
 
         public static void DrawLightDistribution(Graphics g)
         {
-            int x0 = Var.RealW / 2,
-                y0 = Var.RealH / 2;
-            int r1 = Sqr(Var.RealH / 2 - Var.FrameSensor),
-                r2 = Sqr(Var.RealH / 2);
-            x0--;
+            int x0 = Var.Border + Var.W / 2,
+                y0 = Var.Border + Var.H / 2;
+            int r1 = Sqr(Var.H / 2 - Var.FrameSensor),
+                r2 = Sqr(Var.H / 2);
 
-            int center = 180 / (2 * Var.DivOfLightCirc); // этот блок кода - интерполяция для проблемных сенсоров
+            // этот блок кода - интерполяция для проблемных сенсоров (вверх, лево, право)
+            int center = 90 / Var.DiscreteAngle; 
             Var.CircleBright[center] = (Var.CircleBright[center - 1] + Var.CircleBright[center + 1]) / 2;
             Var.CircleBright[0] = Var.CircleBright[1];
             Var.CircleBright[center * 2 - 1] = Var.CircleBright[center * 2 - 2];
 
-            int max = 0, min = Int32.MaxValue, curr = 0;
-            for (int i = 0; i < 180 / Var.DivOfLightCirc; i++)
+            // усреднение и поиск минимума и максимума
+            int max = 0, min = Int32.MaxValue, curr;
+            for (int i = 0; i <= 180 / Var.DiscreteAngle; i++)
             {
-                curr = AverageByThree(Var.CircleBright, 0, -1 + (180 / Var.DivOfLightCirc), i);
+                //curr = AverageByThree(Var.CircleBright, 0, -1 + (180 / Var.DiscreteAngle), i);
+                curr = Var.CircleBright[i];
                 if (max < curr)
                     max = curr;
                 if (min > curr)
                     min = curr;
             }
-            for (int i = 0; i <= Var.H / (2 * Var.SideSector); i++)
+            for (int i = 0; i <= (Var.H / 2) / Var.SideSector; i++)
             {
-                curr = AverageByThree(Var.LeftBright, 0, Var.H / (2 * Var.SideSector), i);
+                //curr = AverageByThree(Var.LeftBright, 0, Var.H / (2 * Var.SideSector), i);
+                curr = Var.LeftBright[i];
                 if (max < curr)
                     max = curr;
                 if (min > curr)
                     min = curr;
             }
-            for (int i = 0; i <= Var.H / (2 * Var.SideSector); i++)
+            for (int i = 0; i <= (Var.H / 2) / Var.SideSector; i++)
             {
-                curr = AverageByThree(Var.RightBright, 0, Var.H / (2 * Var.SideSector), i);
+                //curr = AverageByThree(Var.RightBright, 0, Var.H / (2 * Var.SideSector), i);
+                curr = Var.RightBright[i];
                 if (max < curr)
                     max = curr;
                 if (min > curr)
@@ -431,22 +433,24 @@ namespace LEDSimuLight
             }
             for (int i = 0; i <= Var.W / Var.SideSector; i++)
             {
-                curr = AverageByThree(Var.FloorBright, 0, Var.W / Var.SideSector, i);
+                //curr = AverageByThree(Var.FloorBright, 0, Var.W / Var.SideSector, i);
+                curr = Var.FloorBright[i];
                 if (max < curr)
                     max = curr;
                 if (min > curr)
                     min = curr;
             }
-
             double sigma = max - min;
+            if (sigma == 0)
+                sigma = 1;
 
-            for (int x = 0; x <= Var.W; x++)
-                for (int y = 0; y <= Var.H; y++)
+            for (int x = Var.Border; x <= Var.W + Var.Border; x++)
+                for (int y = Var.Border; y <= Var.H + Var.Border; y++)
                 {
                     int dx = x - x0;
                     int dy = y - y0;
                     int square = Sqr(x - x0) + Sqr(y - y0);
-                    if (y > Var.H / 2 && square >= r1 && square < r2)
+                    if (y > Var.Border + Var.H / 2 && square >= r1 && square < r2)
                     {
                         int alpha = 0;
                         if (dx != 0)
@@ -458,85 +462,103 @@ namespace LEDSimuLight
                         else
                             alpha = 90;
 
-                        int num = alpha / Var.DivOfLightCirc;   // вычисляем сектор
+                        int num = alpha / Var.DiscreteAngle;   // вычисляем сектор
                         double koef = 0,
                                colk = 0;
 
-                        koef = 4.0 * (-min + AverageByThree(Var.CircleBright, 0, -1 + (180 / Var.DivOfLightCirc), num)) / sigma;
+                        //koef = 4.0 * (-min + AverageByThree(Var.CircleBright, 0, -1 + (180 / Var.DiscreteAngle), num)) / sigma;
+                        koef = 4 * ( (double)Var.CircleBright[num] - min) / sigma;
 
                         colk = koef - Math.Floor(koef);
 
-                        Color col = Color.Black;
+                        Color col = Color.Blue;
                         if (koef >= 0 && koef < 1)
-                            col = Color.FromArgb(0, (int)colk*255, 255);
+                            col = Color.FromArgb(0, (int) (colk*255), 255);
                         if (koef >= 1 && koef < 2)
-                            col = Color.FromArgb(0, 255, (int) (1 - colk)*255);
+                            col = Color.FromArgb(0, 255, (int) ((1 - colk)*255));
                         if (koef >= 2 && koef < 3)
-                            col = Color.FromArgb( (int)colk*255, 255, 0);
-                        if (koef >= 3 && koef <= 4)
-                            col = (koef == 4) ? Color.FromArgb(255, 0, 0) : Color.FromArgb(255, (int)(1 - colk)*255, 0);
+                            col = Color.FromArgb( (int) (colk*255), 255, 0);
+                        if (koef >= 3 && koef < 4)
+                            col = Color.FromArgb(255, (int) ((1 - colk)*255), 0);
+                        if (koef == 4)
+                            col = Color.FromArgb(255, 0, 0);
                         DrawPoint(g, x, y, col);
+
+                        continue;
                     }
-                    if (y <= Var.H / 2 && y > 0 && x < Var.FrameSensor - 1)
+                    if (y <= Var.Border + Var.H / 2 && x < Var.Border + Var.FrameSensor)
                     {
                         int num = y / Var.SideSector;   // вычисляем сектор
                         double koef = 0,
                                colk = 0;
 
-                        koef = 4.0 * (-min + AverageByThree(Var.LeftBright, 0, Var.H / (2 * Var.SideSector), num)) / sigma;
+                        //koef = 4.0 * (-min + AverageByThree(Var.LeftBright, 0, Var.H / (2 * Var.SideSector), num)) / sigma;
+                        koef = 4 * ( (double)Var.LeftBright[num] - min) / sigma;
 
                         colk = koef - Math.Floor(koef);
-                        Color col = Color.Black;
+                        Color col = Color.Blue;
                         if (koef >= 0 && koef < 1)
-                            col = Color.FromArgb(0, (int)colk*255, 255);
+                            col = Color.FromArgb(0, (int)(colk * 255), 255);
                         if (koef >= 1 && koef < 2)
-                            col = Color.FromArgb(0, 255, (int)(1 - colk)*255);
+                            col = Color.FromArgb(0, 255, (int)((1 - colk) * 255));
                         if (koef >= 2 && koef < 3)
-                            col = Color.FromArgb( (int)colk*255, 255, 0);
-                        if (koef >= 3 && koef <= 4)
-                            col = (koef == 4) ? Color.FromArgb(255, 0, 0) : Color.FromArgb(255, (int)(1 - colk)*255, 0);
+                            col = Color.FromArgb((int)(colk * 255), 255, 0);
+                        if (koef >= 3 && koef < 4)
+                            col = Color.FromArgb(255, (int)((1 - colk) * 255), 0);
+                        if (koef == 4)
+                            col = Color.FromArgb(255, 0, 0);
                         DrawPoint(g, x, y, col);
+
+                        continue;
                     }
-                    if (y <= Var.H / 2 && y > 0 && x > Var.W - Var.FrameSensor - 1 && x < Var.W - 1)
+                    if (y <= Var.Border + Var.H / 2 && x > Var.Border + Var.W - Var.FrameSensor)
                     {
                         int num = y / Var.SideSector;   // вычисляем сектор
                         double koef = 0,
                                colk = 0;
 
-                        koef = 4.0 * (-min + AverageByThree(Var.RightBright, 0, Var.H / (2 * Var.SideSector), num)) / sigma;
+                        //koef = 4.0 * (-min + AverageByThree(Var.RightBright, 0, Var.H / (2 * Var.SideSector), num)) / sigma;
+                        koef = 4 * ( (double)Var.RightBright[num] - min) / sigma;
 
                         colk = koef - Math.Floor(koef);
 
-                        Color col = Color.Black;
+                        Color col = Color.Blue;
                         if (koef >= 0 && koef < 1)
-                            col = Color.FromArgb(0, (int)colk*255, 255);
+                            col = Color.FromArgb(0, (int)(colk * 255), 255);
                         if (koef >= 1 && koef < 2)
-                            col = Color.FromArgb(0, 255, (int)(1 - colk)*255);
+                            col = Color.FromArgb(0, 255, (int)((1 - colk) * 255));
                         if (koef >= 2 && koef < 3)
-                            col = Color.FromArgb( (int)colk*255, 255, 0);
-                        if (koef >= 3 && koef <= 4)
-                            col = (koef == 4) ? Color.FromArgb(255, 0, 0) : Color.FromArgb(255, (int) (1 - colk)*255, 0);
+                            col = Color.FromArgb((int)(colk * 255), 255, 0);
+                        if (koef >= 3 && koef < 4)
+                            col = Color.FromArgb(255, (int)((1 - colk) * 255), 0);
+                        if (koef == 4)
+                            col = Color.FromArgb(255, 0, 0);
                         DrawPoint(g, x, y, col);
+
+                        continue;
                     }
-                    if (y < Var.FrameSensor && y > 0 && x < Var.W - 1)
+                    if (y < Var.Border + Var.FrameSensor)
                     {
                         int num = x / Var.SideSector;  // вычисляем сектор
                         double koef = 0,
                                colk = 0;
 
-                        koef = 4.0 * (-min + AverageByThree(Var.FloorBright, 0, Var.W / Var.SideSector, num)) / sigma;
+                        //koef = 4.0 * (-min + AverageByThree(Var.FloorBright, 0, Var.W / Var.SideSector, num)) / sigma;
+                        koef = 4 * ( (double)Var.FloorBright[num] - min) / sigma;
 
                         colk = koef - Math.Floor(koef);
 
-                        Color col = Color.Black;
+                        Color col = Color.Blue;
                         if (koef >= 0 && koef < 1)
-                            col = Color.FromArgb(0, (int)colk*255, 255);
+                            col = Color.FromArgb(0, (int)(colk * 255), 255);
                         if (koef >= 1 && koef < 2)
-                            col = Color.FromArgb(0, 255, (int)(1 - colk)*255);
+                            col = Color.FromArgb(0, 255, (int)((1 - colk) * 255));
                         if (koef >= 2 && koef < 3)
-                            col = Color.FromArgb( (int)colk*255, 255, 0);
-                        if (koef >= 3 && koef <= 4)
-                            col = (koef == 4) ? Color.FromArgb(255, 0, 0) : Color.FromArgb(255, (int)(1 - colk)*255, 0);
+                            col = Color.FromArgb((int)(colk * 255), 255, 0);
+                        if (koef >= 3 && koef < 4)
+                            col = Color.FromArgb(255, (int)((1 - colk) * 255), 0);
+                        if (koef == 4)
+                            col = Color.FromArgb(255, 0, 0);
                         DrawPoint(g, x, y, col);
                     }
                 }
