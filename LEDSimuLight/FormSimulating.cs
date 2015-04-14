@@ -100,7 +100,7 @@ namespace LEDSimuLight
             OpenGLm.LineDrawPic(_graphicsSimulatingOfLed, 0, Var.RealW, 0, Var.RealH);
             OpenGLm.DrawSensors(_graphicsSimulatingOfLed);
             OpenGLm.DrawRainbow(_graphicsSimulatingOfLed);
-            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsSimulatingOfLed);
+            OpenGLm.SetMesh(_graphicsSimulatingOfLed);
             pbSimulatingOfLed.Image = _bmpSimulatingOfLed;
 
             DetectingActiveLayer(4); // i - GaN в базе под номером 4
@@ -521,7 +521,7 @@ namespace LEDSimuLight
         {
             int code0 = Var.Mas[x, y], oldX = x;
             double shift = y;
-            while (code0 == Var.Mas[x, y] || (oldX - x) < Step)
+             while (code0 == Var.Mas[x, y] || (oldX - x) < Step)
             {
                 PutVertex(x, y, 'l');
                 x--;
@@ -706,7 +706,7 @@ namespace LEDSimuLight
         {
             _graphicsSimulatingOfLed.Clear(Color.White);
             OpenGLm.LineDrawPic(_graphicsSimulatingOfLed, 0, Var.RealW, 0, Var.RealH);
-            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsSimulatingOfLed);
+            OpenGLm.SetMesh(_graphicsSimulatingOfLed);
             OpenGLm.DrawSensors(_graphicsSimulatingOfLed);
 
             _nMess = 0;
@@ -807,7 +807,7 @@ namespace LEDSimuLight
 
             //OpenGLm.LineDrawPic(0, Var.W, 0, Var.H);
             OpenGLm.DrawSensors(_graphicsSimulatingOfLed);
-            OpenGLm.SetMesh(Var.WMaxMicr, Var.HMaxMicr, _graphicsSimulatingOfLed);
+            OpenGLm.SetMesh(_graphicsSimulatingOfLed);
             _nMess = 0;
             _isLucky = true;
 

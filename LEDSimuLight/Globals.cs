@@ -7,6 +7,34 @@ namespace LEDSimuLight
 {
     public static class Var
     {
+        public static int
+          PrecKoeff = 1,
+          BigStep = 100,
+          LittleStep = 50,
+          W,
+          H,
+          HMaxMicr = 10,
+          WMaxMicr = 10,
+          NumOfMatr,
+          Border,
+          RealW,
+          RealH,
+          FrameSensor = 0,
+          SensMat = 6,
+          QuantsOut = 0,
+          QuantAbsorbed = 0,
+          QuantsFront = 0,
+          QuantsBack = 0,
+          QuantsLeft = 0,
+          QuantsRight = 0,
+          DiscreteAngle = 1,
+          BadQuants = 0,
+          SideSector;
+        public static double QuantumEff = 0;
+        public static int[,] Mas;
+        public static MaterialsArray[] Materials;
+        public static int[] CircleBright, LeftBright, RightBright, FloorBright;
+
         public class Point
         {
             public int X, Y;
@@ -75,8 +103,28 @@ namespace LEDSimuLight
             public double Fraction, Reflection, Absorption, R, G, B;
         }
 
-        public static void SetBase()
+        public static void InitVariables(int w, int h)
         {
+            RealH = h;
+            RealW = w;
+            Border = 100;
+            FrameSensor = 20;
+            H = RealH - Border * 2;
+            W = RealW - Border * 2;
+            SideSector = (int)(((Math.PI * H / 2) / 180) * DiscreteAngle);
+            Mas = new int[RealW + 1, RealH + 1];
+            CircleBright = new int[1 + 180 / DiscreteAngle];
+            LeftBright = new int[1 + (RealH / 2) / SideSector];
+            RightBright = new int[1 + (RealH / 2) / SideSector];
+            FloorBright = new int[1 + RealW / SideSector];
+
+            SetMaterialDb(); // временно
+        }
+
+        static void SetMaterialDb()
+        {
+            Materials = new MaterialsArray[100];
+            NumOfMatr = 0;
             // public materials_array(String type, String name, double fraction, double absorption, double reflection, double r, double g, double b)
             Materials[NumOfMatr] = new MaterialsArray("Undefined", "воздух", 1, 0, 0, 1.0, 1.0, 1.0); //  0
             NumOfMatr++;
@@ -103,39 +151,17 @@ namespace LEDSimuLight
             Materials[NumOfMatr] = new MaterialsArray("Thin film", "ITO", 1.9, 0.01, 0, 0.8745, 0.9843, 0.2667); // 11 0,01
             NumOfMatr++;
         }
-
-        public static int[,] Mas;
-        public static int
-            PrecKoeff = 1,
-            W,
-            H,
-            HMaxMicr = 10,
-            WMaxMicr = 10,
-            NumOfMatr = 0,
-            Border,
-            RealW,
-            RealH,
-            FrameSensor = 0,
-            SensMat = 6,
-            QuantsOut = 0,
-            QuantAbsorbed = 0,
-            QuantsFront = 0,
-            QuantsBack = 0,
-            QuantsLeft = 0,
-            QuantsRight = 0,
-            DiscreteAngle = 1,
-            BadQuants = 0,
-            SideSector;
-        public static double QuantumEff = 0;
-
-        public static MaterialsArray[] Materials;
-        public static int[] CircleBright, LeftBright, RightBright, FloorBright;
     }
+
     public static class OpenGLm
     {
         private static readonly Pen BlackPen = new Pen(Color.Black, 1);
 
-        private static void CreateFrame(Graphics g)  // рисуем рамку
+        /// <summary>
+        /// Рисует рамку
+        /// </summary>
+        /// <param name="g"></param>
+        private static void CreateFrame(Graphics g)
         {
             DrawLine(g, Var.Border, Var.Border, Var.Border, Var.RealH - Var.Border);
             DrawLine(g, Var.Border, Var.RealH - Var.Border, Var.RealW - Var.Border, Var.RealH - Var.Border);
@@ -143,7 +169,7 @@ namespace LEDSimuLight
             DrawLine(g, Var.RealW - Var.Border, Var.Border, Var.Border, Var.Border);
         }
 
-        public static void PrintText(int x, int y, string text, Graphics g, int size = 9)
+        public static void PrintText(Graphics g, int x, int y, string text, int size = 9)
         {
             g.DrawString(text, new Font("Arial", size), Brushes.Black, new PointF(x, Var.RealH - y));
             g.Flush();
@@ -151,12 +177,12 @@ namespace LEDSimuLight
 
         public static void DrawLine(Graphics g, int x1, int y1, int x2, int y2)
         {
-            g.DrawLine(BlackPen, x1, Var.RealH - y1, x2, Var.RealW - y2);
+            g.DrawLine(BlackPen, x1, Var.RealH - y1, x2, Var.RealH - y2);
         }
 
         public static void DrawLine(Graphics g, int x1, int y1, int x2, int y2, Color col)
         {
-            g.DrawLine(new Pen(col, 1), x1, Var.RealH - y1, x2, Var.RealW - y2);
+            g.DrawLine(new Pen(col, 1), x1, Var.RealH - y1, x2, Var.RealH - y2);
         }
 
         public static void DrawPoint(Graphics g, int x, int y)
@@ -177,55 +203,81 @@ namespace LEDSimuLight
             g.DrawLine(currPen, x, (Var.RealH - y) - l, x, (Var.RealH - y) + l);
         }
 
-        private static void CreateMark(int maxW, int maxH, Graphics g)  // метки на осях
+        private static void CreateMark(Graphics g)  // метки на осях
         {
-            int koeff = Var.H / 100;
-            const int div = 10;
+            // вспомогательный коэффициент для отступов
+            int microOffset = Var.H / 100;
 
-            for (int i = 0; i <= div; i++) // крупные метки на осях
+            // крупные горизонтальные метки
+            int currLevelX = Var.Border;
+            int dimensionX = 0;
+            while (currLevelX <= Var.Border + Var.W)
             {
-                DrawLine(g, Var.Border + i * (Var.W / div), Var.Border - koeff, Var.Border + i * (Var.W / div), Var.Border + koeff);
+                DrawLine(g, currLevelX, Var.Border - microOffset, currLevelX, Var.Border + microOffset);
+                DrawLine(g, currLevelX, Var.Border + Var.H - microOffset, currLevelX, Var.Border + Var.H + microOffset);
 
-                string mark1 = (i*maxW/(double) div).ToString();
-                PrintText(Var.Border + i * (Var.W / div) - koeff, Var.Border - 2*koeff, mark1, g); // подписи к меткам
+                string mark = (dimensionX++).ToString();
+                PrintText(g, currLevelX - microOffset, Var.Border - 2*microOffset, mark);
 
-                DrawLine(g, Var.Border + i * (Var.W / div), (Var.RealH - Var.Border) - koeff, Var.Border + i * (Var.W / div), (Var.RealH - Var.Border) + koeff);
-                DrawLine(g, (Var.RealH - Var.Border) - koeff, Var.Border + i * (Var.H / div), (Var.RealH - Var.Border) + koeff, Var.Border + i * (Var.H / div));
-
-                string mark2 = (i * maxH / (double) div).ToString();
-                PrintText(Var.Border - (int) (4.5 * koeff), Var.Border + i * (Var.H / div) + (int)(1.5 * koeff), mark2, g); // подписи к меткам
-
-                DrawLine(g, Var.Border - koeff, Var.Border + i * (Var.H / div), Var.Border + koeff, Var.Border + i * (Var.H / div));
+                currLevelX += Var.BigStep;
             }
 
-            int hl = Var.H / 200; // маленькие метки на осях
-            const int div2 = div*2;
-            for (int i = 0; i <= div*2; i++)
+            // крупные вертикальные метки
+            int currLevelY = Var.Border;
+            int dimensionY = 0;
+            while (currLevelY <= Var.Border + Var.H)
             {
-                DrawLine(g, Var.Border + i * (Var.W / div2), Var.Border - hl, Var.Border + i * (Var.W / div2), Var.Border + hl);
-                DrawLine(g, Var.Border + i*(Var.W / div2), (Var.RealH - Var.Border) - hl, Var.Border + i*(Var.W / div2), (Var.RealH - Var.Border) + hl);
-                DrawLine(g, Var.RealH - Var.Border - hl, Var.Border + i * (Var.H / div2), (Var.RealH - Var.Border) + hl, Var.Border + i * (Var.H / div2));
-                DrawLine(g, Var.Border - hl, Var.Border + i*(Var.H / div2), Var.Border + hl, Var.Border + i*(Var.H / div2));
+                DrawLine(g, Var.Border - microOffset, currLevelY, Var.Border + microOffset, currLevelY);
+                DrawLine(g, Var.Border + Var.W - microOffset, currLevelY, Var.Border + Var.W + microOffset, currLevelY);
+
+                string mark = (dimensionY++).ToString();
+                PrintText(g, Var.Border - (int)(4.5 * microOffset), currLevelY + (int)(1.5 * microOffset), mark);
+
+                currLevelY += Var.BigStep;
+            }
+
+            // новый отступ
+            int microOffset2 = Var.H / 200;
+
+            // маленькие горизонтальные метки
+            currLevelX = Var.Border;
+            while (currLevelX <= Var.Border + Var.W)
+            {
+                DrawLine(g, currLevelX, Var.Border - microOffset2, currLevelX, Var.Border + microOffset2);
+                DrawLine(g, currLevelX, Var.Border + Var.H - microOffset2, currLevelX, Var.Border + Var.H + microOffset2);
+                currLevelX += Var.LittleStep;
+            }
+
+            // маленькие вертикальные метки
+            currLevelY = Var.Border;
+            while (currLevelY <= Var.Border + Var.H)
+            {
+                DrawLine(g, Var.Border - microOffset2, currLevelY, Var.Border + microOffset2, currLevelY);
+                DrawLine(g, Var.Border + Var.W - microOffset2, currLevelY, Var.Border + Var.W + microOffset2, currLevelY);
+                currLevelY += Var.LittleStep;
             }
         }
 
         private static void CreatePoints(Graphics g)  // точки в области
         {
-            int numStep = Var.H / 50;
-            for (int i = 0; i <= numStep; i++)
-                for (int j = 0; j <= numStep; j++)
-                    DrawCross(g, i * (Var.W / numStep) + Var.Border, j * (Var.H / numStep) + Var.Border, 3, 1);
+            int numStepY = Var.H / Var.BigStep;
+            int numStepX = Var.W / Var.BigStep;
+            for (int i = 0; i <= numStepX; i++)
+                for (int j = 0; j <= numStepY; j++)
+                    DrawCross(g, + Var.Border + i * Var.BigStep, Var.Border + j * Var.BigStep, 4, 1);
 
-            numStep = Var.H / 25;
-            for (int i = 0; i <= numStep; i++)
-                for (int j = 0; j <= numStep; j++)
-                    DrawCross(g, i * (Var.W / numStep) + Var.Border, j * (Var.H / numStep) + Var.Border, 1, 1);
+            int newStep = Var.BigStep / 4;
+            numStepY = Var.H / newStep;
+            numStepX = Var.W / newStep;
+            for (int i = 0; i <= numStepX; i++)
+                for (int j = 0; j <= numStepY; j++)
+                    DrawCross(g, Var.Border + i * newStep, Var.Border + j * newStep, 1, 1);
         }
 
-        public static void SetMesh(int w, int h, Graphics g)
+        public static void SetMesh(Graphics g)
         {
             CreateFrame(g);
-            CreateMark(w, h, g);
+            CreateMark(g);
             CreatePoints(g);
         }
 
