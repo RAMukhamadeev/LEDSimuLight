@@ -113,7 +113,7 @@ namespace LEDSimuLight
             LittleStep = 50;
             H = RealH - Border * 2;
             W = RealW - Border * 2;
-            SideSector = (int)(((Math.PI * H / 2) / 180) * DiscreteAngle);
+            SideSector = (int)(((Math.PI * (H / 2 + W / 2)) / 180) * DiscreteAngle);
             Mas = new int[RealW + 1, RealH + 1];
             CircleBright = new int[1 + 180 / DiscreteAngle];
             LeftBright = new int[1 + (RealH / 2) / SideSector];
@@ -128,7 +128,7 @@ namespace LEDSimuLight
             Materials = new MaterialsArray[100];
             NumOfMatr = 0;
             // public materials_array(String type, String name, double fraction, double absorption, double reflection, double r, double g, double b)
-            Materials[NumOfMatr] = new MaterialsArray("Undefined", "воздух", 1, 0, 0, 0.92, 0.92, 0.92); //  0
+            Materials[NumOfMatr] = new MaterialsArray("Undefined", "воздух", 1, 0, 0, 1, 1, 1); //  0
             NumOfMatr++;
             Materials[NumOfMatr] = new MaterialsArray("Substrate", "Al2O3", 1.6, 0.01, 0, 0.6196, 0.8549, 0.9294); // 1 0,3
             NumOfMatr++;
@@ -140,7 +140,7 @@ namespace LEDSimuLight
             NumOfMatr++;
             Materials[NumOfMatr] = new MaterialsArray("Contact", "металлический контакт", 1, 1, 0, 0.7765, 0.7765, 0.0); // 5 1,0
             NumOfMatr++;
-            Materials[NumOfMatr] = new MaterialsArray("Sensors", "сенсор", 1, 1, 0, 0, 0, 1); // 6
+            Materials[NumOfMatr] = new MaterialsArray("Sensors", "сенсор", 1, 1, 0, 1, 1, 1); // 6
             NumOfMatr++;
             Materials[NumOfMatr] = new MaterialsArray("Thin film", "GaN", 2.5, 0.2, 0, 0.9490, 0.6353, 0.9568); // 7 0,3
             NumOfMatr++;
@@ -203,6 +203,11 @@ namespace LEDSimuLight
             Pen currPen = new Pen(Color.Black, w);
             g.DrawLine(currPen, x - l, Var.RealH - y, x + l, Var.RealH - y);
             g.DrawLine(currPen, x, (Var.RealH - y) - l, x, (Var.RealH - y) + l);
+        }
+
+        public static void DrawCircle(Graphics g, int x, int y)
+        {
+            g.FillEllipse(Brushes.Red, x - 7, Var.RealH - y - 7, 14, 14);
         }
 
         private static void CreateMark(Graphics g)  // метки на осях
@@ -313,107 +318,53 @@ namespace LEDSimuLight
             }
         }
 
-        private static int Sqr(int x)
-        {
-            return x * x;
-        }
-
-        private static void Circle(Graphics g, int x0, int y0, double r, double col1, double col2, double col3)
-        {
-            for (int x = x0 - (int)r; x <= x0 + (int)r; x++)
-            {
-                int y1 = y0 - (int)(Math.Sqrt(r * r - Sqr(x - x0))),
-                    y2 = y0 + (int)(Math.Sqrt(r * r - Sqr(x - x0)));
-                DrawPoint(g, x, y1);
-                DrawPoint(g, x, y2);
-            }
-            for (int y = y0 - (int)r; y <= y0 + (int)r; y++)
-            {
-                int x1 = x0 - (int)(Math.Sqrt(r * r - Sqr(y - y0))),
-                    x2 = x0 + (int)(Math.Sqrt(r * r - Sqr(y - y0)));
-                DrawPoint(g, x1, y);
-                DrawPoint(g, x2, y);
-            }
-        }
-
-        private static void Condition(Graphics g, int x, int y, double t)
-        {
-            double r = 0;
-
-            while (r <= 3)
-            {
-                double own = (r / 3) * 2 * Math.PI;
-                Circle(g, x, y, r, 1, Math.Sin(t), Math.Sin(t - own));
-                r = r + 1;
-            }
-            if (Form.ActiveForm != null)
-                Form.ActiveForm.Refresh();
-        }
-
-        public static void Explosion(Graphics g, int x, int y)
-        {
-            double t = 0;
-            while (t <= 3 * Math.PI)
-            {
-                Condition(g, x, y, t);
-                t = t + Math.PI / 4;
-            }
-        }
-
         public static void DrawRainbow(Graphics g)
         {
             int koeff = 2,
-                y0 = (Var.RealH / 2),
+                y0 = Var.Border + Var.H,
                 textOffsetY = 5 * koeff,
-                textSize = 5,
-                xPer = (Var.RealW - Var.Border / 2) - 15*koeff;
-            //PrintText(xPer, y0 + textOffsetY, "100%", g, textSize);
+                textSize = 8,
+                xPer = (Var.RealW - Var.Border / 2) - 10*koeff;
+            PrintText(g, xPer, y0 + textOffsetY, "100%", textSize);
             for (int i = 0; i <= 50 * koeff; i++)
             {
                 Color col = Color.FromArgb(255, (int) (255*i/(50.0*koeff)), 0);
-                DrawLine(g, Var.RealW - Var.Border, y0 + i, Var.RealW - Var.Border + 10 * koeff, y0 + i, col);
+                DrawLine(g, Var.RealW - Var.Border, y0 - i, Var.RealW - Var.Border + 10 * koeff, y0 - i, col);
             }
-            y0 += 50 * koeff;
-            //PrintText(xPer, y0 + textOffsetY, "75%", g, textSize);
+            y0 -= 50 * koeff;
+            PrintText(g, xPer, y0 + textOffsetY, "75%", textSize);
             for (int i = 0; i <= 50 * koeff; i++)
             {
                 Color col = Color.FromArgb( (int) (255 * (50 * koeff - i) / (50.0 * koeff)) ,255, 0);
-                DrawLine(g, Var.RealW - Var.Border, y0 + i, Var.RealW - Var.Border + 10 * koeff, y0 + i, col);
+                DrawLine(g, Var.RealW - Var.Border, y0 - i, Var.RealW - Var.Border + 10 * koeff, y0 - i, col);
             }
-            y0 += 50 * koeff;
-            //PrintText(xPer, y0 + textOffsetY, "50%", g, textSize);
+            y0 -= 50 * koeff;
+            PrintText(g, xPer, y0 + textOffsetY, "50%", textSize);
             for (int i = 0; i <= 50 * koeff; i++)
             {
                 Color col = Color.FromArgb(0, 255, (int)(255 * i / (50.0 * koeff)));
-                DrawLine(g, Var.RealW - Var.Border, y0 + i, Var.RealW - Var.Border + 10 * koeff, y0 + i, col);
+                DrawLine(g, Var.RealW - Var.Border, y0 - i, Var.RealW - Var.Border + 10 * koeff, y0 - i, col);
             }
-            y0 += 50 * koeff;
-            //PrintText(xPer, y0 + textOffsetY, "25%", g, textSize);
+            y0 -= 50 * koeff;
+            PrintText(g, xPer, y0 + textOffsetY, "25%", textSize);
             for (int i = 0; i <= 50 * koeff; i++)
             {
                 Color col = Color.FromArgb(0, (int)(255 * (50 * koeff - i) / (50.0 * koeff)), 255);
-                DrawLine(g, Var.RealW - Var.Border, y0 + i, Var.RealW - Var.Border + 10 * koeff, y0 + i, col);
+                DrawLine(g, Var.RealW - Var.Border, y0 - i, Var.RealW - Var.Border + 10 * koeff, y0 - i, col);
             }
-            y0 += 50 * koeff;
-            //PrintText(xPer, y0 + textOffsetY, "0%", g, textSize);
+            y0 -= 50 * koeff;
+            PrintText(g, xPer, y0 + textOffsetY, "0%", textSize);
         }
 
-        static void DrawHalfCircle(Graphics g, int x0, int y0, int r)
+        static void DrawHalfEllipse(Graphics g, int x0, int y0, double a, double b)
         {
-            int limit = (int)(r / Math.Sqrt(2));
-            for (int y = y0; y <= y0 + limit; y++)
-            {
-                int temp = (int)Math.Sqrt(Sqr(r) - Sqr(y - y0));
-                int x = x0 + temp;
-                DrawPoint(g, x, y);
-                x = x0 - temp;
-                DrawPoint(g, x, y);
-            }
-            for (int x = x0 - limit; x <= x0 + limit; x++)
-            {
-                int y = y0 + (int)Math.Sqrt(Sqr(r) - Sqr(x - x0));
-                DrawPoint(g, x, y);
-            }
+            for (int y = y0; y <= Var.RealH; y++)
+                for (int x = 0; x <= Var.RealW; x++)
+                {
+                    double koeff = Math.Pow((x - x0)/a, 2) + Math.Pow((y - y0)/b, 2);
+                    if (Math.Abs(koeff - 1) < 1.7e-3)
+                        DrawPoint(g, x, y);
+                }
         }
 
         public static void DrawSensors(Graphics g)
@@ -423,12 +374,13 @@ namespace LEDSimuLight
             DrawLine(g, Var.Border + Var.W - Var.FrameSensor, Var.FrameSensor + Var.Border, Var.Border + Var.W - Var.FrameSensor, Var.Border + Var.H / 2);
 
             int x0 = Var.Border + Var.W / 2,
-                y0 = Var.Border + Var.H / 2,
-                r1 = Var.H / 2 - Var.FrameSensor,
-                r2 = Var.H / 2;
+                y0 = Var.Border + Var.H / 2;
 
-            DrawHalfCircle(g, x0, y0, r1);
-            DrawHalfCircle(g, x0, y0, r2);
+            double a = x0 - Var.Border;
+            double b = Var.RealH - y0 - Var.Border;
+
+            DrawHalfEllipse(g, x0, y0, a, b);
+            DrawHalfEllipse(g, x0, y0, a - Var.FrameSensor, b - Var.FrameSensor);
         }
 
         static int[] GetAverageMas(int[] inputMas)
@@ -448,7 +400,7 @@ namespace LEDSimuLight
         public static void DrawLightDistribution(Graphics g)
         {
             // этот блок кода - интерполяция для проблемных сенсоров
-            int center = 90 / Var.DiscreteAngle; 
+            int center = 90 / Var.DiscreteAngle;
             Var.CircleBright[center] = (Var.CircleBright[center - 1] + Var.CircleBright[center + 1]) / 2;
             Var.CircleBright[0] = Var.CircleBright[1];
             Var.CircleBright[Var.CircleBright.Length - 1] = Var.CircleBright[Var.CircleBright.Length - 2];
@@ -506,15 +458,19 @@ namespace LEDSimuLight
 
             int x0 = Var.Border + Var.W / 2,
                 y0 = Var.Border + Var.H / 2;
-            int r1 = Sqr(Var.H / 2 - Var.FrameSensor),
-                r2 = Sqr(Var.H / 2);
+            double a = x0 - Var.Border,
+                   b = Var.RealH - y0 - Var.Border;
+
             for (int x = Var.Border; x <= Var.W + Var.Border; x++)
                 for (int y = Var.Border; y <= Var.H + Var.Border; y++)
                 {
                     int dx = x - x0;
                     int dy = y - y0;
-                    int square = Sqr(x - x0) + Sqr(y - y0);
-                    if (y > Var.Border + Var.H / 2 && square >= r1 && square < r2)
+
+                    double koeff1 = Math.Pow((x - x0) / a, 2) + Math.Pow((y - y0) / b, 2);
+                    double koeff2 = Math.Pow((x - x0) / (a - Var.FrameSensor), 2) + Math.Pow((y - y0) / (b - Var.FrameSensor), 2);
+
+                    if (y >= Var.Border + Var.H / 2 && koeff1 < 1 && koeff2 > 1)
                     {
                         int alpha = 0;
                         if (dx != 0)

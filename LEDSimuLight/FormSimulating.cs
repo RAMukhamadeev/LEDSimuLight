@@ -31,46 +31,29 @@ namespace LEDSimuLight
         {
             int x0 = Var.Border + Var.W / 2,
                 y0 = Var.Border + Var.H / 2,
-                r = (Var.H / 2) - Var.FrameSensor + 5,
-                limit = (int) ( r / Math.Sqrt(2) ),
                 sens = Var.SensMat;
 
-            for (int y = y0; y <= y0 + limit; y++)
-            {
-                int temp = (int) Math.Sqrt(Sqr(r) - Sqr(y - y0));
-                int x = x0 + temp;
-                Var.Mas[x, y] = sens;
-                Var.Mas[x - 1, y] = sens;
-                Var.Mas[x - 2, y] = sens;
-                Var.Mas[x - 3, y] = sens;
-                Var.Mas[x - 4, y] = sens;
-                x = x0 - temp;
-                Var.Mas[x, y] = sens;
-                Var.Mas[x + 1, y] = sens;
-                Var.Mas[x + 2, y] = sens;
-                Var.Mas[x + 3, y] = sens;
-                Var.Mas[x + 4, y] = sens;
-            }
-            for (int x = x0 - limit; x <= x0 + limit; x++)
-            {
-                int y = y0 + (int) Math.Sqrt(Sqr(r) - Sqr(x - x0));
-                Var.Mas[x, y] = sens;
-                Var.Mas[x, y - 1] = sens;
-                Var.Mas[x, y - 2] = sens;
-                Var.Mas[x, y - 3] = sens;
-                Var.Mas[x, y - 4] = sens;
-            }
-            Var.Mas[x0, y0 + r - 5] = sens;
+            double a = x0 - Var.Border;
+            double b = Var.RealH - y0 - Var.Border;
 
-            for (int y = Var.Border + Var.FrameSensor - 5; y <= Var.Border + Var.H / 2; y++)
+            for (int y = y0; y <= Var.RealH; y++)
+                for (int x = 0; x <= Var.RealW; x++)
+                {
+                    double koeff1 = Math.Pow((x - x0) / a, 2) + Math.Pow((y - y0) / b, 2);
+                    double koeff2 = Math.Pow((x - x0) / (a - Var.FrameSensor), 2) + Math.Pow((y - y0) / (b - Var.FrameSensor), 2);
+                    if (koeff1 < 1 && koeff2 > 1)
+                        Var.Mas[x, y] = sens;
+                }
+
+            for (int y = Var.Border; y <= Var.Border + Var.H / 2; y++)
             {
-                for (int x = Var.Border + Var.FrameSensor - 5; x < Var.Border + Var.FrameSensor; x++)
+                for (int x = Var.Border; x < Var.Border + Var.FrameSensor; x++)
                     Var.Mas[x, y] = sens;
-                for (int x = Var.Border + Var.W - Var.FrameSensor; x < Var.Border + Var.W - Var.FrameSensor + 5; x++)
+                for (int x = Var.Border + Var.W - Var.FrameSensor; x < Var.Border + Var.W; x++)
                     Var.Mas[x, y] = sens;
             }
-            for (int y = Var.Border + Var.FrameSensor - 5; y < Var.Border + Var.FrameSensor; y++)
-                for (int x = Var.Border + Var.FrameSensor - 5; x <= Var.Border + Var.W - Var.FrameSensor + 4; x++)
+            for (int y = Var.Border; y < Var.Border + Var.FrameSensor; y++)
+                for (int x = Var.Border; x <= Var.Border + Var.W; x++)
                     Var.Mas[x, y] = sens;
         }
 
@@ -105,7 +88,6 @@ namespace LEDSimuLight
 
             DetectingActiveLayer(4); // i - GaN в базе под номером 4
             InitializeVar();
-            MakeLegend();
         }
 
         private void DetectingActiveLayer(int num) // в дальнейшем массив
@@ -123,63 +105,9 @@ namespace LEDSimuLight
 
         private void AddMaterial(int n, int code, double r, double g, double b)
         {
-            switch (n)
-            {
-                case 1:
-                    Col1.BackColor = Color.FromArgb( (int)(r * 255), (int) (g*255), (int) (b*255) );
-                    elem1.Text = Var.Materials[code].Name;
-                    Col1.Visible = true;
-                    elem1.Visible = true;
-                    break;
-                case 2:
-                    Col2.BackColor = Color.FromArgb( (int)(r * 255), (int) (g*255), (int) (b*255) );
-                    elem2.Text = Var.Materials[code].Name;
-                    Col2.Visible = true;
-                    elem2.Visible = true;
-                    break;
-                case 3:
-                    Col3.BackColor = Color.FromArgb((int)(r * 255), (int)(g * 255), (int)(b * 255));
-                    elem3.Text = Var.Materials[code].Name;
-                    Col3.Visible = true;
-                    elem3.Visible = true;
-                    break;
-                case 4:
-                    Col4.BackColor = Color.FromArgb((int)(r * 255), (int)(g * 255), (int)(b * 255));
-                    elem4.Text = Var.Materials[code].Name;
-                    Col4.Visible = true;
-                    elem4.Visible = true;
-                    break;
-                case 5:
-                    Col5.BackColor = Color.FromArgb((int)(r * 255), (int)(g * 255), (int)(b * 255));
-                    elem5.Text = Var.Materials[code].Name;
-                    Col5.Visible = true;
-                    elem5.Visible = true;
-                    break;
-                case 6:
-                    Col6.BackColor = Color.FromArgb((int)(r * 255), (int)(g * 255), (int)(b * 255));
-                    elem6.Text = Var.Materials[code].Name;
-                    Col6.Visible = true;
-                    elem6.Visible = true;
-                    break;
-                case 7:
-                    Col7.BackColor = Color.FromArgb((int)(r * 255), (int)(g * 255), (int)(b * 255));
-                    elem7.Text = Var.Materials[code].Name;
-                    Col7.Visible = true;
-                    elem7.Visible = true;
-                    break;
-                case 8:
-                    Col8.BackColor = Color.FromArgb((int)(r * 255), (int)(g * 255), (int)(b * 255));
-                    elem8.Text = Var.Materials[code].Name;
-                    Col8.Visible = true;
-                    elem8.Visible = true;
-                    break;
-                case 9:
-                    Col9.BackColor = Color.FromArgb((int)(r * 255), (int)(g * 255), (int)(b * 255));
-                    elem9.Text = Var.Materials[code].Name;
-                    Col9.Visible = true;
-                    elem9.Visible = true;
-                    break;
-            }
+
+            if (FormLegend.Instance != null)
+                FormLegend.Instance.SetMaterial(n, Color.FromArgb( (int) (255*r), (int) (255*g), (int) (255*b)), code);
         }
 
         private void MakeLegend()
@@ -346,7 +274,7 @@ namespace LEDSimuLight
                 dy = y - y0;
             int delta = 3;
 
-            if (y > y0)
+            if (y >= y0)
             {
                 int alpha;
                 if (dx != 0)
@@ -378,14 +306,15 @@ namespace LEDSimuLight
                         Var.FloorBright[num]++;
                         Var.QuantsBack++;
                     }
-                    else if (x >= Var.W + Var.Border - Var.FrameSensor - delta)
-                    {
-                        num = y/Var.SideSector;
-                        Var.RightBright[num]++;
-                        Var.QuantsRight++;
-                    }
                     else
-                        MessageBox.Show("Не найден сектор!!!");
+                        if (x >= Var.W + Var.Border - Var.FrameSensor - delta)
+                        {
+                            num = y / Var.SideSector;
+                            Var.RightBright[num]++;
+                            Var.QuantsRight++;
+                        }
+                        //else
+                        //    MessageBox.Show("Не найден сектор!!!");
             }
         }
 
@@ -708,6 +637,7 @@ namespace LEDSimuLight
             OpenGLm.LineDrawPic(_graphicsSimulatingOfLed, 0, Var.RealW, 0, Var.RealH);
             OpenGLm.SetMesh(_graphicsSimulatingOfLed);
             OpenGLm.DrawSensors(_graphicsSimulatingOfLed);
+            OpenGLm.DrawRainbow(_graphicsSimulatingOfLed);
 
             _nMess = 0;
 
@@ -716,7 +646,7 @@ namespace LEDSimuLight
                 int r = _rnd.Next(_numAct);
                 int x = _active[r].X, y = _active[r].Y, code = Var.Mas[x, y];
                 _xs = x; _ys = y;
-                OpenGLm.Explosion(_graphicsSimulatingOfLed, x, y); // эффект
+                OpenGLm.DrawCircle(_graphicsSimulatingOfLed, x, y); // эффект
 
                 double curAngle = 2 * Math.PI * _rnd.NextDouble();
                 PushMessage("Квант возник в точке с координатой X = " + ( (double) (x) / (Var.W / Var.WMaxMicr) ) + " мкм; Y = " + ( (double) (y) / (Var.H / Var.HMaxMicr) ) + " мкм в " + Var.Materials[code].Name + ".");
@@ -724,7 +654,9 @@ namespace LEDSimuLight
                 
                 _stackSize = 0;
                 DebugRayTracing(curAngle, x, y);
-                label4.Text = i.ToString();
+                
+                if (FormSimulatingInfo.Instance != null)
+                    FormSimulatingInfo.Instance.SetCountOfQuants(i.ToString());
             }
 
             pbSimulatingOfLed.Image = _bmpSimulatingOfLed;
@@ -754,16 +686,13 @@ namespace LEDSimuLight
                 if (i % 1000 == 0)
                 {
                     Var.QuantumEff = (double) (Var.QuantsOut) / i;
-                    double effShow = Math.Floor(Var.QuantumEff * 1000000) / 1000000;
-                    label4.Text = i.ToString(); // выпущено квантов в данный момент
-                    label12.Text = Var.QuantsOut.ToString();
-                    label13.Text = Var.QuantsFront.ToString();
-                    label16.Text = Var.QuantAbsorbed.ToString();
-                    label15.Text = effShow.ToString();
-                    label18.Text = Var.QuantsBack.ToString();
-                    label20.Text = Var.QuantsLeft.ToString();
-                    label22.Text = Var.QuantsRight.ToString();
-                    panel2.Refresh();
+
+                    // выпущено квантов в данный момент
+                    if (FormSimulatingInfo.Instance != null)
+                        FormSimulatingInfo.Instance.SetCountOfQuants(i.ToString());
+
+                    if (FormSimulatingInfo.Instance != null)
+                        FormSimulatingInfo.Instance.SetInfoFromVar();
 
                     Application.DoEvents();
                 }
@@ -778,7 +707,7 @@ namespace LEDSimuLight
         private void начатьМоделированиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EmittingQuants(300000);
-            MessageBox.Show(Var.BadQuants.ToString());
+            //MessageBox.Show(Var.BadQuants.ToString());
         }
 
         private void simulating_KeyPress(object sender, KeyPressEventArgs e)
@@ -801,29 +730,31 @@ namespace LEDSimuLight
             pbSimulatingOfLed.Image = _bmpSimulatingOfLed;
         }
 
-        private void одиночныйКвантToolStripMenuItem_Click(object sender, EventArgs e)
+        private void показатьЛегендуToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _winReport = new FormReport();
+            FormLegend formLegend = new FormLegend();
+            formLegend.Show();
 
-            //OpenGLm.LineDrawPic(0, Var.W, 0, Var.H);
-            OpenGLm.DrawSensors(_graphicsSimulatingOfLed);
-            OpenGLm.SetMesh(_graphicsSimulatingOfLed);
-            _nMess = 0;
-            _isLucky = true;
-
-            double curAngle = Math.PI*200/180;
-            int x = 50*5, y = 50*6;
-
-            _xs = x;
-            _ys = y;
-            int code = Var.Mas[x, y];
-            PushMessage("Квант возник в точке с координатой X = " + ((double) (x)/(Var.W/Var.WMaxMicr)) + " мкм; Y = " +
-                        ((double) (y)/(Var.H/Var.HMaxMicr)) + " мкм в " + Var.Materials[code].Name + ".");
-            PushMessage("Начальный угол равен = " + ToDegree(curAngle) + " градусов.");
-            _stackSize = 0;
-            OpenGLm.Explosion(_graphicsSimulatingOfLed, x, y); // эффект
-            DebugRayTracing(curAngle, x, y);
+            MakeLegend();
         }
 
+        private void показатьИнформационнуюПанельToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormSimulatingInfo formSimulatingInfo = new FormSimulatingInfo();
+            formSimulatingInfo.Show();
+        }
+
+        private void pbSimulatingOfLed_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormSimulating_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (FormLegend.Instance != null)
+                FormLegend.Instance.Close();
+            if (FormSimulatingInfo.Instance != null)
+                FormSimulatingInfo.Instance.Close();
+        }
     }
 }

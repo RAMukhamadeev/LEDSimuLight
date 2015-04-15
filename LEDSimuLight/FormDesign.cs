@@ -145,10 +145,6 @@ namespace LEDSimuLight
                         Var.Mas[x, y] = 0;
                 }
 
-
-            OpenGLm.LineDrawPic(_graphicsDesignOfLed, 0, Var.RealW, 0, Var.RealH); // рисуем на экране
-            OpenGLm.SetMesh(_graphicsDesignOfLed);
-
             _oldClick = 0;
         }
 
@@ -288,7 +284,8 @@ namespace LEDSimuLight
 
         public void RemoveSprite(int x, int y)
         {
-            int delta = 20;
+            y = Var.RealH - y;
+            int delta = 15;
             for (int i = x - delta; i <= x + delta; i++)
                 for (int j = y - delta; j <= y + delta; j++)
                     if (i >= 0 && j >= 0 && i < _bmpOriginalPicture.Width && j < _bmpOriginalPicture.Height)
@@ -303,7 +300,7 @@ namespace LEDSimuLight
             if (min.X == _currPoint.X && min.Y == _currPoint.Y)
                 return;
 
-            RemoveSprite(_currPoint.X, Var.RealH - _currPoint.Y);
+            RemoveSprite(_currPoint.X, _currPoint.Y);
             OpenGLm.DrawCross(_graphicsDesignOfLed, min.X, min.Y, 15, 3);
             _currPoint.X = min.X;
             _currPoint.Y = min.Y;
@@ -430,8 +427,16 @@ namespace LEDSimuLight
         {
             FormDesignInfo formDesignInfo = new FormDesignInfo();
             formDesignInfo.Show();
-            formDesignInfo.SetMaterial(_material);
-            formDesignInfo.SetShape(_shape);
+            if (_material != "")
+                formDesignInfo.SetMaterial(_material);
+            if (_shape != "") 
+                formDesignInfo.SetShape(_shape);
+        }
+
+        private void FormDesign_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (FormDesignInfo.Instance != null)
+                FormDesignInfo.Instance.Close();
         }
     }
 }
