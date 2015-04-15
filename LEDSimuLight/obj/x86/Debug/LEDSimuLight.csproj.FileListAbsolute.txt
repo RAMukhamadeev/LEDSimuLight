@@ -63,3 +63,4 @@ D:\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormSettings.reso
 D:\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormSimulating.resources
 D:\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.csproj.GenerateResource.Cache
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormDesignInfo.resources
+D:\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormDesignInfo.resources

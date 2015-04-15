@@ -132,6 +132,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="FormReport.resx">
       <DependentUpon>FormReport.cs</DependentUpon>
@@ -155,6 +156,10 @@
   <ItemGroup>
     <Content Include="image_about.ico" />
     <Content Include="image_new.ico" />
+    <None Include="Resources\Xcode.png" />
+    <None Include="Resources\System Profiler.png" />
+    <None Include="Resources\Interface Builder.png" />
+    <None Include="Resources\Activity Monitor.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

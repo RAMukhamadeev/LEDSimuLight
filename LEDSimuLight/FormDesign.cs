@@ -207,17 +207,17 @@ namespace LEDSimuLight
 
         private double ToMicrX(int x)
         {
-            return ( (double)x / Var.W) * Var.WMaxMicr;
+            return (double)(x - Var.Border) / Var.BigStep;
         }
 
         private double ToMicrY(int y)
         {
-            return ((double) y/Var.H)*Var.HMaxMicr;
+            return (double) (y - Var.Border) / Var.BigStep;
         }
 
         private Var.Point NearestPoint(int x, int y)
         {
-            int step = Var.W / 200;
+            const int step = 2;
 
             Var.Point[] masPoint = new Var.Point[4];
             int x1 = (x / step) * step,
@@ -299,31 +299,19 @@ namespace LEDSimuLight
         {
             int x = e.X,
                 y = Var.RealH - e.Y;
+            Var.Point min = NearestPoint(x, y);
+            if (min.X == _currPoint.X && min.Y == _currPoint.Y)
+                return;
 
-            if (x >= Var.Border && x <= Var.RealW - Var.Border && y >= Var.Border && y <= Var.RealH - Var.Border)
-            {
-                Var.Point min = NearestPoint(x, y);
-                if (min.X == _currPoint.X && min.Y == _currPoint.Y)
-                    return;
+            RemoveSprite(_currPoint.X, Var.RealH - _currPoint.Y);
+            OpenGLm.DrawCross(_graphicsDesignOfLed, min.X, min.Y, 15, 3);
+            _currPoint.X = min.X;
+            _currPoint.Y = min.Y;
 
-                RemoveSprite(_currPoint.X, Var.RealH - _currPoint.Y);
-                OpenGLm.DrawCross(_graphicsDesignOfLed, min.X, min.Y, 15, 3);
-                _currPoint.X = min.X;
-                _currPoint.Y = min.Y;
+            if (FormDesignInfo.Instance != null)
+                FormDesignInfo.Instance.SetCoordinates(ToMicrX(min.X) + " мкм", ToMicrY(min.Y) + " мкм");
 
-                if (FormDesignInfo.Instance != null)
-                    FormDesignInfo.Instance.SetCoordinates(ToMicrX(min.X - Var.Border) + " мкм", ToMicrY(min.Y - Var.Border) + " мкм");
-
-                pbDesignOfLed.Image = _bmpDesignOfLed;
-            }
-            else
-            {
-                RemoveSprite(_currPoint.X, Var.RealH - _currPoint.Y);
-                pbDesignOfLed.Image = _bmpDesignOfLed;
-
-                if (FormDesignInfo.Instance != null) 
-                    FormDesignInfo.Instance.SetCoordinates("none", "none");
-            }
+            pbDesignOfLed.Image = _bmpDesignOfLed;
         }
 
         private void pbDesignOfLed_Click(object sender, EventArgs e)
@@ -421,6 +409,29 @@ namespace LEDSimuLight
 
         private void pbDesignOfLed_Resize(object sender, EventArgs e)
         {
+        }
+
+        private void pbDesignOfLed_MouseEnter(object sender, EventArgs e)
+        {
+            Cursor.Hide();
+        }
+
+        private void pbDesignOfLed_MouseLeave(object sender, EventArgs e)
+        {
+            Cursor.Show();
+            RemoveSprite(_currPoint.X, Var.RealH - _currPoint.Y);
+            pbDesignOfLed.Image = _bmpDesignOfLed;
+
+            if (FormDesignInfo.Instance != null)
+                FormDesignInfo.Instance.SetCoordinates("none", "none");
+        }
+
+        private void показатьИнформационнуюПанельToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormDesignInfo formDesignInfo = new FormDesignInfo();
+            formDesignInfo.Show();
+            formDesignInfo.SetMaterial(_material);
+            formDesignInfo.SetShape(_shape);
         }
     }
 }

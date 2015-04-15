@@ -9,8 +9,8 @@ namespace LEDSimuLight
     {
         public static int
           PrecKoeff = 1,
-          BigStep = 100,
-          LittleStep = 50,
+          BigStep,
+          LittleStep,
           W,
           H,
           HMaxMicr = 10,
@@ -107,8 +107,10 @@ namespace LEDSimuLight
         {
             RealH = h;
             RealW = w;
-            Border = 100;
+            Border = h / 15;
             FrameSensor = 20;
+            BigStep = 100;
+            LittleStep = 50;
             H = RealH - Border * 2;
             W = RealW - Border * 2;
             SideSector = (int)(((Math.PI * H / 2) / 180) * DiscreteAngle);
@@ -126,7 +128,7 @@ namespace LEDSimuLight
             Materials = new MaterialsArray[100];
             NumOfMatr = 0;
             // public materials_array(String type, String name, double fraction, double absorption, double reflection, double r, double g, double b)
-            Materials[NumOfMatr] = new MaterialsArray("Undefined", "воздух", 1, 0, 0, 1.0, 1.0, 1.0); //  0
+            Materials[NumOfMatr] = new MaterialsArray("Undefined", "воздух", 1, 0, 0, 0.92, 0.92, 0.92); //  0
             NumOfMatr++;
             Materials[NumOfMatr] = new MaterialsArray("Substrate", "Al2O3", 1.6, 0.01, 0, 0.6196, 0.8549, 0.9294); // 1 0,3
             NumOfMatr++;
@@ -172,7 +174,7 @@ namespace LEDSimuLight
         public static void PrintText(Graphics g, int x, int y, string text, int size = 9)
         {
             g.DrawString(text, new Font("Arial", size), Brushes.Black, new PointF(x, Var.RealH - y));
-            g.Flush();
+
         }
 
         public static void DrawLine(Graphics g, int x1, int y1, int x2, int y2)
