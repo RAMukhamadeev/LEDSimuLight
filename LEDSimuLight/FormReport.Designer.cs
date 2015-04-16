@@ -33,33 +33,32 @@ namespace LEDSimuLight
         /// </summary>
         private void InitializeComponent()
         {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(FormReport));
-            this.MessageTextBox = new RichTextBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReport));
+            this.MessageTextBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // MessageTextBox
             // 
-            this.MessageTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204)));
-            this.MessageTextBox.Location = new Point(24, 23);
-            this.MessageTextBox.Margin = new Padding(6, 6, 6, 6);
+            this.MessageTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MessageTextBox.Location = new System.Drawing.Point(11, 12);
+            this.MessageTextBox.Margin = new System.Windows.Forms.Padding(48, 23, 48, 23);
             this.MessageTextBox.Name = "MessageTextBox";
             this.MessageTextBox.ReadOnly = true;
-            this.MessageTextBox.Size = new Size(1372, 517);
+            this.MessageTextBox.Size = new System.Drawing.Size(528, 263);
             this.MessageTextBox.TabIndex = 0;
             this.MessageTextBox.Text = "";
             // 
             // FormReport
             // 
-            this.AutoScaleDimensions = new SizeF(12F, 25F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(1424, 567);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(566, 293);
             this.Controls.Add(this.MessageTextBox);
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.Icon = ((Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new Padding(6, 6, 6, 6);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(48, 23, 48, 23);
             this.Name = "FormReport";
             this.Text = "Отчет";
-            this.Load += new EventHandler(this.report_Load);
+            this.Load += new System.EventHandler(this.report_Load);
             this.ResumeLayout(false);
 
         }

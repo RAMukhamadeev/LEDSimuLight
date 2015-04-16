@@ -61,8 +61,7 @@ namespace LEDSimuLight
             this.отчетОМоделированииToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Padding = new System.Windows.Forms.Padding(12, 4, 0, 4);
-            this.menuStripMain.Size = new System.Drawing.Size(1904, 46);
+            this.menuStripMain.Size = new System.Drawing.Size(642, 24);
             this.menuStripMain.TabIndex = 1;
             this.menuStripMain.Text = "menuStripMain";
             // 
@@ -71,13 +70,13 @@ namespace LEDSimuLight
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.закрытьToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(83, 38);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // закрытьToolStripMenuItem
             // 
             this.закрытьToolStripMenuItem.Name = "закрытьToolStripMenuItem";
-            this.закрытьToolStripMenuItem.Size = new System.Drawing.Size(180, 36);
+            this.закрытьToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.закрытьToolStripMenuItem.Text = "Закрыть";
             // 
             // моделированиеToolStripMenuItem
@@ -86,20 +85,20 @@ namespace LEDSimuLight
             this.трассировкаToolStripMenuItem,
             this.начатьМоделированиеToolStripMenuItem});
             this.моделированиеToolStripMenuItem.Name = "моделированиеToolStripMenuItem";
-            this.моделированиеToolStripMenuItem.Size = new System.Drawing.Size(210, 38);
+            this.моделированиеToolStripMenuItem.Size = new System.Drawing.Size(109, 20);
             this.моделированиеToolStripMenuItem.Text = "Моделирование";
             // 
             // трассировкаToolStripMenuItem
             // 
             this.трассировкаToolStripMenuItem.Name = "трассировкаToolStripMenuItem";
-            this.трассировкаToolStripMenuItem.Size = new System.Drawing.Size(348, 36);
+            this.трассировкаToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.трассировкаToolStripMenuItem.Text = "Трассировка";
             this.трассировкаToolStripMenuItem.Click += new System.EventHandler(this.трассировкаToolStripMenuItem_Click);
             // 
             // начатьМоделированиеToolStripMenuItem
             // 
             this.начатьМоделированиеToolStripMenuItem.Name = "начатьМоделированиеToolStripMenuItem";
-            this.начатьМоделированиеToolStripMenuItem.Size = new System.Drawing.Size(348, 36);
+            this.начатьМоделированиеToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.начатьМоделированиеToolStripMenuItem.Text = "Запуск моделирования";
             this.начатьМоделированиеToolStripMenuItem.Click += new System.EventHandler(this.начатьМоделированиеToolStripMenuItem_Click);
             // 
@@ -109,20 +108,20 @@ namespace LEDSimuLight
             this.показатьЛегендуToolStripMenuItem,
             this.показатьИнформационнуюПанельToolStripMenuItem});
             this.видToolStripMenuItem.Name = "видToolStripMenuItem";
-            this.видToolStripMenuItem.Size = new System.Drawing.Size(68, 38);
+            this.видToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.видToolStripMenuItem.Text = "Вид";
             // 
             // показатьЛегендуToolStripMenuItem
             // 
             this.показатьЛегендуToolStripMenuItem.Name = "показатьЛегендуToolStripMenuItem";
-            this.показатьЛегендуToolStripMenuItem.Size = new System.Drawing.Size(485, 36);
+            this.показатьЛегендуToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.показатьЛегендуToolStripMenuItem.Text = "Показать легенду";
             this.показатьЛегендуToolStripMenuItem.Click += new System.EventHandler(this.показатьЛегендуToolStripMenuItem_Click);
             // 
             // показатьИнформационнуюПанельToolStripMenuItem
             // 
             this.показатьИнформационнуюПанельToolStripMenuItem.Name = "показатьИнформационнуюПанельToolStripMenuItem";
-            this.показатьИнформационнуюПанельToolStripMenuItem.Size = new System.Drawing.Size(485, 36);
+            this.показатьИнформационнуюПанельToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.показатьИнформационнуюПанельToolStripMenuItem.Text = "Показать информационную панель";
             this.показатьИнформационнуюПанельToolStripMenuItem.Click += new System.EventHandler(this.показатьИнформационнуюПанельToolStripMenuItem_Click);
             // 
@@ -132,20 +131,20 @@ namespace LEDSimuLight
             this.показатьОтчетToolStripMenuItem,
             this.показатьРаспределениеСветаToolStripMenuItem});
             this.отчетОМоделированииToolStripMenuItem.Name = "отчетОМоделированииToolStripMenuItem";
-            this.отчетОМоделированииToolStripMenuItem.Size = new System.Drawing.Size(92, 38);
+            this.отчетОМоделированииToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.отчетОМоделированииToolStripMenuItem.Text = "Отчет";
             // 
             // показатьОтчетToolStripMenuItem
             // 
             this.показатьОтчетToolStripMenuItem.Name = "показатьОтчетToolStripMenuItem";
-            this.показатьОтчетToolStripMenuItem.Size = new System.Drawing.Size(434, 36);
+            this.показатьОтчетToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.показатьОтчетToolStripMenuItem.Text = "Показать отчет";
             this.показатьОтчетToolStripMenuItem.Click += new System.EventHandler(this.показатьОтчетToolStripMenuItem_Click);
             // 
             // показатьРаспределениеСветаToolStripMenuItem
             // 
             this.показатьРаспределениеСветаToolStripMenuItem.Name = "показатьРаспределениеСветаToolStripMenuItem";
-            this.показатьРаспределениеСветаToolStripMenuItem.Size = new System.Drawing.Size(434, 36);
+            this.показатьРаспределениеСветаToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.показатьРаспределениеСветаToolStripMenuItem.Text = "Показать распределение света";
             this.показатьРаспределениеСветаToolStripMenuItem.Click += new System.EventHandler(this.показатьРаспределениеСветаToolStripMenuItem_Click);
             // 
@@ -156,32 +155,31 @@ namespace LEDSimuLight
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pbSimulatingOfLed.BackColor = System.Drawing.SystemColors.MenuBar;
             this.pbSimulatingOfLed.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pbSimulatingOfLed.Location = new System.Drawing.Point(1, 41);
-            this.pbSimulatingOfLed.Margin = new System.Windows.Forms.Padding(4);
+            this.pbSimulatingOfLed.Location = new System.Drawing.Point(0, 20);
+            this.pbSimulatingOfLed.Margin = new System.Windows.Forms.Padding(2);
             this.pbSimulatingOfLed.Name = "pbSimulatingOfLed";
-            this.pbSimulatingOfLed.Size = new System.Drawing.Size(1900, 938);
+            this.pbSimulatingOfLed.Size = new System.Drawing.Size(950, 469);
             this.pbSimulatingOfLed.TabIndex = 9;
             this.pbSimulatingOfLed.TabStop = false;
             this.pbSimulatingOfLed.Click += new System.EventHandler(this.pbSimulatingOfLed_Click);
             // 
             // FormSimulating
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1904, 986);
+            this.ClientSize = new System.Drawing.Size(642, 493);
             this.Controls.Add(this.pbSimulatingOfLed);
             this.Controls.Add(this.menuStripMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
-            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "FormSimulating";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Моделирование распределения света";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormSimulating_FormClosed);
             this.Load += new System.EventHandler(this.simulating_Load);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.simulating_KeyPress);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FormSimulating_KeyUp);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSimulatingOfLed)).EndInit();

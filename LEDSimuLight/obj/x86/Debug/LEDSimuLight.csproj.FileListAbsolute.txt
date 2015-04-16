@@ -66,3 +66,5 @@ C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\L
 D:\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormDesignInfo.resources
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormLegend.resources
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormSimulatingInfo.resources
+D:\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormLegend.resources
+D:\GitHub\LEDSimuLight\LEDSimuLight\obj\x86\Debug\LEDSimuLight.FormSimulatingInfo.resources

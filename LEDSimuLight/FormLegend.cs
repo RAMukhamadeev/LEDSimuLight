@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace LEDSimuLight
@@ -25,7 +20,7 @@ namespace LEDSimuLight
             controlButton.Visible = true;
 
             Control controlLabel = Controls["elem" + n];
-            controlLabel.Text = Var.Materials[code].Name;
+            controlLabel.Text = LedLibrary.Materials[code].Name;
             controlLabel.Visible = true;
         }
 

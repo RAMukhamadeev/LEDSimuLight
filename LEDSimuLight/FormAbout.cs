@@ -10,19 +10,9 @@ namespace LEDSimuLight
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
-            ActiveForm.Close();
-        }
-
-        private void закрытьToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ActiveForm.Close();
-        }
-
-        private void about_Load(object sender, EventArgs e)
-        {
-
+            Close();
         }
     }
 }

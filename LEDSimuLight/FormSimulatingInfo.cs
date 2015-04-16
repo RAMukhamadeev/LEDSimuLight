@@ -19,14 +19,14 @@ namespace LEDSimuLight
 
         public void SetInfoFromVar()
         {
-            lblQuantumEfficiency.Text = Var.QuantumEff.ToString("00.0000 %");
-            lblCountOfAbsorbed.Text = Var.QuantAbsorbed.ToString();
-            lblCountOfOut.Text = Var.QuantsOut.ToString();
+            lblQuantumEfficiency.Text = LedLibrary.QuantumEff.ToString("00.0000 %");
+            lblCountOfAbsorbed.Text = LedLibrary.QuantAbsorbed.ToString();
+            lblCountOfOut.Text = LedLibrary.QuantsOut.ToString();
 
-            lblCountOfUp.Text = Var.QuantsFront.ToString();
-            lblCountOfLeft.Text = Var.QuantsLeft.ToString();
-            lblCountOfRight.Text = Var.QuantsRight.ToString();
-            lblCountOfDown.Text = Var.QuantsBack.ToString();            
+            lblCountOfUp.Text = LedLibrary.QuantsFront.ToString();
+            lblCountOfLeft.Text = LedLibrary.QuantsLeft.ToString();
+            lblCountOfRight.Text = LedLibrary.QuantsRight.ToString();
+            lblCountOfDown.Text = LedLibrary.QuantsBack.ToString();            
         }
 
         private void FormSimulatingInfo_Load(object sender, EventArgs e)

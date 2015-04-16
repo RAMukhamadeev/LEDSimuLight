@@ -7,7 +7,7 @@ namespace LEDSimuLight
 {
     public partial class FormSimulating : Form
     {
-        readonly Var.Point[] _active = new Var.Point[Var.W * Var.H]; // здесь внимательно! может быть переполнение
+        readonly LedLibrary.Point[] _active = new LedLibrary.Point[LedLibrary.W * LedLibrary.H]; // здесь внимательно! может быть переполнение
         int _numAct, _stackSize, _xs, _ys;
         private const int BackTrack = 1;
         FormReport _winReport;
@@ -29,49 +29,49 @@ namespace LEDSimuLight
 
         private void InsertSensorMaterial()
         {
-            int x0 = Var.Border + Var.W / 2,
-                y0 = Var.Border + Var.H / 2,
-                sens = Var.SensMat;
+            int x0 = LedLibrary.Border + LedLibrary.W / 2,
+                y0 = LedLibrary.Border + LedLibrary.H / 2,
+                sens = LedLibrary.SensMat;
 
-            double a = x0 - Var.Border;
-            double b = Var.RealH - y0 - Var.Border;
+            double a = x0 - LedLibrary.Border;
+            double b = LedLibrary.RealH - y0 - LedLibrary.Border;
 
-            for (int y = y0; y <= Var.RealH; y++)
-                for (int x = 0; x <= Var.RealW; x++)
+            for (int y = y0; y <= LedLibrary.RealH; y++)
+                for (int x = 0; x <= LedLibrary.RealW; x++)
                 {
                     double koeff1 = Math.Pow((x - x0) / a, 2) + Math.Pow((y - y0) / b, 2);
-                    double koeff2 = Math.Pow((x - x0) / (a - Var.FrameSensor), 2) + Math.Pow((y - y0) / (b - Var.FrameSensor), 2);
+                    double koeff2 = Math.Pow((x - x0) / (a - LedLibrary.FrameSensor), 2) + Math.Pow((y - y0) / (b - LedLibrary.FrameSensor), 2);
                     if (koeff1 < 1 && koeff2 > 1)
-                        Var.Mas[x, y] = sens;
+                        LedLibrary.Mas[x, y] = sens;
                 }
 
-            for (int y = Var.Border; y <= Var.Border + Var.H / 2; y++)
+            for (int y = LedLibrary.Border; y <= LedLibrary.Border + LedLibrary.H / 2; y++)
             {
-                for (int x = Var.Border; x < Var.Border + Var.FrameSensor; x++)
-                    Var.Mas[x, y] = sens;
-                for (int x = Var.Border + Var.W - Var.FrameSensor; x < Var.Border + Var.W; x++)
-                    Var.Mas[x, y] = sens;
+                for (int x = LedLibrary.Border; x < LedLibrary.Border + LedLibrary.FrameSensor; x++)
+                    LedLibrary.Mas[x, y] = sens;
+                for (int x = LedLibrary.Border + LedLibrary.W - LedLibrary.FrameSensor; x < LedLibrary.Border + LedLibrary.W; x++)
+                    LedLibrary.Mas[x, y] = sens;
             }
-            for (int y = Var.Border; y < Var.Border + Var.FrameSensor; y++)
-                for (int x = Var.Border; x <= Var.Border + Var.W; x++)
-                    Var.Mas[x, y] = sens;
+            for (int y = LedLibrary.Border; y < LedLibrary.Border + LedLibrary.FrameSensor; y++)
+                for (int x = LedLibrary.Border; x <= LedLibrary.Border + LedLibrary.W; x++)
+                    LedLibrary.Mas[x, y] = sens;
         }
 
         private static void InitializeVar()
         {
-            Var.QuantAbsorbed = 0;
-            Var.QuantsBack = 0;
-            Var.QuantsFront = 0;
-            Var.QuantsLeft = 0;
-            Var.QuantsOut = 0;
-            Var.QuantsRight = 0;
-            Var.QuantumEff = 0;
-            Var.BadQuants = 0;
+            LedLibrary.QuantAbsorbed = 0;
+            LedLibrary.QuantsBack = 0;
+            LedLibrary.QuantsFront = 0;
+            LedLibrary.QuantsLeft = 0;
+            LedLibrary.QuantsOut = 0;
+            LedLibrary.QuantsRight = 0;
+            LedLibrary.QuantumEff = 0;
+            LedLibrary.BadQuants = 0;
 
-            Array.Clear(Var.LeftBright, 0, Var.LeftBright.Length);
-            Array.Clear(Var.RightBright, 0, Var.RightBright.Length);
-            Array.Clear(Var.CircleBright, 0, Var.CircleBright.Length);
-            Array.Clear(Var.FloorBright, 0, Var.FloorBright.Length);
+            Array.Clear(LedLibrary.LeftBright, 0, LedLibrary.LeftBright.Length);
+            Array.Clear(LedLibrary.RightBright, 0, LedLibrary.RightBright.Length);
+            Array.Clear(LedLibrary.CircleBright, 0, LedLibrary.CircleBright.Length);
+            Array.Clear(LedLibrary.FloorBright, 0, LedLibrary.FloorBright.Length);
         }
 
         private void simulating_Load(object sender, EventArgs e)
@@ -80,7 +80,7 @@ namespace LEDSimuLight
             _graphicsSimulatingOfLed = Graphics.FromImage(_bmpSimulatingOfLed);
 
             InsertSensorMaterial();
-            OpenGLm.LineDrawPic(_graphicsSimulatingOfLed, 0, Var.RealW, 0, Var.RealH);
+            OpenGLm.LineDrawPic(_graphicsSimulatingOfLed, 0, LedLibrary.RealW, 0, LedLibrary.RealH);
             OpenGLm.DrawSensors(_graphicsSimulatingOfLed);
             OpenGLm.DrawRainbow(_graphicsSimulatingOfLed);
             OpenGLm.SetMesh(_graphicsSimulatingOfLed);
@@ -92,10 +92,10 @@ namespace LEDSimuLight
 
         private void DetectingActiveLayer(int num) // в дальнейшем массив
         {
-            for (int x = 0; x <= Var.W; x++)
-                for (int y = 0; y <= Var.H; y++)
-                    if (Var.Mas[x, y] == num)
-                        _active[_numAct++] = new Var.Point(x, y);
+            for (int x = 0; x <= LedLibrary.W; x++)
+                for (int y = 0; y <= LedLibrary.H; y++)
+                    if (LedLibrary.Mas[x, y] == num)
+                        _active[_numAct++] = new LedLibrary.Point(x, y);
         }
 
         private double Sqr(double x)
@@ -113,18 +113,18 @@ namespace LEDSimuLight
         private void MakeLegend()
         {
             bool[] used = new bool[100];
-            used[Var.SensMat] = true; // сенсоры на легенде не нужны
+            used[LedLibrary.SensMat] = true; // сенсоры на легенде не нужны
 
             int count = 0;
-            for (int x = 0; x <= Var.W; x++)
-                for (int y = Var.H; y >= 0; y--)
+            for (int x = 0; x <= LedLibrary.W; x++)
+                for (int y = LedLibrary.H; y >= 0; y--)
                 {
-                    int code = Var.Mas[x, y];
+                    int code = LedLibrary.Mas[x, y];
                     if (!used[code])
                     {
                         count++;
                         used[code] = true;
-                        AddMaterial(count, code, Var.Materials[code].R, Var.Materials[code].G, Var.Materials[code].B);
+                        AddMaterial(count, code, LedLibrary.Materials[code].R, LedLibrary.Materials[code].G, LedLibrary.Materials[code].B);
                     }
                 }
         }
@@ -146,10 +146,10 @@ namespace LEDSimuLight
             if (_isLucky)
                 return false;
 
-            double l1 = (double) ( Var.WMaxMicr * (x - _xs) ) / Var.W,
-                   l2 = (double) ( Var.HMaxMicr * (y - _ys) ) / Var.H,
+            double l1 = (double) ( LedLibrary.WMaxMicr * (x - _xs) ) / LedLibrary.W,
+                   l2 = (double) ( LedLibrary.HMaxMicr * (y - _ys) ) / LedLibrary.H,
                    len = Math.Sqrt(Sqr(l1) + Sqr(l2)),
-                   transmission = 1 - Var.Materials[code].Absorption,
+                   transmission = 1 - LedLibrary.Materials[code].Absorption,
                    aliveProb = Math.Pow(transmission, len),
                    absProb = 1 - aliveProb;
             return _rnd.NextDouble() <= absProb;
@@ -159,24 +159,24 @@ namespace LEDSimuLight
         {
             double res = 0;
 
-            int xl = x - 4 * Var.PrecKoeff, xr = x + 4 * Var.PrecKoeff;
+            int xl = x - 4 * LedLibrary.PrecKoeff, xr = x + 4 * LedLibrary.PrecKoeff;
             double yl = 0, yr = 0;
-            int code0L = Var.Mas[xl, y], code0R = Var.Mas[xr, y];
+            int code0L = LedLibrary.Mas[xl, y], code0R = LedLibrary.Mas[xr, y];
 
             int delta = 0;
-            while (code0L == Var.Mas[xl, Math.Max(y - delta, 0)] && code0L == Var.Mas[xl, Math.Min(y + delta, Var.H)] && delta < Var.H)
+            while (code0L == LedLibrary.Mas[xl, Math.Max(y - delta, 0)] && code0L == LedLibrary.Mas[xl, Math.Min(y + delta, LedLibrary.H)] && delta < LedLibrary.H)
                delta++;
-            if (code0L != Var.Mas[xl, Math.Max(y - delta, 0)])
+            if (code0L != LedLibrary.Mas[xl, Math.Max(y - delta, 0)])
                  yl = y - delta + 0.5;
-            if (code0L != Var.Mas[xl, Math.Min(y + delta, Var.H)])
+            if (code0L != LedLibrary.Mas[xl, Math.Min(y + delta, LedLibrary.H)])
                  yl = y + delta - 0.5;
 
              delta = 0;
-             while (code0R == Var.Mas[xr, Math.Max(y - delta, 0)] && code0R == Var.Mas[xr, Math.Min(y + delta, Var.H)] && delta < Var.H)
+             while (code0R == LedLibrary.Mas[xr, Math.Max(y - delta, 0)] && code0R == LedLibrary.Mas[xr, Math.Min(y + delta, LedLibrary.H)] && delta < LedLibrary.H)
                  delta++;
-             if (code0R != Var.Mas[xr, Math.Max(y - delta, 0)])
+             if (code0R != LedLibrary.Mas[xr, Math.Max(y - delta, 0)])
                  yr = y - delta + 0.5;
-             if (code0R != Var.Mas[xr, Math.Min(y + delta, Var.H)])
+             if (code0R != LedLibrary.Mas[xr, Math.Min(y + delta, LedLibrary.H)])
                  yr = y + delta - 0.5;
 
              res = Math.Atan((yr - yl) / (xr - xl));
@@ -268,8 +268,8 @@ namespace LEDSimuLight
 
         private void CalcSector(int x, int y)
         {
-            int x0 = Var.Border + Var.W / 2,
-                y0 = Var.Border + Var.H / 2,
+            int x0 = LedLibrary.Border + LedLibrary.W / 2,
+                y0 = LedLibrary.Border + LedLibrary.H / 2,
                 dx = x - x0,
                 dy = y - y0;
             int delta = 3;
@@ -286,32 +286,32 @@ namespace LEDSimuLight
                 else
                     alpha = 90;
 
-                int num = alpha / Var.DiscreteAngle; // вычисляем сектор
-                Var.CircleBright[num]++;
-                Var.QuantsFront++;
+                int num = alpha / LedLibrary.DiscreteAngle; // вычисляем сектор
+                LedLibrary.CircleBright[num]++;
+                LedLibrary.QuantsFront++;
             }
             else
             {
                 int num = 0;
-                if (x <= Var.Border + Var.FrameSensor + delta)
+                if (x <= LedLibrary.Border + LedLibrary.FrameSensor + delta)
                 {
-                    num = y / Var.SideSector;
-                    Var.LeftBright[num]++;
-                    Var.QuantsLeft++;
+                    num = y / LedLibrary.SideSector;
+                    LedLibrary.LeftBright[num]++;
+                    LedLibrary.QuantsLeft++;
                 }
                 else
-                    if (y <= Var.Border + Var.FrameSensor + delta)
+                    if (y <= LedLibrary.Border + LedLibrary.FrameSensor + delta)
                     {
-                        num = x / Var.SideSector;
-                        Var.FloorBright[num]++;
-                        Var.QuantsBack++;
+                        num = x / LedLibrary.SideSector;
+                        LedLibrary.FloorBright[num]++;
+                        LedLibrary.QuantsBack++;
                     }
                     else
-                        if (x >= Var.W + Var.Border - Var.FrameSensor - delta)
+                        if (x >= LedLibrary.W + LedLibrary.Border - LedLibrary.FrameSensor - delta)
                         {
-                            num = y / Var.SideSector;
-                            Var.RightBright[num]++;
-                            Var.QuantsRight++;
+                            num = y / LedLibrary.SideSector;
+                            LedLibrary.RightBright[num]++;
+                            LedLibrary.QuantsRight++;
                         }
                         //else
                         //    MessageBox.Show("Не найден сектор!!!");
@@ -322,18 +322,18 @@ namespace LEDSimuLight
         {
             if (Absorbed(code0, x, y))
             {
-                Var.QuantAbsorbed++;
-                PushMessage("Квант поглотился в материале " + Var.Materials[code0].Name);
+                LedLibrary.QuantAbsorbed++;
+                PushMessage("Квант поглотился в материале " + LedLibrary.Materials[code0].Name);
                 return;
             }
             _xs = x;
             _ys = y;
 
-            int code = Var.Mas[x, y];
-            double n1 = Var.Materials[code].Fraction,
-                   n = Var.Materials[code0].Fraction;
+            int code = LedLibrary.Mas[x, y];
+            double n1 = LedLibrary.Materials[code].Fraction,
+                   n = LedLibrary.Materials[code0].Fraction;
 
-            if (Var.Mas[x, y] == Var.SensMat)
+            if (LedLibrary.Mas[x, y] == LedLibrary.SensMat)
             {
                 PushMessage("Квант захвачен сенсором.");
                 CalcSector(x, y);
@@ -345,13 +345,13 @@ namespace LEDSimuLight
             if (IsReflection(angle, beta, n, n1, code))
             {
                 double newAlpha = CalculateReflection(angle, beta);
-                PushMessage("Квант претерпел отражение от " + Var.Materials[code].Name + "; угол стал равен " + ToDegree(newAlpha) + " градусов.");
+                PushMessage("Квант претерпел отражение от " + LedLibrary.Materials[code].Name + "; угол стал равен " + ToDegree(newAlpha) + " градусов.");
                 DebugRayTracing(newAlpha, x0, y0);
             }
             else
             {
                 double newAlpha = CalculateFraction(angle, beta, n, n1);
-                PushMessage("Квант достиг " + Var.Materials[code].Name + " и претерпел преломление; угол стал равен " + ToDegree(newAlpha) + " градусов.");
+                PushMessage("Квант достиг " + LedLibrary.Materials[code].Name + " и претерпел преломление; угол стал равен " + ToDegree(newAlpha) + " градусов.");
                 DebugRayTracing(newAlpha, x, y);
             }
         }
@@ -361,22 +361,22 @@ namespace LEDSimuLight
 
             if ( Absorbed(code0, x, y) )
             {
-                Var.QuantAbsorbed++;
+                LedLibrary.QuantAbsorbed++;
                 return;
             }
             _xs = x; 
             _ys = y;
-            if (Var.Mas[x, y] == Var.SensMat)
+            if (LedLibrary.Mas[x, y] == LedLibrary.SensMat)
             {
                 CalcSector(x, y);
-                Var.QuantsOut++;
+                LedLibrary.QuantsOut++;
                 return;
             }
 
 
-            int code = Var.Mas[x, y];
-            double n1 = Var.Materials[code].Fraction,
-                   n = Var.Materials[code0].Fraction;
+            int code = LedLibrary.Mas[x, y];
+            double n1 = LedLibrary.Materials[code].Fraction,
+                   n = LedLibrary.Materials[code0].Fraction;
 
             double beta = RoughAngle(x0, y0);
 
@@ -394,7 +394,7 @@ namespace LEDSimuLight
 
         private void PutVertex(int x, int y, char status)
         {
-            int mod = Var.H / 50;
+            int mod = LedLibrary.H / 50;
 
             Color col = Color.Black;
             if (status == 'l' || status == 'r')
@@ -413,9 +413,9 @@ namespace LEDSimuLight
 
         private void DebugMovingRight(int x, int y, double delta, double angle)
         {
-            int code0 = Var.Mas[x, y], oldX = x;
+            int code0 = LedLibrary.Mas[x, y], oldX = x;
             double shift = y;
-            while (code0 == Var.Mas[x, y] || (x - oldX) < Step)
+            while (code0 == LedLibrary.Mas[x, y] || (x - oldX) < Step)
             {
                 PutVertex(x, y, 'r');
                 x++;
@@ -426,15 +426,15 @@ namespace LEDSimuLight
             int x0 = x - 1;
             int y0 = (int)(shift - delta);
 
-            if (y < Var.H && y > 0 && x < Var.W && code0 != Var.Mas[x, y])
+            if (y < LedLibrary.H && y > 0 && x < LedLibrary.W && code0 != LedLibrary.Mas[x, y])
                 DebugReemit(code0, x, y, x0, y0, angle, 'r');
         }
 
         private void MovingRight(int x, int y, double delta, double angle)
         {
-            int code0 = Var.Mas[x, y], oldX = x;
+            int code0 = LedLibrary.Mas[x, y], oldX = x;
             double shift = y;
-            while (code0 == Var.Mas[x, y] || (x - oldX) < Step)
+            while (code0 == LedLibrary.Mas[x, y] || (x - oldX) < Step)
             {
                 x++;
                 shift += delta;
@@ -448,9 +448,9 @@ namespace LEDSimuLight
 
         private void DebugMovingLeft(int x, int y, double delta, double angle)
         {
-            int code0 = Var.Mas[x, y], oldX = x;
+            int code0 = LedLibrary.Mas[x, y], oldX = x;
             double shift = y;
-             while (code0 == Var.Mas[x, y] || (oldX - x) < Step)
+             while (code0 == LedLibrary.Mas[x, y] || (oldX - x) < Step)
             {
                 PutVertex(x, y, 'l');
                 x--;
@@ -466,9 +466,9 @@ namespace LEDSimuLight
 
         private void MovingLeft(int x, int y, double delta, double angle)
         {
-            int code0 = Var.Mas[x, y], oldX = x;
+            int code0 = LedLibrary.Mas[x, y], oldX = x;
             double shift = y;
-            while (code0 == Var.Mas[x, y] || (oldX - x) < Step)
+            while (code0 == LedLibrary.Mas[x, y] || (oldX - x) < Step)
             {
                 x--;
                 shift += delta;
@@ -481,9 +481,9 @@ namespace LEDSimuLight
 
         private void DebugMovingUp(int x, int y, double delta, double angle)
         {
-            int code0 = Var.Mas[x, y];
+            int code0 = LedLibrary.Mas[x, y];
             double shift = x;
-            while (code0 == Var.Mas[x, y])
+            while (code0 == LedLibrary.Mas[x, y])
             {
                 PutVertex(x, y, 'u');
                 y++;
@@ -499,9 +499,9 @@ namespace LEDSimuLight
 
         private void MovingUp(int x, int y, double delta, double angle)
         {
-            int code0 = Var.Mas[x, y], oldY = y;
+            int code0 = LedLibrary.Mas[x, y], oldY = y;
             double shift = x;
-            while (code0 == Var.Mas[x, y] || (y - oldY) < Step)
+            while (code0 == LedLibrary.Mas[x, y] || (y - oldY) < Step)
             {
                 y++;
                 shift += delta;
@@ -514,9 +514,9 @@ namespace LEDSimuLight
 
         private void DebugMovingDown(int x, int y, double delta, double angle)
         {
-            int code0 = Var.Mas[x, y], oldY = y;
+            int code0 = LedLibrary.Mas[x, y], oldY = y;
             double shift = x;
-            while (code0 == Var.Mas[x, y] || (oldY - y) < Step)
+            while (code0 == LedLibrary.Mas[x, y] || (oldY - y) < Step)
             {
                 PutVertex(x, y, 'd');
                 y--;
@@ -531,9 +531,9 @@ namespace LEDSimuLight
 
         private void MovingDown(int x, int y, double delta, double angle)
         {
-            int code0 = Var.Mas[x, y], oldY = y;
+            int code0 = LedLibrary.Mas[x, y], oldY = y;
             double shift = x;
-            while (code0 == Var.Mas[x, y] || (oldY - y) < Step)
+            while (code0 == LedLibrary.Mas[x, y] || (oldY - y) < Step)
             {
                 y--;
                 shift += delta;
@@ -548,7 +548,7 @@ namespace LEDSimuLight
         {
             if (_stackSize >= 75)
             {
-                PushMessage("Квант поглотился в материале " + Var.Materials[Var.Mas[x, y]].Name);
+                PushMessage("Квант поглотился в материале " + LedLibrary.Materials[LedLibrary.Mas[x, y]].Name);
                 return;
             }
             _stackSize++;
@@ -600,7 +600,7 @@ namespace LEDSimuLight
         {
             if (_stackSize >= 100)
             {
-                Var.BadQuants++;
+                LedLibrary.BadQuants++;
                 ReleaseQuant();
 
                 return;
@@ -631,25 +631,30 @@ namespace LEDSimuLight
                         }
         }
 
-        private void DebugEmittingQuants(int count)
+        void RedrawPicture()
         {
             _graphicsSimulatingOfLed.Clear(Color.White);
-            OpenGLm.LineDrawPic(_graphicsSimulatingOfLed, 0, Var.RealW, 0, Var.RealH);
+            OpenGLm.LineDrawPic(_graphicsSimulatingOfLed, 0, LedLibrary.RealW, 0, LedLibrary.RealH);
             OpenGLm.SetMesh(_graphicsSimulatingOfLed);
             OpenGLm.DrawSensors(_graphicsSimulatingOfLed);
             OpenGLm.DrawRainbow(_graphicsSimulatingOfLed);
+        }
+
+        private void DebugEmittingQuants(int count)
+        {
+            RedrawPicture();
 
             _nMess = 0;
 
             for (int i = 1; i <= count; i++)
             {
                 int r = _rnd.Next(_numAct);
-                int x = _active[r].X, y = _active[r].Y, code = Var.Mas[x, y];
+                int x = _active[r].X, y = _active[r].Y, code = LedLibrary.Mas[x, y];
                 _xs = x; _ys = y;
                 OpenGLm.DrawCircle(_graphicsSimulatingOfLed, x, y); // эффект
 
                 double curAngle = 2 * Math.PI * _rnd.NextDouble();
-                PushMessage("Квант возник в точке с координатой X = " + ( (double) (x) / (Var.W / Var.WMaxMicr) ) + " мкм; Y = " + ( (double) (y) / (Var.H / Var.HMaxMicr) ) + " мкм в " + Var.Materials[code].Name + ".");
+                PushMessage("Квант возник в точке с координатой X = " + ( (double) (x) / (LedLibrary.W / LedLibrary.WMaxMicr) ) + " мкм; Y = " + ( (double) (y) / (LedLibrary.H / LedLibrary.HMaxMicr) ) + " мкм в " + LedLibrary.Materials[code].Name + ".");
                 PushMessage("Начальный угол равен = " + ToDegree(curAngle) + " градусов.");
                 
                 _stackSize = 0;
@@ -665,12 +670,12 @@ namespace LEDSimuLight
         private void ReleaseQuant()
         {
             int r = _rnd.Next(_numAct);
-            int x = _active[r].X, y = _active[r].Y, code = Var.Mas[x, y];
+            int x = _active[r].X, y = _active[r].Y, code = LedLibrary.Mas[x, y];
             double curAngle = 2 * Math.PI * _rnd.NextDouble();
             _xs = x; _ys = y;
             _nMess = 0;
 
-            PushMessage("Квант возник в точке с координатой X = " + ((double)(x) / (Var.W / Var.WMaxMicr)) + " мкм; Y = " + ((double)(y) / (Var.H / Var.HMaxMicr)) + " мкм в " + Var.Materials[code].Name + ".");
+            PushMessage("Квант возник в точке с координатой X = " + ((double)(x) / (LedLibrary.W / LedLibrary.WMaxMicr)) + " мкм; Y = " + ((double)(y) / (LedLibrary.H / LedLibrary.HMaxMicr)) + " мкм в " + LedLibrary.Materials[code].Name + ".");
             PushMessage("Начальный угол равен = " + ToDegree(curAngle) + " градусов.");
 
             _stackSize = 0;
@@ -685,7 +690,7 @@ namespace LEDSimuLight
               
                 if (i % 1000 == 0)
                 {
-                    Var.QuantumEff = (double) (Var.QuantsOut) / i;
+                    LedLibrary.QuantumEff = (double) (LedLibrary.QuantsOut) / i;
 
                     // выпущено квантов в данный момент
                     if (FormSimulatingInfo.Instance != null)
@@ -710,12 +715,6 @@ namespace LEDSimuLight
             //MessageBox.Show(Var.BadQuants.ToString());
         }
 
-        private void simulating_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char) Keys.Space)
-                DebugEmittingQuants(1);
-        }
-
         private void показатьОтчетToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _winReport = new FormReport();
@@ -726,6 +725,7 @@ namespace LEDSimuLight
 
         private void показатьРаспределениеСветаToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            RedrawPicture();
             OpenGLm.DrawLightDistribution(_graphicsSimulatingOfLed);
             pbSimulatingOfLed.Image = _bmpSimulatingOfLed;
         }
@@ -755,6 +755,12 @@ namespace LEDSimuLight
                 FormLegend.Instance.Close();
             if (FormSimulatingInfo.Instance != null)
                 FormSimulatingInfo.Instance.Close();
+        }
+
+        private void FormSimulating_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+                DebugEmittingQuants(3);
         }
     }
 }

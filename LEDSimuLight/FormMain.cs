@@ -61,5 +61,25 @@ namespace LEDSimuLight
             FormSimulating simWin = new FormSimulating();
             simWin.Show();
         }
+
+        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                LedLibrary.LoadMaterialsDb(ofd.FileName);
+            }
+        }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            LedLibrary.LoadMaterialsDb("LedMaterials.db");
+        }
+
+        private void pbDatabase_Click(object sender, EventArgs e)
+        {
+            FormDatabase formDatabase = new FormDatabase();
+            formDatabase.Show();
+        }
     }
 }
