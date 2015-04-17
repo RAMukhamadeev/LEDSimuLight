@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace LEDSimuLight
@@ -7,11 +8,17 @@ namespace LEDSimuLight
     public partial class FormDesign : Form
     {
         /// <summary>
-        /// текущая точка под курсором
+        /// Ссылка на текущую активную форму
+        /// </summary>
+        public static FormDesign Instance { get; private set; }
+
+        /// <summary>
+        /// Текущая точка под курсором
         /// </summary>
         readonly LedLibrary.Point _currPoint = new LedLibrary.Point(0, 0);
+
         /// <summary>
-        /// массив хранит точки текущей отрисовываемой пользователем фигуры
+        /// Массив хранит точки текущей отрисовываемой пользователем фигуры
         /// </summary>
         readonly LedLibrary.Point[] _masPoints = new LedLibrary.Point[100];
 
@@ -55,7 +62,10 @@ namespace LEDSimuLight
             foreach (var next in LedLibrary.Materials)
             {
                 tsic.Add(next.Name);
-                tsic[pos++].Click += MaterialItem_Click;
+                tsic[pos].Click += MaterialItem_Click;
+                tsic[pos].BackColor = Color.FromArgb( (int)(next.R*255), (int)(next.G*255), (int)(next.B*255));
+                tsic[pos].Font = new Font(tsic[pos].Font.Name, tsic[pos].Font.Size, FontStyle.Bold); // "Segoe UI; 9pt; style=Bold"
+                pos++;
             }
         }
 
@@ -69,6 +79,7 @@ namespace LEDSimuLight
 
         private void design_Load(object sender, EventArgs e)
         {
+            Instance = this;
             PreparePictureForView();
             LoadMaterialToMenu();
         }
@@ -146,6 +157,10 @@ namespace LEDSimuLight
         {
             _click++;
             _masPoints[_click] = new LedLibrary.Point(_currPoint.X, _currPoint.Y);
+            if (FormDesignInfo.Instance != null)
+                FormDesignInfo.Instance.SetCoordinatesForFix( 
+                    LedLibrary.ToMicrX(_currPoint.X).ToString("00.00"), 
+                    LedLibrary.ToMicrY(_currPoint.Y).ToString("00.00"));
 
             if (_click >= 3 && _masPoints[1].X == _currPoint.X && _masPoints[1].Y == _currPoint.Y)
                 DrawPolygon(code);
@@ -213,7 +228,7 @@ namespace LEDSimuLight
 
         private LedLibrary.Point NearestPoint(int x, int y)
         {
-            const int step = 2;
+            const int step = 1;
 
             LedLibrary.Point[] masPoint = new LedLibrary.Point[4];
             int x1 = (x / step) * step,
@@ -285,33 +300,53 @@ namespace LEDSimuLight
         void RemoveSprite(int x, int y)
         {
             y = LedLibrary.RealH - y;
-            int delta = 15;
+            int delta = 17;
             for (int i = x - delta; i <= x + delta; i++)
                 for (int j = y - delta; j <= y + delta; j++)
                     if (i >= 0 && j >= 0 && i < _bmpOriginalPicture.Width && j < _bmpOriginalPicture.Height)
                         _bmpDesignOfLed.SetPixel(i, j, _bmpOriginalPicture.GetPixel(i, j));
         }
 
+        public void SetFixedCoordinates(double x, double y)
+        {
+            _click--;
+            _currPoint.X = LedLibrary.FromMicrX(x);
+            _currPoint.Y = LedLibrary.FromMicrY(y);
+
+            ProcessClick();
+        }
+
         private void pbDesignOfLed_MouseMove(object sender, MouseEventArgs e)
         {
-            int x = e.X,
-                y = LedLibrary.RealH - e.Y;
-            LedLibrary.Point min = NearestPoint(x, y);
-            if (min.X == _currPoint.X && min.Y == _currPoint.Y)
-                return;
+            ProcessMouseMove(e.X, LedLibrary.RealH - e.Y);
+        }
+
+        private void ProcessMouseMove(int x, int y)
+        {
+            LedLibrary.Point discretePoint = NearestPoint(x, y);
 
             RemoveSprite(_currPoint.X, _currPoint.Y);
-            OpenGLm.DrawCross(_graphicsDesignOfLed, min.X, min.Y, 15, 3);
-            _currPoint.X = min.X;
-            _currPoint.Y = min.Y;
+
+            if (_click > 0 && discretePoint.X == _masPoints[1].X && discretePoint.Y == _masPoints[1].Y)
+            {
+                OpenGLm.DrawCross(_graphicsDesignOfLed, discretePoint.X, discretePoint.Y, 15, 5, Color.Red);
+            }
+            else
+            {
+                OpenGLm.DrawCross(_graphicsDesignOfLed, discretePoint.X, discretePoint.Y, 15, 3);
+            }
+
+            _currPoint.X = discretePoint.X;
+            _currPoint.Y = discretePoint.Y;
 
             if (FormDesignInfo.Instance != null)
-                FormDesignInfo.Instance.SetCoordinates(LedLibrary.ToMicrX(min.X) + " мкм", LedLibrary.ToMicrY(min.Y) + " мкм");
+                FormDesignInfo.Instance.SetCoordinates(LedLibrary.ToMicrX(discretePoint.X).ToString("00.00 мкм"),
+                    LedLibrary.ToMicrY(discretePoint.Y).ToString("00.00 мкм"));
 
             pbDesignOfLed.Image = _bmpDesignOfLed;
         }
 
-        private void pbDesignOfLed_Click(object sender, EventArgs e)
+        private void ProcessClick()
         {
             int code = 0;
             for (int i = 0; i < LedLibrary.Materials.Count; i++)
@@ -327,84 +362,10 @@ namespace LEDSimuLight
             pbDesignOfLed.Image = _bmpDesignOfLed;
         }
 
-
-
-        //private void siToolStripMenuItem1_Click(object sender, EventArgs e)
-        //{
-        //    _material = "Si";
-        //    if (FormDesignInfo.Instance != null) 
-        //        FormDesignInfo.Instance.SetMaterial(_material);
-        //}
-
-        //private void al2O3ToolStripMenuItem1_Click(object sender, EventArgs e)
-        //{
-        //    _material = "Al2O3";
-        //    if (FormDesignInfo.Instance != null) 
-        //        FormDesignInfo.Instance.SetMaterial(_material);
-        //}
-
-        //private void gaNToolStripMenuItem1_Click(object sender, EventArgs e)
-        //{
-        //    _material = "GaN";
-        //    if (FormDesignInfo.Instance != null) 
-        //        FormDesignInfo.Instance.SetMaterial(_material);
-        //}
-
-        //private void inGaNToolStripMenuItem1_Click(object sender, EventArgs e)
-        //{
-        //    _material = "InGaN";
-        //    if (FormDesignInfo.Instance != null) 
-        //        FormDesignInfo.Instance.SetMaterial(_material);
-        //}
-
-        //private void iGaNToolStripMenuItem1_Click(object sender, EventArgs e)
-        //{
-        //    _material = "i-GaN";
-        //    if (FormDesignInfo.Instance != null) 
-        //        FormDesignInfo.Instance.SetMaterial(_material);
-        //}
-
-        //private void pGaNToolStripMenuItem1_Click(object sender, EventArgs e)
-        //{
-        //    _material = "p-GaN";
-        //    if (FormDesignInfo.Instance != null) 
-        //        FormDesignInfo.Instance.SetMaterial(_material);
-        //}
-
-        //private void nGaNToolStripMenuItem1_Click(object sender, EventArgs e)
-        //{
-        //    _material = "n-GaN";
-        //    if (FormDesignInfo.Instance != null) 
-        //        FormDesignInfo.Instance.SetMaterial(_material);
-        //}
-
-        //private void iTOToolStripMenuItem1_Click(object sender, EventArgs e)
-        //{
-        //    _material = "ITO";
-        //    if (FormDesignInfo.Instance != null) 
-        //        FormDesignInfo.Instance.SetMaterial(_material);
-        //}
-
-        //private void металлическийКонтактToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    _material = "металлический контакт";
-        //    if (FormDesignInfo.Instance != null) 
-        //        FormDesignInfo.Instance.SetMaterial(_material);
-        //}
-
-        //private void отражательБрэггаToolStripMenuItem1_Click(object sender, EventArgs e)
-        //{
-        //    _material = "отражатель Брэгга";
-        //    if (FormDesignInfo.Instance != null) 
-        //        FormDesignInfo.Instance.SetMaterial(_material);
-        //}
-
-        //private void вакуумToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    _material = "Пустота";
-        //    if (FormDesignInfo.Instance != null) 
-        //        FormDesignInfo.Instance.SetMaterial(_material);
-        //}
+        private void pbDesignOfLed_Click(object sender, EventArgs e)
+        {
+            ProcessClick();
+        }
 
         private void pbDesignOfLed_Resize(object sender, EventArgs e)
         {
@@ -418,7 +379,7 @@ namespace LEDSimuLight
         private void pbDesignOfLed_MouseLeave(object sender, EventArgs e)
         {
             Cursor.Show();
-            RemoveSprite(_currPoint.X, LedLibrary.RealH - _currPoint.Y);
+            RedrawPicture();
             pbDesignOfLed.Image = _bmpDesignOfLed;
 
             if (FormDesignInfo.Instance != null)
@@ -430,7 +391,9 @@ namespace LEDSimuLight
             FormDesignInfo formDesignInfo = new FormDesignInfo();
             formDesignInfo.Show();
             if (_material != "")
+            {
                 formDesignInfo.SetMaterial(_material);
+            }
             if (_shape != "") 
                 formDesignInfo.SetShape(_shape);
         }

@@ -3,7 +3,7 @@ Type: Other
 Name: Air
 Fraction: 1
 Absorbtion: 0
-Reflection: 0
+Reflection: 0,14
 Color red: 1
 Color green: 1
 Color blue: 1
@@ -13,7 +13,7 @@ Type: Substrate
 Name: Al2O3
 Fraction: 1,6
 Absorbtion: 0,01
-Reflection: 0
+Reflection: 0,11
 Color red: 0,6196
 Color green: 0,8549
 Color blue: 0,9294
@@ -21,19 +21,19 @@ Color blue: 0,9294
 @New material@
 Type: Thin film
 Name: n-GaN
-Fraction: 2,5
+Fraction: 2,43
 Absorbtion: 0,25
-Reflection: 0
+Reflection: 0,05
 Color red: 0,6588
-Color green: 0,1765
+Color green: 0,3765
 Color blue: 0,949
 
 @New material@
 Type: Thin film
 Name: InGaN
-Fraction: 2,5
+Fraction: 2,52
 Absorbtion: 0,01
-Reflection: 0
+Reflection: 0,03
 Color red: 0,2902
 Color green: 0,949
 Color blue: 0,1765
@@ -41,29 +41,29 @@ Color blue: 0,1765
 @New material@
 Type: Thin film
 Name: i-GaN
-Fraction: 2,5
-Absorbtion: 0,1
-Reflection: 0
+Fraction: 2,49
+Absorbtion: 0,12
+Reflection: 0,04
 Color red: 0,7921
 Color green: 0,7921
-Color blue: 1
+Color blue: 0,9452
 
 @New material@
 Type: Contact
 Name: Metal contact
 Fraction: 1
 Absorbtion: 1
-Reflection: 0
+Reflection: 0,07
 Color red: 0,7765
 Color green: 0,7765
-Color blue: 0
+Color blue: 0,0356
 
 @New material@
 Type: Sensor
 Name: Virtual sensor
 Fraction: 1
 Absorbtion: 1
-Reflection: 0
+Reflection: 0,12
 Color red: 1
 Color green: 1
 Color blue: 1
@@ -72,8 +72,8 @@ Color blue: 1
 Type: Mirror
 Name: Bragg reflector
 Fraction: 1
-Absorbtion: 0,2
-Reflection: 0
+Absorbtion: 0,21
+Reflection: 0,01
 Color red: 0,4235
 Color green: 0,6353
 Color blue: 0,09
@@ -83,18 +83,158 @@ Type: Thin film
 Name: SiO2
 Fraction: 1,43
 Absorbtion: 0,01
-Reflection: 0
+Reflection: 0,02
 Color red: 0,1608
-Color green: 0,0274
-Color blue: 0,6196
+Color green: 0,5621
+Color blue: 0,6106
 
 @New material@
 Type: Thin film
 Name: ITO
 Fraction: 1,9
 Absorbtion: 0,01
-Reflection: 0
+Reflection: 0,15
 Color red: 0,8745
 Color green: 0,9843
 Color blue: 0,2667
+
+@New material@
+Type: Substrate
+Name: GaAs (subs)
+Fraction: 3,34
+Absorbtion: 0,02
+Reflection: 0,03
+Color red: 0,0013
+Color green: 0,9743
+Color blue: 0,9621
+
+@New material@
+Type: Thin film
+Name: GaAs (thin film)
+Fraction: 3,34
+Absorbtion: 0,02
+Reflection: 0,04
+Color red: 0,2318
+Color green: 0,8743
+Color blue: 0,4215
+
+@New material@
+Type: Thin film
+Name: AlGaAs
+Fraction: 3,21
+Absorbtion: 0,01
+Reflection: 0,12
+Color red: 0,6561
+Color green: 0,7312
+Color blue: 0,7854
+
+@New material@
+Type: Thin film
+Name: GaAsP
+Fraction: 3,14
+Absorbtion: 0,02
+Reflection: 0,07
+Color red: 0,3871
+Color green: 0,4732
+Color blue: 0,2432
+
+@New material@
+Type: Substrate
+Name: GaN (subs)
+Fraction: 2,47
+Absorbtion: 0,03
+Reflection: 0,12
+Color red: 0,4123
+Color green: 0,4571
+Color blue: 0,5167
+
+@New material@
+Type: Thin film
+Name: AlGaInP
+Fraction: 2,78
+Absorbtion: 0,07
+Reflection: 0,17
+Color red: 0,9757
+Color green: 0,4871
+Color blue: 0,0234
+
+@New material@
+Type: Thin film
+Name: GaP
+Fraction: 3,19
+Absorbtion: 0,14
+Reflection: 0,02
+Color red: 0,8723
+Color green: 0,9812
+Color blue: 0,0231
+
+@New material@
+Type: Thin film
+Name: AlGaP
+Fraction: 2,98
+Absorbtion: 0,12
+Reflection: 0,09
+Color red: 0,7645
+Color green: 0,4324
+Color blue: 0,2981
+
+@New material@
+Type: Thin film
+Name: ZnSe
+Fraction: 1,92
+Absorbtion: 0,21
+Reflection: 0,03
+Color red: 0,9432
+Color green: 0,5334
+Color blue: 0,5334
+
+@New material@
+Type: Thin film
+Name: GaN (thin film)
+Fraction: 2,54
+Absorbtion: 0,04
+Reflection: 0,12
+Color red: 0,4311
+Color green: 0,5432
+Color blue: 0,7643
+
+@New material@
+Type: Thin film
+Name: SiC (thin film)
+Fraction: 1,76
+Absorbtion: 0,14
+Reflection: 0,05
+Color red: 0,8772
+Color green: 0,4762
+Color blue: 0,6883
+
+@New material@
+Type: Substrate
+Name: SiC (subs)
+Fraction: 1,87
+Absorbtion: 0,09
+Reflection: 0,02
+Color red: 0,8522
+Color green: 0,7373
+Color blue: 0,8393
+
+@New material@
+Type: Thin film
+Name: AlN
+Fraction: 1,52
+Absorbtion: 0,07
+Reflection: 0,11
+Color red: 0,9872
+Color green: 0,8772
+Color blue: 0,7382
+
+@New material@
+Type: Thin film
+Name: AlGaInN
+Fraction: 2,21
+Absorbtion: 0,02
+Reflection: 0,02
+Color red: 0,7828
+Color green: 0,4789
+Color blue: 0,8482
 

@@ -32,9 +32,9 @@
             this.dgvDatabase = new System.Windows.Forms.DataGridView();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.закрытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.закрытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.материалToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.новыйМатериалToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pbExit = new System.Windows.Forms.PictureBox();
@@ -57,9 +57,10 @@
             // 
             this.dgvDatabase.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvDatabase.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDatabase.Location = new System.Drawing.Point(12, 33);
+            this.dgvDatabase.Location = new System.Drawing.Point(24, 60);
+            this.dgvDatabase.Margin = new System.Windows.Forms.Padding(6);
             this.dgvDatabase.Name = "dgvDatabase";
-            this.dgvDatabase.Size = new System.Drawing.Size(978, 305);
+            this.dgvDatabase.Size = new System.Drawing.Size(1956, 669);
             this.dgvDatabase.TabIndex = 0;
             // 
             // menuStripMain
@@ -69,7 +70,8 @@
             this.материалToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(1000, 24);
+            this.menuStripMain.Padding = new System.Windows.Forms.Padding(12, 4, 0, 4);
+            this.menuStripMain.Size = new System.Drawing.Size(2000, 44);
             this.menuStripMain.TabIndex = 2;
             this.menuStripMain.Text = "menuStrip1";
             // 
@@ -80,52 +82,53 @@
             this.сохранитьToolStripMenuItem,
             this.закрытьToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(83, 36);
             this.файлToolStripMenuItem.Text = "Файл";
-            // 
-            // закрытьToolStripMenuItem
-            // 
-            this.закрытьToolStripMenuItem.Name = "закрытьToolStripMenuItem";
-            this.закрытьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.закрытьToolStripMenuItem.Text = "Закрыть";
-            this.закрытьToolStripMenuItem.Click += new System.EventHandler(this.закрытьToolStripMenuItem_Click);
             // 
             // открытьToolStripMenuItem
             // 
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
-            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(206, 36);
             this.открытьToolStripMenuItem.Text = "Открыть";
             this.открытьToolStripMenuItem.Click += new System.EventHandler(this.открытьToolStripMenuItem_Click);
             // 
             // сохранитьToolStripMenuItem
             // 
             this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(206, 36);
             this.сохранитьToolStripMenuItem.Text = "Сохранить";
             this.сохранитьToolStripMenuItem.Click += new System.EventHandler(this.сохранитьToolStripMenuItem_Click);
+            // 
+            // закрытьToolStripMenuItem
+            // 
+            this.закрытьToolStripMenuItem.Name = "закрытьToolStripMenuItem";
+            this.закрытьToolStripMenuItem.Size = new System.Drawing.Size(206, 36);
+            this.закрытьToolStripMenuItem.Text = "Закрыть";
+            this.закрытьToolStripMenuItem.Click += new System.EventHandler(this.закрытьToolStripMenuItem_Click);
             // 
             // материалToolStripMenuItem
             // 
             this.материалToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.новыйМатериалToolStripMenuItem});
             this.материалToolStripMenuItem.Name = "материалToolStripMenuItem";
-            this.материалToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
+            this.материалToolStripMenuItem.Size = new System.Drawing.Size(137, 36);
             this.материалToolStripMenuItem.Text = "Материал";
             // 
             // новыйМатериалToolStripMenuItem
             // 
             this.новыйМатериалToolStripMenuItem.Name = "новыйМатериалToolStripMenuItem";
-            this.новыйМатериалToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.новыйМатериалToolStripMenuItem.Size = new System.Drawing.Size(277, 36);
             this.новыйМатериалToolStripMenuItem.Text = "Новый материал";
             this.новыйМатериалToolStripMenuItem.Click += new System.EventHandler(this.новыйМатериалToolStripMenuItem_Click);
             // 
             // pbExit
             // 
             this.pbExit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbExit.Image = global::LEDSimuLight.Properties.Resources.exit;
-            this.pbExit.Location = new System.Drawing.Point(677, 362);
+            this.pbExit.Image = ((System.Drawing.Image)(resources.GetObject("pbExit.Image")));
+            this.pbExit.Location = new System.Drawing.Point(1354, 741);
+            this.pbExit.Margin = new System.Windows.Forms.Padding(6);
             this.pbExit.Name = "pbExit";
-            this.pbExit.Size = new System.Drawing.Size(130, 126);
+            this.pbExit.Size = new System.Drawing.Size(260, 242);
             this.pbExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbExit.TabIndex = 6;
             this.pbExit.TabStop = false;
@@ -134,10 +137,11 @@
             // pbAddMaterial
             // 
             this.pbAddMaterial.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbAddMaterial.Image = global::LEDSimuLight.Properties.Resources.add;
-            this.pbAddMaterial.Location = new System.Drawing.Point(182, 362);
+            this.pbAddMaterial.Image = ((System.Drawing.Image)(resources.GetObject("pbAddMaterial.Image")));
+            this.pbAddMaterial.Location = new System.Drawing.Point(364, 741);
+            this.pbAddMaterial.Margin = new System.Windows.Forms.Padding(6);
             this.pbAddMaterial.Name = "pbAddMaterial";
-            this.pbAddMaterial.Size = new System.Drawing.Size(130, 126);
+            this.pbAddMaterial.Size = new System.Drawing.Size(260, 242);
             this.pbAddMaterial.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbAddMaterial.TabIndex = 5;
             this.pbAddMaterial.TabStop = false;
@@ -146,10 +150,11 @@
             // pbOpenDatabase
             // 
             this.pbOpenDatabase.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbOpenDatabase.Image = global::LEDSimuLight.Properties.Resources.open;
-            this.pbOpenDatabase.Location = new System.Drawing.Point(345, 362);
+            this.pbOpenDatabase.Image = ((System.Drawing.Image)(resources.GetObject("pbOpenDatabase.Image")));
+            this.pbOpenDatabase.Location = new System.Drawing.Point(690, 741);
+            this.pbOpenDatabase.Margin = new System.Windows.Forms.Padding(6);
             this.pbOpenDatabase.Name = "pbOpenDatabase";
-            this.pbOpenDatabase.Size = new System.Drawing.Size(130, 126);
+            this.pbOpenDatabase.Size = new System.Drawing.Size(260, 242);
             this.pbOpenDatabase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbOpenDatabase.TabIndex = 4;
             this.pbOpenDatabase.TabStop = false;
@@ -158,10 +163,11 @@
             // pbSaveDatabase
             // 
             this.pbSaveDatabase.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSaveDatabase.Image = global::LEDSimuLight.Properties.Resources.save;
-            this.pbSaveDatabase.Location = new System.Drawing.Point(509, 362);
+            this.pbSaveDatabase.Image = ((System.Drawing.Image)(resources.GetObject("pbSaveDatabase.Image")));
+            this.pbSaveDatabase.Location = new System.Drawing.Point(1018, 741);
+            this.pbSaveDatabase.Margin = new System.Windows.Forms.Padding(6);
             this.pbSaveDatabase.Name = "pbSaveDatabase";
-            this.pbSaveDatabase.Size = new System.Drawing.Size(130, 126);
+            this.pbSaveDatabase.Size = new System.Drawing.Size(260, 242);
             this.pbSaveDatabase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbSaveDatabase.TabIndex = 3;
             this.pbSaveDatabase.TabStop = false;
@@ -172,9 +178,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe Print", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label1.Location = new System.Drawing.Point(193, 501);
+            this.label1.Location = new System.Drawing.Point(408, 1001);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 26);
+            this.label1.Size = new System.Drawing.Size(180, 54);
             this.label1.TabIndex = 9;
             this.label1.Text = "Добавить";
             // 
@@ -183,9 +190,10 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe Print", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label2.Location = new System.Drawing.Point(361, 501);
+            this.label2.Location = new System.Drawing.Point(730, 1001);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 26);
+            this.label2.Size = new System.Drawing.Size(185, 54);
             this.label2.TabIndex = 10;
             this.label2.Text = "Открыть";
             // 
@@ -194,9 +202,10 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe Print", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label3.Location = new System.Drawing.Point(522, 501);
+            this.label3.Location = new System.Drawing.Point(1044, 1001);
+            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 26);
+            this.label3.Size = new System.Drawing.Size(196, 54);
             this.label3.TabIndex = 11;
             this.label3.Text = "Сохранить";
             // 
@@ -205,17 +214,18 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe Print", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label4.Location = new System.Drawing.Point(712, 501);
+            this.label4.Location = new System.Drawing.Point(1424, 1001);
+            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 26);
+            this.label4.Size = new System.Drawing.Size(117, 54);
             this.label4.TabIndex = 12;
             this.label4.Text = "Выход";
             // 
             // FormDatabase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 549);
+            this.ClientSize = new System.Drawing.Size(2000, 1080);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -228,6 +238,7 @@
             this.Controls.Add(this.menuStripMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "FormDatabase";
             this.Text = "База данных с материалами светодиодов";
             this.Load += new System.EventHandler(this.FormDatabase_Load);

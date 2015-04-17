@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -9,10 +8,14 @@ namespace LEDSimuLight
 {
     public static class LedLibrary
     {
+        public static double
+            Wavelength = 473;
         public static int
+          FrameSensor = 20,
+          BigStep = 100,
+          LittleStep = 50,
+          MeshDensityCoeff = 1,
           PrecKoeff = 1,
-          BigStep,
-          LittleStep,
           W,
           H,
           HMaxMicr = 10,
@@ -20,8 +23,8 @@ namespace LEDSimuLight
           Border,
           RealW,
           RealH,
-          FrameSensor = 0,
           SensMat = 6,
+          CountOfQuants = 500000,
           QuantsOut = 0,
           QuantAbsorbed = 0,
           QuantsFront = 0,
@@ -31,6 +34,7 @@ namespace LEDSimuLight
           DiscreteAngle = 1,
           BadQuants = 0,
           SideSector;
+
         public static double QuantumEff = 0;
         public static int[,] Mas;
         public static List<Material> Materials = new List<Material>();
@@ -71,6 +75,16 @@ namespace LEDSimuLight
         public static int Dist(Point p1, Point p2)
         {
             return Sqr(p2.X - p1.X) + Sqr(p2.Y - p1.Y);
+        }
+
+        public static int FromMicrX(double x)
+        {
+            return (int) ((x*BigStep) + Border);
+        }
+
+        public static int FromMicrY(double y)
+        {
+            return (int)((y * BigStep) + Border);
         }
 
         public static double ToMicrX(int x)
@@ -153,12 +167,9 @@ namespace LEDSimuLight
             RealH = h;
             RealW = w;
             Border = h / 15;
-            FrameSensor = 20;
-            BigStep = 100;
-            LittleStep = 50;
             H = RealH - Border * 2;
             W = RealW - Border * 2;
-            SideSector = (int)(((Math.PI * (H / 2 + W / 2)) / 180) * DiscreteAngle);
+            SideSector = (int)(((Math.PI * (H/2 + W/2)) / 180) * DiscreteAngle);
             Mas = new int[RealW + 1, RealH + 1];
             CircleBright = new int[1 + 180 / DiscreteAngle];
             LeftBright = new int[1 + (RealH / 2) / SideSector];
@@ -168,7 +179,7 @@ namespace LEDSimuLight
 
         static string GetMaterialValueOfField(string str)
         {
-            return str = str.Substring(str.IndexOf(':') + 2);
+            return str.Substring(str.IndexOf(':') + 2);
         }
 
         static void AddMaterial(List<string> mas, int pos)
@@ -357,6 +368,9 @@ namespace LEDSimuLight
         /// <param name="yu"></param>
         public static void LineDrawPic(Graphics g, int xl, int xr, int yd, int yu)
         {
+            if (LedLibrary.Mas == null)
+                return;
+
             xl = Math.Max(0, xl);
             yd = Math.Max(0, yd);
             xr = Math.Min(LedLibrary.RealW, xr);
@@ -382,34 +396,35 @@ namespace LEDSimuLight
             int koeff = 2,
                 y0 = LedLibrary.Border + LedLibrary.H,
                 textOffsetY = 5 * koeff,
-                textSize = 8,
-                xPer = (LedLibrary.RealW - LedLibrary.Border / 2) - 10*koeff;
+                textSize = 7,
+                rainbowWidht = 8,
+                xPer = (LedLibrary.RealW - LedLibrary.Border / 2) - 39;
             PrintText(g, xPer, y0 + textOffsetY, "100%", textSize);
             for (int i = 0; i <= 50 * koeff; i++)
             {
                 Color col = Color.FromArgb(255, (int) (255*i/(50.0*koeff)), 0);
-                DrawLine(g, LedLibrary.RealW - LedLibrary.Border, y0 - i, LedLibrary.RealW - LedLibrary.Border + 10 * koeff, y0 - i, col);
+                DrawLine(g, LedLibrary.RealW - LedLibrary.Border, y0 - i, LedLibrary.RealW - LedLibrary.Border + rainbowWidht, y0 - i, col);
             }
             y0 -= 50 * koeff;
             PrintText(g, xPer, y0 + textOffsetY, "75%", textSize);
             for (int i = 0; i <= 50 * koeff; i++)
             {
                 Color col = Color.FromArgb( (int) (255 * (50 * koeff - i) / (50.0 * koeff)) ,255, 0);
-                DrawLine(g, LedLibrary.RealW - LedLibrary.Border, y0 - i, LedLibrary.RealW - LedLibrary.Border + 10 * koeff, y0 - i, col);
+                DrawLine(g, LedLibrary.RealW - LedLibrary.Border, y0 - i, LedLibrary.RealW - LedLibrary.Border + rainbowWidht, y0 - i, col);
             }
             y0 -= 50 * koeff;
             PrintText(g, xPer, y0 + textOffsetY, "50%", textSize);
             for (int i = 0; i <= 50 * koeff; i++)
             {
                 Color col = Color.FromArgb(0, 255, (int)(255 * i / (50.0 * koeff)));
-                DrawLine(g, LedLibrary.RealW - LedLibrary.Border, y0 - i, LedLibrary.RealW - LedLibrary.Border + 10 * koeff, y0 - i, col);
+                DrawLine(g, LedLibrary.RealW - LedLibrary.Border, y0 - i, LedLibrary.RealW - LedLibrary.Border + rainbowWidht, y0 - i, col);
             }
             y0 -= 50 * koeff;
             PrintText(g, xPer, y0 + textOffsetY, "25%", textSize);
             for (int i = 0; i <= 50 * koeff; i++)
             {
                 Color col = Color.FromArgb(0, (int)(255 * (50 * koeff - i) / (50.0 * koeff)), 255);
-                DrawLine(g, LedLibrary.RealW - LedLibrary.Border, y0 - i, LedLibrary.RealW - LedLibrary.Border + 10 * koeff, y0 - i, col);
+                DrawLine(g, LedLibrary.RealW - LedLibrary.Border, y0 - i, LedLibrary.RealW - LedLibrary.Border + rainbowWidht, y0 - i, col);
             }
             y0 -= 50 * koeff;
             PrintText(g, xPer, y0 + textOffsetY, "0%", textSize);

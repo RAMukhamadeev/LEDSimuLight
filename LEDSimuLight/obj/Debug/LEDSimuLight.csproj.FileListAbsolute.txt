@@ -15,7 +15,6 @@ C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSi
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.pdb
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\bin\Debug\LEDSimuLight.exe
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\bin\Debug\LEDSimuLight.pdb
-C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.csprojResolveAssemblyReference.cache
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormAbout.resources
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormDesign.resources
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormMain.resources
@@ -42,3 +41,10 @@ D:\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormSimulating.resour
 D:\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.csproj.GenerateResource.Cache
 D:\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormDatabase.resources
 D:\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormAddMaterial.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormAddMaterial.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormDatabase.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormDesignInfo.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormLegend.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormSimulatingInfo.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.csprojResolveAssemblyReference.cache
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormEfficiencyGraph.resources

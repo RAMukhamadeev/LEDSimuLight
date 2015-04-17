@@ -373,7 +373,6 @@ namespace LEDSimuLight
                 return;
             }
 
-
             int code = LedLibrary.Mas[x, y];
             double n1 = LedLibrary.Materials[code].Fraction,
                    n = LedLibrary.Materials[code0].Fraction;
@@ -642,6 +641,8 @@ namespace LEDSimuLight
 
         private void DebugEmittingQuants(int count)
         {
+            if (_numAct == 0) return;
+
             RedrawPicture();
 
             _nMess = 0;
@@ -661,7 +662,7 @@ namespace LEDSimuLight
                 DebugRayTracing(curAngle, x, y);
                 
                 if (FormSimulatingInfo.Instance != null)
-                    FormSimulatingInfo.Instance.SetCountOfQuants(i.ToString());
+                    FormSimulatingInfo.Instance.SetCountOfQuants(i);
             }
 
             pbSimulatingOfLed.Image = _bmpSimulatingOfLed;
@@ -669,6 +670,9 @@ namespace LEDSimuLight
 
         private void ReleaseQuant()
         {
+            if (_numAct == 0)
+                return;
+
             int r = _rnd.Next(_numAct);
             int x = _active[r].X, y = _active[r].Y, code = LedLibrary.Mas[x, y];
             double curAngle = 2 * Math.PI * _rnd.NextDouble();
@@ -694,10 +698,13 @@ namespace LEDSimuLight
 
                     // выпущено квантов в данный момент
                     if (FormSimulatingInfo.Instance != null)
-                        FormSimulatingInfo.Instance.SetCountOfQuants(i.ToString());
+                        FormSimulatingInfo.Instance.SetCountOfQuants(i);
 
                     if (FormSimulatingInfo.Instance != null)
                         FormSimulatingInfo.Instance.SetInfoFromVar();
+
+                    if (FormEfficiencyGraph.Instance != null)
+                        FormEfficiencyGraph.Instance.SetPoint();
 
                     Application.DoEvents();
                 }
@@ -711,7 +718,7 @@ namespace LEDSimuLight
 
         private void начатьМоделированиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EmittingQuants(300000);
+            EmittingQuants(LedLibrary.CountOfQuants);
             //MessageBox.Show(Var.BadQuants.ToString());
         }
 
@@ -760,7 +767,13 @@ namespace LEDSimuLight
         private void FormSimulating_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
-                DebugEmittingQuants(3);
+                DebugEmittingQuants(1);
+        }
+
+        private void зависимостьВнешнегоКвантовогоВыходаОтВремениToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormEfficiencyGraph formEfficiencyGraph = new FormEfficiencyGraph();
+            formEfficiencyGraph.Show();
         }
     }
 }
