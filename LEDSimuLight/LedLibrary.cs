@@ -10,7 +10,13 @@ namespace LEDSimuLight
     {
         public static double
             Wavelength = 473;
+        public static string
+            ActiveMaterial = "i-GaN";
+        public static bool
+            IsAsyncCalculation = false;
         public static int
+          StepOfCursor = 5,
+          CountOfThread = 4,
           FrameSensor = 20,
           BigStep = 100,
           LittleStep = 50,
@@ -24,7 +30,7 @@ namespace LEDSimuLight
           RealW,
           RealH,
           SensMat = 6,
-          CountOfQuants = 500000,
+          CountOfQuants = 100000,
           QuantsOut = 0,
           QuantAbsorbed = 0,
           QuantsFront = 0,
@@ -37,7 +43,7 @@ namespace LEDSimuLight
 
         public static double QuantumEff = 0;
         public static int[,] Mas;
-        public static List<Material> Materials = new List<Material>();
+        public static readonly List<Material> Materials = new List<Material>();
         public static int[] CircleBright, LeftBright, RightBright, FloorBright;
 
         public class Point
@@ -166,9 +172,16 @@ namespace LEDSimuLight
         {
             RealH = h;
             RealW = w;
+
             Border = h / 15;
+            Border = (Border/StepOfCursor)*StepOfCursor;
+
             H = RealH - Border * 2;
+            //H = (H/StepOfCursor)*StepOfCursor;
+
             W = RealW - Border * 2;
+            //W = (W/StepOfCursor)*StepOfCursor;
+
             SideSector = (int)(((Math.PI * (H/2 + W/2)) / 180) * DiscreteAngle);
             Mas = new int[RealW + 1, RealH + 1];
             CircleBright = new int[1 + 180 / DiscreteAngle];

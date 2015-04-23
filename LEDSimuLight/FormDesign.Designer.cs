@@ -108,8 +108,8 @@
             // показатьИнформационнуюПанельToolStripMenuItem
             // 
             this.показатьИнформационнуюПанельToolStripMenuItem.Name = "показатьИнформационнуюПанельToolStripMenuItem";
-            this.показатьИнформационнуюПанельToolStripMenuItem.Size = new System.Drawing.Size(485, 36);
-            this.показатьИнформационнуюПанельToolStripMenuItem.Text = "Показать информационную панель";
+            this.показатьИнформационнуюПанельToolStripMenuItem.Size = new System.Drawing.Size(431, 36);
+            this.показатьИнформационнуюПанельToolStripMenuItem.Text = "Инструменты проектирования";
             this.показатьИнформационнуюПанельToolStripMenuItem.Click += new System.EventHandler(this.показатьИнформационнуюПанельToolStripMenuItem_Click);
             // 
             // создатьРельефToolStripMenuItem
@@ -180,7 +180,7 @@
             this.pbDesignOfLed.BackColor = System.Drawing.SystemColors.MenuBar;
             this.pbDesignOfLed.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.pbDesignOfLed.Location = new System.Drawing.Point(0, 44);
-            this.pbDesignOfLed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbDesignOfLed.Margin = new System.Windows.Forms.Padding(4);
             this.pbDesignOfLed.Name = "pbDesignOfLed";
             this.pbDesignOfLed.Size = new System.Drawing.Size(1392, 970);
             this.pbDesignOfLed.TabIndex = 8;
@@ -202,13 +202,14 @@
             this.Controls.Add(this.menuStripMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "FormDesign";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Конструирование светодиода";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormDesign_FormClosed);
             this.Load += new System.EventHandler(this.design_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FormDesign_KeyUp);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDesignOfLed)).EndInit();

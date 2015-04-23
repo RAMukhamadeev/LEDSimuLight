@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace LEDSimuLight
@@ -16,7 +17,7 @@ namespace LEDSimuLight
             double wavelength;
             try
             {
-                countOfQuants = Int32.Parse(cbCountOfQuants.Text) * 1000000;
+                countOfQuants = Int32.Parse(cbCountOfQuants.Text) * 1000;
                 wavelength = Double.Parse(tbWavelength.Text);
                 meshDensity = Int32.Parse(cbMeshDensity.Text);
             }
@@ -45,14 +46,20 @@ namespace LEDSimuLight
 
         private void FormSettings_Load(object sender, EventArgs e)
         {
-            tbCountOfQuants.Value = LedLibrary.CountOfQuants / 1000000;
-            cbCountOfQuants.Text = (LedLibrary.CountOfQuants/1000000).ToString();
+            tbCountOfQuants.Value = LedLibrary.CountOfQuants / 1000;
+            cbCountOfQuants.Text = (LedLibrary.CountOfQuants/1000).ToString();
 
             trbWavelength.Value = (int) LedLibrary.Wavelength;
             tbWavelength.Text = LedLibrary.Wavelength.ToString();
 
             tbMeshDensity.Value = LedLibrary.MeshDensityCoeff;
             cbMeshDensity.Text = LedLibrary.MeshDensityCoeff.ToString();
+
+            foreach (var next in LedLibrary.Materials)
+            {
+                cbChoseActive.Items.Add(next.Name);
+            }
+            cbChoseActive.Text = LedLibrary.ActiveMaterial;
         }
 
         private void tbCountOfQuants_Scroll(object sender, EventArgs e)
@@ -63,6 +70,11 @@ namespace LEDSimuLight
         private void закрытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void cbChoseActive_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LedLibrary.ActiveMaterial = cbChoseActive.Text;
         }
     }
 }

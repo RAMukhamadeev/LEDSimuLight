@@ -31,6 +31,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEfficiencyGraph));
             this.chartQuantumEfficiency = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.chartQuantumEfficiency)).BeginInit();
             this.SuspendLayout();
@@ -63,8 +64,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1196, 821);
             this.Controls.Add(this.chartQuantumEfficiency);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormEfficiencyGraph";
-            this.Text = "FormEfficiencyGraph";
+            this.Text = "Зависимотсь внешнего квантового выхода от времени";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.FormEfficiencyGraph_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chartQuantumEfficiency)).EndInit();

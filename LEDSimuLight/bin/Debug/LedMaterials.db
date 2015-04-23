@@ -11,42 +11,42 @@ Color blue: 1
 @New material@
 Type: Substrate
 Name: Al2O3
-Fraction: 1,6
-Absorbtion: 0,01
+Fraction: 1,774
+Absorbtion: 0,12
 Reflection: 0,11
-Color red: 0,6196
-Color green: 0,8549
-Color blue: 0,9294
+Color red: 1
+Color green: 0,8
+Color blue: 0,6
 
 @New material@
 Type: Thin film
 Name: n-GaN
 Fraction: 2,43
-Absorbtion: 0,25
+Absorbtion: 0,05
 Reflection: 0,05
-Color red: 0,6588
-Color green: 0,3765
-Color blue: 0,949
+Color red: 0,6
+Color green: 1
+Color blue: 0,4
 
 @New material@
 Type: Thin film
 Name: InGaN
-Fraction: 2,52
-Absorbtion: 0,01
-Reflection: 0,03
-Color red: 0,2902
-Color green: 0,949
-Color blue: 0,1765
+Fraction: 2,2
+Absorbtion: 0,05
+Reflection: 0,05
+Color red: 1
+Color green: 0,9
+Color blue: 0,05
 
 @New material@
 Type: Thin film
 Name: i-GaN
 Fraction: 2,49
-Absorbtion: 0,12
+Absorbtion: 0,2
 Reflection: 0,04
-Color red: 0,7921
-Color green: 0,7921
-Color blue: 0,9452
+Color red: 1
+Color green: 0,6
+Color blue: 0
 
 @New material@
 Type: Contact
@@ -54,9 +54,9 @@ Name: Metal contact
 Fraction: 1
 Absorbtion: 1
 Reflection: 0,07
-Color red: 0,7765
-Color green: 0,7765
-Color blue: 0,0356
+Color red: 1
+Color green: 1
+Color blue: 0
 
 @New material@
 Type: Sensor
@@ -189,7 +189,7 @@ Color green: 0,5334
 Color blue: 0,5334
 
 @New material@
-Type: Thin film
+Type: Mirror
 Name: GaN (thin film)
 Fraction: 2,54
 Absorbtion: 0,04
@@ -237,4 +237,24 @@ Reflection: 0,02
 Color red: 0,7828
 Color green: 0,4789
 Color blue: 0,8482
+
+@New material@
+Type: Thin film
+Name: p-GaN
+Fraction: 2,49
+Absorbtion: 0,03
+Reflection: 0,03
+Color red: 0
+Color green: 0,8
+Color blue: 1
+
+@New material@
+Type: Thin film
+Name: PDMS
+Fraction: 2,4
+Absorbtion: 0
+Reflection: 0
+Color red: 1
+Color green: 0,8
+Color blue: 1
 

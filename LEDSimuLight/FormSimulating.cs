@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LEDSimuLight
@@ -86,7 +88,11 @@ namespace LEDSimuLight
             OpenGLm.SetMesh(_graphicsSimulatingOfLed);
             pbSimulatingOfLed.Image = _bmpSimulatingOfLed;
 
-            DetectingActiveLayer(4); // i - GaN в базе под номером 4
+            LedLibrary.Material activeMaterial =
+                LedLibrary.Materials.Where(x => x.Name == LedLibrary.ActiveMaterial).FirstOrDefault();
+            int activeCode = LedLibrary.Materials.IndexOf(activeMaterial);
+
+            DetectingActiveLayer(activeCode); // i - GaN в базе под номером 4
             InitializeVar();
         }
 
@@ -240,7 +246,8 @@ namespace LEDSimuLight
             if ((beta > 0 && beta < Math.PI / 2) || (beta > Math.PI / 2 && beta < Math.PI))
                 res = (Math.Abs(Math.Cos(alpha - beta)) >= n1 / n);
 
-            if (code == 9) // Зеркало
+            // Зеркало
+            if (LedLibrary.Materials[code].Type == "Mirror") 
                 res = true;
             return res;
         }
@@ -597,7 +604,7 @@ namespace LEDSimuLight
 
         private void RayTracing(double curAngle, int x, int y)
         {
-            if (_stackSize >= 100)
+            if (_stackSize >= 50)
             {
                 LedLibrary.BadQuants++;
                 ReleaseQuant();
@@ -674,25 +681,26 @@ namespace LEDSimuLight
                 return;
 
             int r = _rnd.Next(_numAct);
-            int x = _active[r].X, y = _active[r].Y, code = LedLibrary.Mas[x, y];
+            int x = _active[r].X, y = _active[r].Y;
             double curAngle = 2 * Math.PI * _rnd.NextDouble();
             _xs = x; _ys = y;
             _nMess = 0;
 
-            PushMessage("Квант возник в точке с координатой X = " + ((double)(x) / (LedLibrary.W / LedLibrary.WMaxMicr)) + " мкм; Y = " + ((double)(y) / (LedLibrary.H / LedLibrary.HMaxMicr)) + " мкм в " + LedLibrary.Materials[code].Name + ".");
-            PushMessage("Начальный угол равен = " + ToDegree(curAngle) + " градусов.");
+            //int code = LedLibrary.Mas[x, y];
+            //PushMessage("Квант возник в точке с координатой X = " + ((double)(x) / (LedLibrary.W / LedLibrary.WMaxMicr)) + " мкм; Y = " + ((double)(y) / (LedLibrary.H / LedLibrary.HMaxMicr)) + " мкм в " + LedLibrary.Materials[code].Name + ".");
+            //PushMessage("Начальный угол равен = " + ToDegree(curAngle) + " градусов.");
 
             _stackSize = 0;
             RayTracing(curAngle, x, y);
         } 
 
-        private void EmittingQuants(int count)
+        private void EmittingQuants()
         {
-            for (int i = 1; i <= count; i++)
+            for (int i = 1; i <= LedLibrary.CountOfQuants / LedLibrary.CountOfThread; i++)
             {
                 ReleaseQuant();
               
-                if (i % 1000 == 0)
+                if (!LedLibrary.IsAsyncCalculation && i % 1000 == 0)
                 {
                     LedLibrary.QuantumEff = (double) (LedLibrary.QuantsOut) / i;
 
@@ -716,10 +724,41 @@ namespace LEDSimuLight
             DebugEmittingQuants(1);
         }
 
+        private void AsyncCalc()
+        {
+            Thread[] threads = new Thread[LedLibrary.CountOfThread];
+            for (int i = 0; i < LedLibrary.CountOfThread; i++)
+            {
+                threads[i] = new Thread(EmittingQuants);
+                threads[i].Start();
+            }
+
+
+            for (int i = 0; i < LedLibrary.CountOfThread; i++)
+            {
+                threads[i].Join();
+            }
+
+            LedLibrary.QuantumEff = (double)(LedLibrary.QuantsOut) / LedLibrary.CountOfQuants;
+        }
+
+        private void LineCalc()
+        {
+            LedLibrary.CountOfThread = 1;
+            EmittingQuants();
+        }
+
         private void начатьМоделированиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EmittingQuants(LedLibrary.CountOfQuants);
-            //MessageBox.Show(Var.BadQuants.ToString());
+            DateTime timeBefore = DateTime.Now;
+            if (LedLibrary.IsAsyncCalculation)
+                AsyncCalc();
+            else
+                LineCalc();
+            DateTime timeAfter = DateTime.Now;
+
+            TimeSpan delta = timeAfter - timeBefore;
+            MessageBox.Show("Моделирование завершено! \nВремя моделирования: " + delta.TotalSeconds + " секунд.");
         }
 
         private void показатьОтчетToolStripMenuItem_Click(object sender, EventArgs e)

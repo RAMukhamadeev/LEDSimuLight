@@ -92,11 +92,11 @@
     <Compile Include="FormDesign.Designer.cs">
       <DependentUpon>FormDesign.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormDesignInfo.cs">
+    <Compile Include="FormDesignInstruments.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormDesignInfo.Designer.cs">
-      <DependentUpon>FormDesignInfo.cs</DependentUpon>
+    <Compile Include="FormDesignInstruments.Designer.cs">
+      <DependentUpon>FormDesignInstruments.cs</DependentUpon>
     </Compile>
     <Compile Include="FormEfficiencyGraph.cs">
       <SubType>Form</SubType>
@@ -155,8 +155,8 @@
     <EmbeddedResource Include="FormDesign.resx">
       <DependentUpon>FormDesign.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormDesignInfo.resx">
-      <DependentUpon>FormDesignInfo.cs</DependentUpon>
+    <EmbeddedResource Include="FormDesignInstruments.resx">
+      <DependentUpon>FormDesignInstruments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormEfficiencyGraph.resx">
       <DependentUpon>FormEfficiencyGraph.cs</DependentUpon>

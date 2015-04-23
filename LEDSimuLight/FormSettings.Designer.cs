@@ -72,6 +72,8 @@ namespace LEDSimuLight
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьНастройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.закрытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cbChoseActive = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -87,6 +89,7 @@ namespace LEDSimuLight
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.menuStripMain.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -103,7 +106,7 @@ namespace LEDSimuLight
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(23, 1102);
+            this.groupBox1.Location = new System.Drawing.Point(14, 1258);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(6);
@@ -227,6 +230,7 @@ namespace LEDSimuLight
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.groupBox7);
             this.groupBox2.Controls.Add(this.groupBox6);
             this.groupBox2.Controls.Add(this.groupBox5);
             this.groupBox2.Controls.Add(this.groupBox4);
@@ -236,7 +240,7 @@ namespace LEDSimuLight
             this.groupBox2.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox2.Size = new System.Drawing.Size(692, 1082);
+            this.groupBox2.Size = new System.Drawing.Size(692, 1238);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Настройки моделирования";
@@ -459,12 +463,12 @@ namespace LEDSimuLight
             // tbCountOfQuants
             // 
             this.tbCountOfQuants.Location = new System.Drawing.Point(28, 132);
-            this.tbCountOfQuants.Maximum = 30;
-            this.tbCountOfQuants.Minimum = 1;
+            this.tbCountOfQuants.Maximum = 5000;
+            this.tbCountOfQuants.Minimum = 100;
             this.tbCountOfQuants.Name = "tbCountOfQuants";
             this.tbCountOfQuants.Size = new System.Drawing.Size(320, 90);
             this.tbCountOfQuants.TabIndex = 61;
-            this.tbCountOfQuants.Value = 1;
+            this.tbCountOfQuants.Value = 100;
             this.tbCountOfQuants.Scroll += new System.EventHandler(this.tbCountOfQuants_Scroll);
             // 
             // cbCountOfQuants
@@ -472,23 +476,16 @@ namespace LEDSimuLight
             this.cbCountOfQuants.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbCountOfQuants.FormattingEnabled = true;
             this.cbCountOfQuants.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "100",
-            "1000"});
+            "300",
+            "500",
+            "1000",
+            "2000",
+            "3000",
+            "5000"});
             this.cbCountOfQuants.Location = new System.Drawing.Point(28, 66);
             this.cbCountOfQuants.Name = "cbCountOfQuants";
             this.cbCountOfQuants.Size = new System.Drawing.Size(150, 41);
             this.cbCountOfQuants.TabIndex = 0;
-            this.cbCountOfQuants.Text = "1";
             // 
             // label1
             // 
@@ -497,9 +494,9 @@ namespace LEDSimuLight
             this.label1.Location = new System.Drawing.Point(211, 68);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(137, 39);
+            this.label1.Size = new System.Drawing.Size(107, 39);
             this.label1.TabIndex = 60;
-            this.label1.Text = "миллион";
+            this.label1.Text = "тысяч";
             // 
             // pictureBox1
             // 
@@ -561,6 +558,28 @@ namespace LEDSimuLight
             this.закрытьToolStripMenuItem.Text = "Закрыть";
             this.закрытьToolStripMenuItem.Click += new System.EventHandler(this.закрытьToolStripMenuItem_Click);
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.cbChoseActive);
+            this.groupBox7.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox7.Location = new System.Drawing.Point(9, 1074);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(666, 139);
+            this.groupBox7.TabIndex = 64;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Выбор материала активного слоя";
+            // 
+            // cbChoseActive
+            // 
+            this.cbChoseActive.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbChoseActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbChoseActive.FormattingEnabled = true;
+            this.cbChoseActive.Location = new System.Drawing.Point(36, 66);
+            this.cbChoseActive.Name = "cbChoseActive";
+            this.cbChoseActive.Size = new System.Drawing.Size(465, 41);
+            this.cbChoseActive.TabIndex = 0;
+            this.cbChoseActive.SelectedIndexChanged += new System.EventHandler(this.cbChoseActive_SelectedIndexChanged);
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
@@ -596,6 +615,7 @@ namespace LEDSimuLight
             this.panel1.ResumeLayout(false);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -642,5 +662,7 @@ namespace LEDSimuLight
         private ToolStripMenuItem закрытьToolStripMenuItem;
         private TrackBar tbMeshDensity;
         private TrackBar trbWavelength;
+        private GroupBox groupBox7;
+        private ComboBox cbChoseActive;
     }
 }
