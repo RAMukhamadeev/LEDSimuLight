@@ -46,6 +46,8 @@ namespace LEDSimuLight
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cbChoseActive = new System.Windows.Forms.ComboBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbPixDensity = new System.Windows.Forms.ComboBox();
@@ -72,10 +74,9 @@ namespace LEDSimuLight
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьНастройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.закрытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.cbChoseActive = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.groupBox5.SuspendLayout();
@@ -89,7 +90,6 @@ namespace LEDSimuLight
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.menuStripMain.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -244,6 +244,28 @@ namespace LEDSimuLight
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Настройки моделирования";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.cbChoseActive);
+            this.groupBox7.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox7.Location = new System.Drawing.Point(9, 1074);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(666, 139);
+            this.groupBox7.TabIndex = 64;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Выбор материала активного слоя";
+            // 
+            // cbChoseActive
+            // 
+            this.cbChoseActive.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbChoseActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbChoseActive.FormattingEnabled = true;
+            this.cbChoseActive.Location = new System.Drawing.Point(36, 66);
+            this.cbChoseActive.Name = "cbChoseActive";
+            this.cbChoseActive.Size = new System.Drawing.Size(465, 41);
+            this.cbChoseActive.TabIndex = 0;
+            this.cbChoseActive.SelectedIndexChanged += new System.EventHandler(this.cbChoseActive_SelectedIndexChanged);
             // 
             // groupBox6
             // 
@@ -510,8 +532,7 @@ namespace LEDSimuLight
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.groupBox2);
@@ -519,7 +540,7 @@ namespace LEDSimuLight
             this.panel1.Location = new System.Drawing.Point(1, 53);
             this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(793, 1158);
+            this.panel1.Size = new System.Drawing.Size(791, 880);
             this.panel1.TabIndex = 2;
             // 
             // menuStripMain
@@ -530,7 +551,7 @@ namespace LEDSimuLight
             this.файлToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(794, 47);
+            this.menuStripMain.Size = new System.Drawing.Size(792, 47);
             this.menuStripMain.TabIndex = 3;
             this.menuStripMain.Text = "menuStrip1";
             // 
@@ -558,33 +579,12 @@ namespace LEDSimuLight
             this.закрытьToolStripMenuItem.Text = "Закрыть";
             this.закрытьToolStripMenuItem.Click += new System.EventHandler(this.закрытьToolStripMenuItem_Click);
             // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.cbChoseActive);
-            this.groupBox7.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox7.Location = new System.Drawing.Point(9, 1074);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(666, 139);
-            this.groupBox7.TabIndex = 64;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Выбор материала активного слоя";
-            // 
-            // cbChoseActive
-            // 
-            this.cbChoseActive.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbChoseActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cbChoseActive.FormattingEnabled = true;
-            this.cbChoseActive.Location = new System.Drawing.Point(36, 66);
-            this.cbChoseActive.Name = "cbChoseActive";
-            this.cbChoseActive.Size = new System.Drawing.Size(465, 41);
-            this.cbChoseActive.TabIndex = 0;
-            this.cbChoseActive.SelectedIndexChanged += new System.EventHandler(this.cbChoseActive_SelectedIndexChanged);
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(794, 1216);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(792, 986);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStripMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -597,6 +597,7 @@ namespace LEDSimuLight
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -615,7 +616,6 @@ namespace LEDSimuLight
             this.panel1.ResumeLayout(false);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

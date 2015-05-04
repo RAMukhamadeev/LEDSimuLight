@@ -49,13 +49,13 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pbUp = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.rbLastShape = new System.Windows.Forms.RadioButton();
+            this.rbWholeStructure = new System.Windows.Forms.RadioButton();
             this.lblMoveValue = new System.Windows.Forms.Label();
             this.trbMove = new System.Windows.Forms.TrackBar();
             this.pbLeft = new System.Windows.Forms.PictureBox();
             this.pbRight = new System.Windows.Forms.PictureBox();
             this.pbDown = new System.Windows.Forms.PictureBox();
-            this.rbWholeStructure = new System.Windows.Forms.RadioButton();
-            this.rbLastShape = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pbFixCoordinates)).BeginInit();
             this.gbFixOfCoordinates.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -254,7 +254,7 @@
             this.groupBox1.Controls.Add(this.lblShowY);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(23, 979);
+            this.groupBox1.Location = new System.Drawing.Point(23, 957);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(469, 112);
             this.groupBox1.TabIndex = 47;
@@ -282,7 +282,7 @@
             this.pbUp.Location = new System.Drawing.Point(167, 95);
             this.pbUp.Name = "pbUp";
             this.pbUp.Size = new System.Drawing.Size(136, 122);
-            this.pbUp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbUp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbUp.TabIndex = 49;
             this.pbUp.TabStop = false;
             this.pbUp.Click += new System.EventHandler(this.pbUp_Click);
@@ -300,17 +300,39 @@
             this.groupBox3.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox3.Location = new System.Drawing.Point(23, 443);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(469, 530);
+            this.groupBox3.Size = new System.Drawing.Size(469, 508);
             this.groupBox3.TabIndex = 48;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Сдвиг структур";
+            // 
+            // rbLastShape
+            // 
+            this.rbLastShape.AutoSize = true;
+            this.rbLastShape.Location = new System.Drawing.Point(147, 47);
+            this.rbLastShape.Name = "rbLastShape";
+            this.rbLastShape.Size = new System.Drawing.Size(139, 43);
+            this.rbLastShape.TabIndex = 55;
+            this.rbLastShape.TabStop = true;
+            this.rbLastShape.Text = "Фигура";
+            this.rbLastShape.UseVisualStyleBackColor = true;
+            // 
+            // rbWholeStructure
+            // 
+            this.rbWholeStructure.AutoSize = true;
+            this.rbWholeStructure.Location = new System.Drawing.Point(39, 47);
+            this.rbWholeStructure.Name = "rbWholeStructure";
+            this.rbWholeStructure.Size = new System.Drawing.Size(88, 43);
+            this.rbWholeStructure.TabIndex = 54;
+            this.rbWholeStructure.TabStop = true;
+            this.rbWholeStructure.Text = "Все";
+            this.rbWholeStructure.UseVisualStyleBackColor = true;
             // 
             // lblMoveValue
             // 
             this.lblMoveValue.AutoSize = true;
             this.lblMoveValue.Font = new System.Drawing.Font("Candara", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblMoveValue.ForeColor = System.Drawing.Color.SeaGreen;
-            this.lblMoveValue.Location = new System.Drawing.Point(160, 474);
+            this.lblMoveValue.Location = new System.Drawing.Point(149, 448);
             this.lblMoveValue.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblMoveValue.Name = "lblMoveValue";
             this.lblMoveValue.Size = new System.Drawing.Size(183, 39);
@@ -334,7 +356,7 @@
             this.pbLeft.Location = new System.Drawing.Point(25, 155);
             this.pbLeft.Name = "pbLeft";
             this.pbLeft.Size = new System.Drawing.Size(136, 122);
-            this.pbLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbLeft.TabIndex = 52;
             this.pbLeft.TabStop = false;
             this.pbLeft.Click += new System.EventHandler(this.pbLeft_Click);
@@ -346,7 +368,7 @@
             this.pbRight.Location = new System.Drawing.Point(309, 155);
             this.pbRight.Name = "pbRight";
             this.pbRight.Size = new System.Drawing.Size(136, 122);
-            this.pbRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbRight.TabIndex = 51;
             this.pbRight.TabStop = false;
             this.pbRight.Click += new System.EventHandler(this.pbRight_Click);
@@ -358,38 +380,17 @@
             this.pbDown.Location = new System.Drawing.Point(167, 233);
             this.pbDown.Name = "pbDown";
             this.pbDown.Size = new System.Drawing.Size(136, 122);
-            this.pbDown.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbDown.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbDown.TabIndex = 50;
             this.pbDown.TabStop = false;
             this.pbDown.Click += new System.EventHandler(this.pbDown_Click);
-            // 
-            // rbWholeStructure
-            // 
-            this.rbWholeStructure.AutoSize = true;
-            this.rbWholeStructure.Location = new System.Drawing.Point(39, 47);
-            this.rbWholeStructure.Name = "rbWholeStructure";
-            this.rbWholeStructure.Size = new System.Drawing.Size(88, 43);
-            this.rbWholeStructure.TabIndex = 54;
-            this.rbWholeStructure.TabStop = true;
-            this.rbWholeStructure.Text = "Все";
-            this.rbWholeStructure.UseVisualStyleBackColor = true;
-            // 
-            // rbLastShape
-            // 
-            this.rbLastShape.AutoSize = true;
-            this.rbLastShape.Location = new System.Drawing.Point(147, 47);
-            this.rbLastShape.Name = "rbLastShape";
-            this.rbLastShape.Size = new System.Drawing.Size(139, 43);
-            this.rbLastShape.TabIndex = 55;
-            this.rbLastShape.TabStop = true;
-            this.rbLastShape.Text = "Фигура";
-            this.rbLastShape.UseVisualStyleBackColor = true;
             // 
             // FormDesignInstruments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(514, 1103);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(514, 1083);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);

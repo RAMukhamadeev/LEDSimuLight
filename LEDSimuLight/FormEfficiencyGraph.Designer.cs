@@ -60,8 +60,8 @@
             // 
             // FormEfficiencyGraph
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1196, 821);
             this.Controls.Add(this.chartQuantumEfficiency);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

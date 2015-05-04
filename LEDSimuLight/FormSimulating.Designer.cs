@@ -63,7 +63,7 @@ namespace LEDSimuLight
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
             this.menuStripMain.Padding = new System.Windows.Forms.Padding(12, 4, 0, 4);
-            this.menuStripMain.Size = new System.Drawing.Size(1284, 44);
+            this.menuStripMain.Size = new System.Drawing.Size(1544, 44);
             this.menuStripMain.TabIndex = 1;
             this.menuStripMain.Text = "menuStripMain";
             // 
@@ -168,7 +168,7 @@ namespace LEDSimuLight
             this.pbSimulatingOfLed.Location = new System.Drawing.Point(0, 40);
             this.pbSimulatingOfLed.Margin = new System.Windows.Forms.Padding(4);
             this.pbSimulatingOfLed.Name = "pbSimulatingOfLed";
-            this.pbSimulatingOfLed.Size = new System.Drawing.Size(1900, 938);
+            this.pbSimulatingOfLed.Size = new System.Drawing.Size(1544, 918);
             this.pbSimulatingOfLed.TabIndex = 9;
             this.pbSimulatingOfLed.TabStop = false;
             this.pbSimulatingOfLed.Click += new System.EventHandler(this.pbSimulatingOfLed_Click);
@@ -178,7 +178,7 @@ namespace LEDSimuLight
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1284, 986);
+            this.ClientSize = new System.Drawing.Size(1544, 958);
             this.Controls.Add(this.pbSimulatingOfLed);
             this.Controls.Add(this.menuStripMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
