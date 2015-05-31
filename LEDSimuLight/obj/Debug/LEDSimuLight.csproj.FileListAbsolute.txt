@@ -47,3 +47,6 @@ C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSi
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormSimulatingInfo.resources
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormEfficiencyGraph.resources
 C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.FormDesignInstruments.resources
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\obj\Debug\LEDSimuLight.csprojResolveAssemblyReference.cache
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\bin\Debug\LEDSimuLight.exe.CodeAnalysisLog.xml
+C:\Users\Руслан\Documents\GitHub\LEDSimuLight\LEDSimuLight\bin\Debug\LEDSimuLight.exe.lastcodeanalysissucceeded
